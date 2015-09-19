@@ -1,0 +1,457 @@
+%% 1/17/13 - USING all_days_all_analysis_17Jan2014_1605
+% Gap durations: use 21Jan2014_1629
+
+
+% ----------------------------------------------------------
+% CALCULATING hit rate of all syl over days. 
+syllables=all_days_all_analysis.parameters.WN_trig.trig_syl;
+for i=1:length(syllables);
+    figure; hold on; title([syllables(i) ' green= WN_hits/Labels; black= FalsePos/TotalWN'])
+    for j=1:length(all_days_all_analysis.data); % num of days
+        try
+            scatter(j,all_days_all_analysis.data{j}.WN_hit_rate.all_songs.(syllables(i)).hits_divide_labels,'g','MarkerFaceColor','g');
+            scatter(j,all_days_all_analysis.data{j}.WN_hit_rate.all_songs.(syllables(i)).FalsePos_divide_TotalWN,'k','MarkerFaceColor','k')
+            %         scatter(j,all_days_all_analysis.data{j}.WN_hit_rate.all_songs.a.FalsePos/all_days_all_analysis.data{j}.WN_hit_rate.all_songs.a.hits_labels_allhits(1),'b','MarkerFaceColor','b')
+        catch err
+        end
+    end
+end
+
+
+% hits seen for f,g, a, and b.
+% Entropy increases most obvious for l,k,j,c,f (see below).  The first 4 all follow largest WN hit syl (g and b). The last (f), is a long syl.
+% ENTROPY increase for f seems to be between days -25 and -15 (from last
+% day), could be other days before that too. why?
+
+
+% ----------------------------------------------------
+% PLOT FOR EACH DAY ONE VAR AGAINST ANOTHER 
+analysis_type_one='amplitude'; % x axis
+analysis_type_two='entropy'; % y axis
+% syllables='cdabjklm';
+syllables=all_days_all_analysis.parameters.syllables_seq_func;
+% syllables='j';
+lin_reg_on_or_off='off';
+type_of_manipulation='WN';
+
+
+
+num_of_days=length(all_days_all_analysis.data);
+divisions=1/num_of_days;
+
+for ii=1:length(syllables);
+    figure; hold on; title(['mean per day of syllable ' syllables(ii) '. ' analysis_type_two ' vs. ' analysis_type_one '. Pre=blue Post=green to red (chronological)'])
+    for jj=1:num_of_days;
+        try
+            mean_per_day.(analysis_type_one){jj}=mean(all_days_all_analysis.data{jj}.all_songs.(syllables(ii)).(analysis_type_one)(:,2));
+            mean_per_day.(analysis_type_two){jj}=mean(all_days_all_analysis.data{jj}.all_songs.(syllables(ii)).(analysis_type_two)(:,2));
+            if jj<=baseline_days;
+                plot(mean_per_day.(analysis_type_one){jj},mean_per_day.(analysis_type_two){jj},'.','MarkerSize',15,'Color','b')
+            elseif jj>baseline_days;
+                plot(mean_per_day.(analysis_type_one){jj},mean_per_day.(analysis_type_two){jj},'.','MarkerSize',15,'Color',jj*[divisions 0 0]+[0 1 0]-jj*[0 divisions 0])
+            else
+                disp('error')
+            end
+        catch
+        end
+    end
+end
+
+
+
+
+% -------------------------------------------
+% PLOT GAP DURATIONS - use all_days_all_analysis_GAPDURATION_21Jan2014.mat
+% took parameters and summary from 17Jan2014_1605
+% and added to 21Jan2014_1629.
+
+close all
+analysis_type='gap_duration';
+first_day_num=datenum(all_days_all_analysis.parameters.first_day);
+
+transitions=all_days_all_analysis.parameters.gap_duration.transitions;
+
+for j=1:length(transitions);
+    figure(j); hold on;
+    for i=1:length(all_days_all_analysis.data); % number of days
+        try
+            num_of_renditions=length(all_days_all_analysis.data{i}.all_songs.(transitions{j}).gap_duration);
+            scatter(i-1.25+[1:num_of_renditions]./(2*num_of_renditions),all_days_all_analysis.data{i}.all_songs.(transitions{j}).(analysis_type),'b');
+            %----------------------
+            % getting variability of durations:
+            COV_gap_durations.(transitions{j})(i)=(std(all_days_all_analysis.data{i}.all_songs.(transitions{j}).gap_duration))/...
+                (mean(all_days_all_analysis.data{i}.all_songs.(transitions{j}).gap_duration));
+        catch err
+            continue
+        end
+    end
+    
+    % Put in medians, std
+    for i=1:length(all_days_all_analysis.data); % number of days
+        try
+            errorbar(i-1,median(all_days_all_analysis.data{i}.all_songs.(transitions{j}).(analysis_type)),...
+                std(all_days_all_analysis.data{i}.all_songs.(transitions{j}).(analysis_type)),'Marker','.','MarkerSize',27,'Color','k');
+        
+        catch err
+            continue
+        end
+    end
+    
+    % put in baseline lines (specifically for lesion experimnets)  aLSO pUT IN VERTICAL LINES FOR important dates (e.g. lesions)
+    if isfield(all_days_all_analysis.summary_of_experiment,'inter_lesion_days')==1;
+        disp('adding line for baseline value');
+        baseline_values_temp=[];
+        for i=1:all_days_all_analysis.summary_of_experiment.inter_lesion_days(1);
+            baseline_values_temp=[baseline_values_temp all_days_all_analysis.data{i}.all_songs.transitions{j}.(analysis_type)'];
+        end
+        baseline_mean=median(baseline_values_temp);
+        baseline_std=std(baseline_values_temp);
+        line(xlim, [baseline_mean baseline_mean],'Color','r','LineWidth',0.4); % mean lines
+        line(xlim, [baseline_mean+baseline_std baseline_mean+baseline_std],'LineStyle','--','Color',[0.7 0.1 0.1],'LineWidth',0.3); % variance lines
+        line(xlim, [baseline_mean-baseline_std baseline_mean-baseline_std],'LineStyle','--','Color', [0.7 0.1 0.1],'LineWidth',0.3);
+        
+        disp('adding lines for lesion days');
+        % lesion 1
+        for i=1:length(all_days_all_analysis.summary_of_experiment.inter_lesion_days);
+            
+            line([all_days_all_analysis.summary_of_experiment.inter_lesion_days(i)+0.1, ...
+                all_days_all_analysis.summary_of_experiment.inter_lesion_days(i)+0.1],ylim,'Color',[0.2 0.6 0.2],'LineWidth',1.8);
+        end
+    end
+    
+    % BASELINE AND IMPORTANT DATES FOR WN EXPERIMENTS
+    if isfield(all_days_all_analysis.summary_of_experiment,'WN_baseline_days')==1;
+        disp('adding line for baseline value');
+        baseline_values_temp=[];
+        for i=1:all_days_all_analysis.summary_of_experiment.WN_baseline_days;
+            baseline_values_temp=[baseline_values_temp all_days_all_analysis.data{i}.all_songs.(transitions{j}).(analysis_type)'];
+        end
+        baseline_mean=median(baseline_values_temp);
+        baseline_std=std(baseline_values_temp);
+        line(xlim, [baseline_mean baseline_mean],'Color','r','LineWidth',0.4); % mean lines
+        line(xlim, [baseline_mean+baseline_std baseline_mean+baseline_std],'LineStyle','--','Color',[0.7 0.1 0.1],'LineWidth',0.3); % variance lines
+        line(xlim, [baseline_mean-baseline_std baseline_mean-baseline_std],'LineStyle','--','Color', [0.7 0.1 0.1],'LineWidth',0.3);
+        
+        disp('adding lines for WN on, driving--> consolid, and off days');
+        line([all_days_all_analysis.summary_of_experiment.WN_baseline_days-0.5, ...
+            all_days_all_analysis.summary_of_experiment.WN_baseline_days-0.5],ylim,'Color',[0.2 0.6 0.2],'LineWidth',1.8);% WN start
+        
+        line([all_days_all_analysis.summary_of_experiment.WN_baseline_days+all_days_all_analysis.summary_of_experiment.WN_driving_days-0.5, ...
+            all_days_all_analysis.summary_of_experiment.WN_baseline_days+all_days_all_analysis.summary_of_experiment.WN_driving_days-0.5],ylim,'Color',[0.2 0.6 0.2],'LineWidth',1.8); % WN driving--> consolidation
+        
+        line([all_days_all_analysis.summary_of_experiment.WN_baseline_days+all_days_all_analysis.summary_of_experiment.WN_driving_days+all_days_all_analysis.summary_of_experiment.WN_consolidation_days-0.5, ...
+            all_days_all_analysis.summary_of_experiment.WN_baseline_days+all_days_all_analysis.summary_of_experiment.WN_driving_days+all_days_all_analysis.summary_of_experiment.WN_consolidation_days-0.5],ylim,'Color',[0.2 0.6 0.2],'LineWidth',1.8);  % WN end
+    end
+    
+    title([analysis_type ' over days for transition: ' transitions{j} '; dots and lines are medians']); xlabel('days');
+end
+
+% 
+% 
+% gh, bj, bk, decrease, and jk might decrease then stabilize?
+% 
+% 
+%-------------------------------------------------------------------------
+% Getting variability in gap duration for each syl.
+
+for j=1:length(transitions);
+    figure; hold on;
+    for i=1:length(all_days_all_analysis.data); % number of days
+        try
+            %----------------------
+            % getting variability of durations:
+            COV_gap_durations.(transitions{j})(i)=(std(all_days_all_analysis.data{i}.all_songs.(transitions{j}).gap_duration))/...
+                (mean(all_days_all_analysis.data{i}.all_songs.(transitions{j}).gap_duration));
+        catch err
+            continue
+        end
+    end
+    
+    % PLOT
+    for i=1:length(all_days_all_analysis.data); % number of days
+        try
+%             errorbar(i-1,median(all_days_all_analysis.data{i}.all_songs.(transitions{j}).(analysis_type)),...
+%                 std(all_days_all_analysis.data{i}.all_songs.(transitions{j}).(analysis_type)),'Marker','.','MarkerSize',27,'Color','k');
+            plot(i-1, COV_gap_durations.(transitions{j})(i),'Marker','.','MarkerSize',27,'Color','k');
+
+        catch err
+            continue
+        end
+    end
+    
+%     % put in baseline lines (specifically for lesion experimnets)  aLSO pUT IN VERTICAL LINES FOR important dates (e.g. lesions)
+%     if isfield(all_days_all_analysis.summary_of_experiment,'inter_lesion_days')==1;
+%         disp('adding line for baseline value');
+%         bl_end=1:all_days_all_analysis.summary_of_experiment.inter_lesion_days(1);
+%         baseline_mean=mean(COV_gap_durations.(transitions{j})(1:bl_end));
+%         baseline_std=std(baseline_values_temp);
+%         line(xlim, [baseline_mean baseline_mean],'Color','r','LineWidth',0.4); % mean lines
+%         line(xlim, [baseline_mean+baseline_std baseline_mean+baseline_std],'LineStyle','--','Color',[0.7 0.1 0.1],'LineWidth',0.3); % variance lines
+%         line(xlim, [baseline_mean-baseline_std baseline_mean-baseline_std],'LineStyle','--','Color', [0.7 0.1 0.1],'LineWidth',0.3);
+%         
+%         disp('adding lines for lesion days');
+%         % lesion 1
+%         for i=1:length(all_days_all_analysis.summary_of_experiment.inter_lesion_days);
+%             
+%             line([all_days_all_analysis.summary_of_experiment.inter_lesion_days(i)+0.1, ...
+%                 all_days_all_analysis.summary_of_experiment.inter_lesion_days(i)+0.1],ylim,'Color',[0.2 0.6 0.2],'LineWidth',1.8);
+%         end
+%     end
+    
+    % BASELINE AND IMPORTANT DATES FOR WN EXPERIMENTS
+    if isfield(all_days_all_analysis.summary_of_experiment,'WN_baseline_days')==1;
+        disp('adding line for baseline value');
+
+        bl_end=all_days_all_analysis.summary_of_experiment.WN_baseline_days;
+        baseline_mean=mean(COV_gap_durations.(transitions{j})(1:bl_end));
+        baseline_std=std(COV_gap_durations.(transitions{j})(1:bl_end));
+
+        line(xlim, [baseline_mean baseline_mean],'Color','r','LineWidth',0.4); % mean lines
+        line(xlim, [baseline_mean+baseline_std baseline_mean+baseline_std],'LineStyle','--','Color',[0.7 0.1 0.1],'LineWidth',0.3); % variance lines
+        line(xlim, [baseline_mean-baseline_std baseline_mean-baseline_std],'LineStyle','--','Color', [0.7 0.1 0.1],'LineWidth',0.3);
+        
+        disp('adding lines for WN on, driving--> consolid, and off days');
+        line([all_days_all_analysis.summary_of_experiment.WN_baseline_days-0.5, ...
+            all_days_all_analysis.summary_of_experiment.WN_baseline_days-0.5],ylim,'Color',[0.2 0.6 0.2],'LineWidth',1.8);% WN start
+        
+        line([all_days_all_analysis.summary_of_experiment.WN_baseline_days+all_days_all_analysis.summary_of_experiment.WN_driving_days-0.5, ...
+            all_days_all_analysis.summary_of_experiment.WN_baseline_days+all_days_all_analysis.summary_of_experiment.WN_driving_days-0.5],ylim,'Color',[0.2 0.6 0.2],'LineWidth',1.8); % WN driving--> consolidation
+        
+        line([all_days_all_analysis.summary_of_experiment.WN_baseline_days+all_days_all_analysis.summary_of_experiment.WN_driving_days+all_days_all_analysis.summary_of_experiment.WN_consolidation_days-0.5, ...
+            all_days_all_analysis.summary_of_experiment.WN_baseline_days+all_days_all_analysis.summary_of_experiment.WN_driving_days+all_days_all_analysis.summary_of_experiment.WN_consolidation_days-0.5],ylim,'Color',[0.2 0.6 0.2],'LineWidth',1.8);  % WN end
+    end
+    
+    title(['COV of gap durations over days for transition: ' transitions{j}]); xlabel('days');
+    ylim([0 1])
+end
+
+for i=1:length(transitions);
+    plot(i, baseline_mean(i))
+end
+
+% CONCLUSION: Nothing obvious related to 1) higher baseline CV or change in
+% CV.  Need to look closer.
+
+% ---------------------------------------
+% CHANGE in motif proportions (i.e. sequence variability)
+
+
+all_days_all_analysis.data{
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%% NOTES ON WHICH ALL_DAYS_ALL_ANALYSIS STRUCTURES TO USE FOR SPECIFIC ANALYSES:
+
+everything before 16Jan - 
+    - found entropy increase for k and j and c.
+    before changed entropy measure to use onset--> offset.
+    before labeled refgh.
+
+
+
+%% started 11/19 - random WN experiment.
+
+% 1. get a batch of song
+% 2. label WN hits as A, and misses (with or without TRIG) as "a".
+% 3. get hit % (trig/total) and catch %
+% 4. get spec features for misses
+% 5. get 
+% 
+% 1. use batch.keep
+% 2. use batch.rec_FB
+% 
+% 
+%% Pull out all the songs into a single batch
+
+% first pull out all songs with FB.
+% second, out of left over songs, some had trigger, but "catch", so no FB.
+% Pull those out by using cleandirAuto on the non-WN songs.
+% third, combine those two to get all songs.
+
+% MAKE a batch file with all songs
+batchname = 'batch';
+db_write_batch(batchname)
+
+% PULL out all songs with WN FB given.
+lt_rec_files_find_FB 
+
+% CLEAN the leftovers to find remaining non-WN songs.
+% batch='batch.rec_noFB'; % name of batch without WN FB.
+% cleandirAuto('batch.rec_noFB',1000,4,4) % these parameters tailored for bk51bk59.
+
+cleandir5('batch',12000,1000,5,5)
+%% if want a random subset of a batch file:
+
+randsamp('all_cbin_not_mat',0.5)
+mkdir('temp_folder') % move old batch.catch.keep
+!mv batch.catch.keep temp_folder
+
+
+% do analysis with random subfolder
+
+% return old batch
+
+%% MAKE a new total batch file by combining the two above.
+% this shoudl contain all songs.
+
+batch.rec_FB
+batch.rec_noFB.keep
+
+batch_one=textread(batch.rec_FB
+batch_two=
+
+%sort:
+
+
+
+
+
+%% ALTERNATIVE METHODS TO PULL SONGS
+
+batchname = 'batch';% make batch
+db_write_batch(batchname)
+
+cleandirAuto('batch',1000,5,5); % clean
+
+cleandirAuto('batch.dcrd',1000,5,5); % clean the dscrd pile with more lenient params to make sure got all songs.
+
+%% label song
+% LABEL ALL SYL (EITHER AS a or A (WN). Don't worry about detected vs.
+% undetected, can separate those later easily.
+
+evsonganaly % use batch.keep
+lt_db_transfer_calls(2)
+
+%% CHECK how good template was at detecting
+
+% First make templates of a and x to see if dramatic change in syllable
+% and to get count of number of f. neg.
+
+db_make_template
+
+% the script will do the following:
+% first, change all "A" to a. copy all .not.mat with A to a temporary
+% folder,then change all A to a, run the check_template script, then
+% restore the old .not.mat with A.
+
+mkdir('temp_folder') 
+!cp *.not.mat* temp_folder
+db_change_syllable_in_batchfile('batch.catch.keep','A','a')
+
+lt_db_check_template_timing_and_hit_rate
+
+!cp temp_folder/*.not.mat* .
+!rm -r temp_folder
+
+%% HOW TO ANALYZE EFFICACY OF TARGETTING
+
+% 1) label all a, regardless of WN or not (includes both matched and not matched).
+% 2) run "check template" which tells you: of those you labeled, what is FF of those matched?
+% 3) get FF of all labeled as well.
+% 
+% using lt_db_check...
+% 1) label ab and A
+% 2) run sript
+% 3) run db_make_template to find the number of "A"
+% 4) fill in the excel notes.
+
+
+%% calculate the WN rate
+
+db_make_template % do for both a and A, and you will have the amount for each.
+
+%% manually make a new template column if there were many that escaped template detection.
+
+
+%% to label all missed
+
+% save old labels
+
+mkdir('temp_folder') 
+!cp *.not.mat* temp_folder
+db_change_miss_label('batch.catch.keep','a','x')
+db_make_template
+
+% to return old labels:
+!cp temp_folder/*.not.mat* .
+!rm -r temp_folder
+
+%% CALCULATING PITCH - USING CATCH SONGS (NOT TRIALS), 2 WAYS)
+
+% FIRST, ONLY GET THE HITS, AT THE POINT OF HIT
+lt_db_check_template_timing_and_hit_rate
+
+% SECOND, GET ALL LABELED, USING COMPRESSED PITCH CONTOUR.
+lt_calc_day_pitch
+
+%% getting syllable structure:
+
+lt_all_days_various_calculations
+
+% % COMMENTS: 
+% in geenral seems like icnreased duration, increased entropy for some (a,g) accounting for amplitude, 
+% decreased FF for some, and increased amplitude
+% 
+
+%% comparing a few sequence stats from pre and post.
+% repeat classes for the qw.. motif
+% classes of : 0, 2, 6, or 6+ for the number of syllablles in the sequence
+% ending in ab (those are the stereotyped possibiklities).
+
+% counted by hand, and compiling here, for two days.
+
+
+pre_19Dec2013=[5 5 4 5 6 8 5 5 4 5 5 4 6 4 5 6 5 5 4 5 5 3 2 6 4 4 5 4 6 4 5 3 4 4 5 3 4 4 4 5 3 3 5 5 5 5 5 5 4 5 4 4 5];
+
+post_14Dec2013=[5 6 4 5 6 4 5 7 5 6 4 1 6 2 4 4 5 4 6 7 5 3 6 3 4 6 4 6 3 6 6 5 4 8 5 5 5 4 6 4 4 4 5 5 4 5 4];
+
+figure;
+hist(pre_19Dec2013)
+figure;
+hist(post_14Dec2013)
+
+% CONCLUSION: repeat number slightly higher variance adn mean (1.3 vs. 0.98
+% std, 4.78 vs. 4.59 mean). (slightly more "0" classes for sequence, but
+% not significant). (SEE SPREADSHEET). 
+
+
+%% 1/14/14 - plot transitions and WN hit rate on same graph
+
+%  go to the mult_seq folder and:
+
+openfig Transition_probabilities_for_bk51bk59_div_over_time.fig
+
+% then plot hit rate over it:
+figure; hold on
+for j=1:length(all_days_all_analysis.data); % num of days
+    try
+        scatter(j,all_days_all_analysis.data{j}.WN_hit_rate.all_songs.a.hits_divide_labels,'g','MarkerFaceColor','g');
+        scatter(j,all_days_all_analysis.data{j}.WN_hit_rate.all_songs.a.FalsePos_divide_TotalWN,'k','MarkerFaceColor','k')
+%         scatter(j,all_days_all_analysis.data{j}.WN_hit_rate.all_songs.a.FalsePos/all_days_all_analysis.data{j}.WN_hit_rate.all_songs.a.hits_labels_allhits(1),'b','MarkerFaceColor','b')
+    catch err
+    end
+end
+
+
+
+
+
+
+
