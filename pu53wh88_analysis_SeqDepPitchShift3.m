@@ -65,8 +65,8 @@ Params.DayRawDat.batch='batch.labeled.catch';
 Params.DayRawDat.syllables={'a','b','c'};
 Params.DayRawDat.frequency_range={[950 2100], [2550 4000],[2150 2950]};
 Params.DayRawDat.pc_dur=[0.125,0.115,0.125];
-
 Params.DayRawDat.pc_time_window={[297 420],[45 175],[60 385]};
+
 Params.DayRawDat.pc_sigma=1;
 
 

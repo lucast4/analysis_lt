@@ -1,9 +1,9 @@
 %% TO DO OVER ALL DAYS [all syls]
 clear all; close all
 phrase = 'SeqDepPitchShift2';
-first_day= '26Nov2014';
-last_day= '26Nov2014';
-Params.DayRawDat.batch='batch.labeled.catch';
+first_day= '17Nov2014';
+last_day= '22Nov2014';
+Params.DayRawDat.batch='batch.labeled.all';
 
 save_results=0;
 
@@ -14,11 +14,16 @@ FcnAll={'seq_dep_pitch_2'};
 Params.DayRawDat.fs=32000;
 Params.DayRawDat.pc_harms=1; % harmonics to take weighted avg over. 1 or 2 is good.
 Params.DayRawDat.syllables={'a','q','b','c', 'd','h','g'};
-Params.DayRawDat.frequency_range={[1300 2100], [1400 2200], [2450 3900],[2000 2850], [1450 2900], [2000 2600], [2350 3150]};
-Params.DayRawDat.pc_dur=[0.12,0.12,0.11,0.12, 0.12, 0.125 , 0.25];
 
-Params.DayRawDat.pc_time_window={[360 470],[240 305], [55 210],[60 375], [35 215], [135 290], [100 210]};
+Params.DayRawDat.frequency_range={[1485 1900], [1550 2160], [2450 3900],[2000 2850], [1600 2750], [2160 2490], [2470 2850]};
+Params.DayRawDat.pc_dur=[0.12,0.12,0.11,0.12, 0.12, 0.125 , 0.25];
+Params.DayRawDat.pc_time_window={[355 430],[240 305], [60 195],[60 375], [35 215], [135 290], [130 200]};
 Params.DayRawDat.pc_sigma=1;
+
+% OLD
+% Params.DayRawDat.frequency_range={[1300 2100], [1400 2200], [2450 3900],[2000 2850], [1450 2900], [2000 2600], [2350 3150]};
+% Params.DayRawDat.pc_dur=[0.12,0.12,0.11,0.12, 0.12, 0.125 , 0.25];
+% Params.DayRawDat.pc_time_window={[360 470],[240 305], [55 210],[60 375], [35 215], [135 290], [100 210]};
 
 
 plotON=0;

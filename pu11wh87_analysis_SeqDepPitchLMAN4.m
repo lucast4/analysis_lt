@@ -101,9 +101,10 @@ check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post
 
 clear all; close all
 phrase = 'SeqDepPitchLMAN4';
-first_day= '06Sep2015';
-last_day= '06Sep2015';
+first_day= '08Sep2015';
+last_day= '08Sep2015';
 save_results=0;
+Params.DayRawDat.batch='batch.labeled.catch';
 
 % functions to run (SAME FOR ALL MOTIFS)
 FcnAll={'seq_dep_pitch_2'};
@@ -111,7 +112,6 @@ FcnAll={'seq_dep_pitch_2'};
 % Parameters for functions within
 Params.DayRawDat.fs=32000;
 Params.DayRawDat.pc_harms=1; % harmonics to take weighted avg over. 1 or 2 is good.
-Params.DayRawDat.batch='batch.labeled.all';
 Params.DayRawDat.syllables={'a','b','c', 'd'};
 Params.DayRawDat.frequency_range={[1300 2200], [2800 3950],[2150 3150], [1100 2700]};
 Params.DayRawDat.pc_dur=[0.135,0.12,0.12, 0.115];
@@ -146,8 +146,8 @@ Params.SeqFilter.SeqPostList={'','','','','','','','','',''};
 
 
 % 2) experiment info
-Params.SeqFilter.WNTimeON='03Sep2015-0000'; % Time WN turned on (1st WN day)
-Params.SeqFilter.WNTimeOFF= '06Sep2015-2400'; % Time WN turned off (last WN day) ( use 0000 and 2400 if only plotting days)
+Params.SeqFilter.WNTimeON='08Sep2015-0000'; % Time WN turned on (1st WN day)
+Params.SeqFilter.WNTimeOFF= '08Sep2015-2400'; % Time WN turned off (last WN day) ( use 0000 and 2400 if only plotting days)
 Params.SeqFilter.BaselineDays=1:2;
 
 Params.SeqFilter.SylLists.FieldsToPlot{1}={'aB','abB','bccB','bccbB','dccB','dccbB'};
@@ -307,8 +307,8 @@ Params.PlotLearning.PBS_window=[-6.5 0];
 % end
 % 
 %% Script to replace PBS with MUSC (or vice versa) in file names of all songs in day
-StringToRemove='MUSC';
-StringToAdd='PBS';
+StringToRemove='PBS';
+StringToAdd='MUSC';
 
 FilesInFolder=dir('*'); % get all cbins, cbinnotmat, and rec
 

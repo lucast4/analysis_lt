@@ -49,8 +49,9 @@ Params.NoteNum_to_plot=0; % for the note you want to analyze
 
 clear all; close all
 phrase = 'SeqDepPitch';
-first_day= '14Aug2015';
-last_day= '16Aug2015';
+first_day= '03Aug2015';
+last_day= '17Aug2015';
+Params.DayRawDat.batch='batch.labeled.catch';
 save_results=0;
 
 % functions to run (SAME FOR ALL MOTIFS)
@@ -59,13 +60,21 @@ FcnAll={'seq_dep_pitch_2'};
 % Parameters for functions within
 Params.DayRawDat.fs=32000;
 Params.DayRawDat.pc_harms=1; % harmonics to take weighted avg over. 1 or 2 is good.
-Params.DayRawDat.batch='batch.labeled.all';
-Params.DayRawDat.syllables={'a','b','d','g','h','k'};
-Params.DayRawDat.frequency_range={[1100 2100], [3000 4100],[800 2500], [1000 2000], [3000 4500], [800 2400]};
-Params.DayRawDat.pc_dur=[0.13, 0.12, 0.12, 0.2, 0.21, 0.11];
-
-Params.DayRawDat.pc_time_window={[445 585],[50 210],[143 285],[495 645], [105 135], [140 310]};
+% Params.DayRawDat.syllables={'a','b','d','g','h','k'};
+% Params.DayRawDat.frequency_range={[1115 2050], [3150 4160],[1020 2320], [1290 1640], [3000 4500], [1230 2335]};
+% Params.DayRawDat.pc_dur=[0.13, 0.12, 0.12, 0.2, 0.21, 0.11];
+% Params.DayRawDat.pc_time_window={[460 515],[86 186],[154 235],[562 640], [105 135], [145 238]};
+Params.DayRawDat.syllables={'a','b','d','g','h','k','j'};
+Params.DayRawDat.frequency_range={[1115 2050], [3150 4160],[1020 2320], [1290 1640], [3000 4500], [1230 2335], [3600 4400]};
+Params.DayRawDat.pc_dur=[0.13, 0.12, 0.12, 0.2, 0.21, 0.11, 0.11];
+Params.DayRawDat.pc_time_window={[460 515],[86 186],[154 235],[562 640], [105 135], [145 238], [100 200]};
 Params.DayRawDat.pc_sigma=1;
+
+% OLD
+% Params.DayRawDat.frequency_range={[1100 2100], [3000 4100],[800 2500], [1000 2000], [3000 4500], [800 2400]};
+% Params.DayRawDat.pc_dur=[0.13, 0.12, 0.12, 0.2, 0.21, 0.11];
+% Params.DayRawDat.pc_time_window={[445 585],[50 210],[143 285],[495 645], [105 135], [140 310]};
+
 
 plotON=0;
 saveON=1;
@@ -89,25 +98,34 @@ Params.SeqFilter.FirstDay='';
 Params.SeqFilter.LastDay='';
 
 
-Params.SeqFilter.SeqPreList={'','a','ab','abb','h','j', 'jb','bd','da','aa','ab','d','g'};
-Params.SeqFilter.SylTargList={'a','b','b','b','k', 'b', 'd', 'a', 'a',  'b', 'd', 'g','g'};
-Params.SeqFilter.SeqPostList={'bb','b','','','','','','','','','','',''};
+% Params.SeqFilter.SeqPreList={'j','a','ab','abb','h','j', 'jb','bd','da','aa','ab','d','g'};
+% Params.SeqFilter.SylTargList={'a','b','b','b','k', 'b', 'd', 'a', 'a',  'b', 'd', 'g','g'};
+% Params.SeqFilter.SeqPostList={'bb','b','','','','','','','','','','',''};
+
+Params.SeqFilter.SeqPreList={'','j','','','a','ab','abb','h','j', 'jb','bd','da','aa','ab','d','g'};
+Params.SeqFilter.SylTargList={'j','j','j','a','b','b','b','k', 'b', 'd', 'a', 'a',  'b', 'd', 'g','g'};
+Params.SeqFilter.SeqPostList={'jb','b','a','bb','b','','','','','','','','','','',''};
 
 
 % 2) experiment info
 Params.SeqFilter.WNTimeON='03Aug2015-0000'; % Time WN turned on (1st WN day)
-Params.SeqFilter.WNTimeOFF= '16Aug2015-2400'; % Time WN turned off (last WN day) ( use 0000 and 2400 if only plotting days)
-Params.SeqFilter.BaselineDays=1:5;
+Params.SeqFilter.WNTimeOFF= '20Aug2015-2400'; % Time WN turned off (last WN day) ( use 0000 and 2400 if only plotting days)
+Params.SeqFilter.BaselineDays=1:6;
 
-Params.SeqFilter.SylLists.FieldsInOrder{1}={'Abb','aBb','abB','abbB','h','hK'};
-Params.SeqFilter.SylLists.FieldsInOrder{2}={'jB','jbD','bdA','daA','aaB','abD','dG','gG'};
+% Params.SeqFilter.SylLists.FieldsInOrder{1}={'jAbb','aBb','abB','abbB','h','hK'};
+% Params.SeqFilter.SylLists.FieldsInOrder{2}={'jB','jbD','bdA','daA','aaB','abD','dG','gG'};
+Params.SeqFilter.SylLists.FieldsInOrder{1}={'Ja','Abb','aBb','abB','abbB','h','hK'};
+Params.SeqFilter.SylLists.FieldsInOrder{2}={'Jjb','jJb','jB','jbD','bdA','daA','aaB','abD','dG','gG'};
+
 
 Params.SeqFilter.SylLists.FieldsToPlot=Params.SeqFilter.SylLists.FieldsInOrder;
 
 
 Params.SeqFilter.SylLists.TargetSyls={'jB'};
 Params.SeqFilter.SylLists.SylsSame={'aBb','abB','abbB','aaB'};
-Params.SeqFilter.SylLists.SylsDifferent={'Abb','h','hK','jbD','bdA','daA','abD','dG','gG'};
+% Params.SeqFilter.SylLists.SylsDifferent={'jAbb','h','hK','jbD','bdA','daA','abD','dG','gG'};
+Params.SeqFilter.SylLists.SylsDifferent={'Jjb','jJb','Ja','Abb','h','hK','jbD','bdA','daA','abD','dG','gG'};
+
 
 Params.SeqFilter.DaysForSnapshot{1}={'09Aug2015','11Aug2015'};
 Params.SeqFilter.DaysToMark= {'11Aug2015-2400'}; % will mark all plots with lines here;
@@ -124,6 +142,7 @@ Params.PlotLearning.DayBinSize=3; % 3 day running avg.
 saveON=1;
 
 [Params, AllDays_PlotLearning, AllDays_RawDatStruct]=lt_seq_dep_pitch_PlotLearning(Params, AllDays_RawDatStruct,saveON);
+close all;
 
 %% 3) Extract structure statistics
 

@@ -3,9 +3,9 @@
 
 clear all; close all
 phrase = 'SeqDepPitchShift';
-first_day= '31Oct2014';
-last_day= '05Nov2014';
-Params.DayRawDat.batch='batch.labeled.catch';
+first_day= '26Oct2014';
+last_day= '30Oct2014';
+Params.DayRawDat.batch='batch.labeled.all';
 
 save_results=0;
 
@@ -17,9 +17,15 @@ Params.DayRawDat.fs=32000;
 Params.DayRawDat.pc_harms=1; % harmonics to take weighted avg over. 1 or 2 is good.
 
 Params.DayRawDat.syllables={'a','q','b','c', 'd','h','g'};
-Params.DayRawDat.frequency_range={[1300 2100], [1400 2200], [2450 3900],[2000 2850], [1400 2900], [2000 2600], [2250 3150]};
+Params.DayRawDat.frequency_range={[1460 1960], [1490 2155], [2795 3520],[2000 2850], [1850 2750], [2140 2440], [2250 3150]};
 Params.DayRawDat.pc_dur=[0.12,0.12,0.11,0.12, 0.12, 0.125 , 0.25];
-Params.DayRawDat.pc_time_window={[386 478],[235 304],[60 220],[65 375], [35 215], [135 290], [100 210]};
+Params.DayRawDat.pc_time_window={[402 462],[235 304],[94 210],[68 260], [50 128], [135 290], [100 210]};
+
+% OLD
+% Params.DayRawDat.frequency_range={[1300 2100], [1400 2200], [2450 3900],[2000 2850], [1400 2900], [2000 2600], [2250 3150]};
+% Params.DayRawDat.pc_dur=[0.12,0.12,0.11,0.12, 0.12, 0.125 , 0.25];
+% Params.DayRawDat.pc_time_window={[386 478],[235 304],[60 220],[65 375], [35 215], [135 290], [100 210]};
+
 
 Params.DayRawDat.pc_sigma=1;
 
@@ -31,7 +37,41 @@ WithinParams={'ParamsSDP',Params,'plotON_SDP',plotON,'saveON_SDP',saveON};
 
 [filename_save all_days_various]=lt_all_days_various_calculations_FUNCTION(phrase,first_day,last_day,FcnAll,WithinParams,save_results);
 
-%% compile
+%% compile [OLD - not using any of qccbb motif]
+% clear all; close all;
+% % 0) keep?
+% Params.SeqFilter.AmplThr=8000;
+% 
+% % 1) Seq filter and remove outliers and compile into one struct
+% Params.SeqFilter.all_daysON=1; % If 1, then doesn't matter what I enter for days argumemtns.
+% Params.SeqFilter.FirstDay='';
+% Params.SeqFilter.LastDay='';
+% 
+% Params.SeqFilter.SeqPreList={'','','a','a','ab','abb','qcc','qccb','bcc','bccb','q','qc','b','bc','bbb','bccbb',''};
+% Params.SeqFilter.SylTargList={'a','a','b','b','b','b','b','b','b','b','c','c','c','c','g','g','q',};
+% Params.SeqFilter.SeqPostList={'bb','bc','c','b','','','','','','','','','','','','','d'};
+% 
+% 
+% % 2) experiment info
+% Params.SeqFilter.WNTimeON='31Oct2014-0000'; % Time WN turned on
+% Params.SeqFilter.WNTimeOFF= '05Nov2014-2400'; % Time WN turned off ( use 0000 and 2400 if only plotting days)
+% Params.SeqFilter.BaselineDays=1:5;
+% 
+% Params.SeqFilter.SylLists.FieldsInOrder{1}={'Abb','aBb','abB','abbB','bbbG'};
+% Params.SeqFilter.SylLists.FieldsInOrder{2}={'Abc','aBc','bC','bcC','bccB','bccbB','bccbbG'};
+% Params.SeqFilter.SylLists.FieldsInOrder{3}={'Qd','d','h'};
+% 
+% Params.SeqFilter.SylLists.TargetSyls={'bccB'};
+% Params.SeqFilter.SylLists.SylsSame={'aBc','bccbB','aBb','abB','abbB'};
+% Params.SeqFilter.SylLists.SylsDifferent={'Abc','Abb','bC','bcC','bbbG','bccbbG','Qd','d','h'};
+% 
+% 
+% % 3) RUN
+% plotON=0;
+% [Params, AllDays_RawDatStruct]=lt_seq_dep_pitch_SeqFilterCompile(Params,plotON);
+
+
+%% compile [new, taking from qccbb motif and adding to data: cC, cB, cbB, cbbG]
 clear all; close all;
 % 0) keep?
 Params.SeqFilter.AmplThr=8000;
@@ -41,10 +81,9 @@ Params.SeqFilter.all_daysON=1; % If 1, then doesn't matter what I enter for days
 Params.SeqFilter.FirstDay='';
 Params.SeqFilter.LastDay='';
 
-Params.SeqFilter.SeqPreList={'','','a','a','ab','abb','qcc','qccb','bcc','bccb','q','qc','b','bc','bbb','bccbb',''};
-Params.SeqFilter.SylTargList={'a','a','b','b','b','b','b','b','b','b','c','c','c','c','g','g','q',};
-Params.SeqFilter.SeqPostList={'bb','bc','c','b','','','','','','','','','','','','','d'};
-
+Params.SeqFilter.SeqPreList={'','','a','a','ab','abb',   'c','cb',    'q',   'b','c','bbb','cbb',''};
+Params.SeqFilter.SylTargList={'a','a','b','b','b','b',   'b','b',   'c',   'c','c','g','g','q',};
+Params.SeqFilter.SeqPostList={'bb','bc','c','b','','',   '','',  '',   '','','','','d'};
 
 % 2) experiment info
 Params.SeqFilter.WNTimeON='31Oct2014-0000'; % Time WN turned on
@@ -52,12 +91,12 @@ Params.SeqFilter.WNTimeOFF= '05Nov2014-2400'; % Time WN turned off ( use 0000 an
 Params.SeqFilter.BaselineDays=1:5;
 
 Params.SeqFilter.SylLists.FieldsInOrder{1}={'Abb','aBb','abB','abbB','bbbG'};
-Params.SeqFilter.SylLists.FieldsInOrder{2}={'Abc','aBc','bC','bcC','bccB','bccbB','bccbbG'};
+Params.SeqFilter.SylLists.FieldsInOrder{2}={'Abc','aBc','bC','cC','cB','cbB','cbbG'};
 Params.SeqFilter.SylLists.FieldsInOrder{3}={'Qd','d','h'};
 
-Params.SeqFilter.SylLists.TargetSyls={'bccB'};
-Params.SeqFilter.SylLists.SylsSame={'aBc','bccbB','aBb','abB','abbB'};
-Params.SeqFilter.SylLists.SylsDifferent={'Abc','Abb','bC','bcC','bbbG','bccbbG','Qd','d','h'};
+Params.SeqFilter.SylLists.TargetSyls={'cB'};
+Params.SeqFilter.SylLists.SylsSame={'aBc','cbB','aBb','abB','abbB'};
+Params.SeqFilter.SylLists.SylsDifferent={'Abc','Abb','bC','cC','bbbG','cbbG','Qd','d','h'};
 
 
 % 3) RUN
@@ -73,8 +112,6 @@ saveON=1;
 
 
 [Params, AllDays_PlotLearning]=lt_seq_dep_pitch_PlotLearning(Params, AllDays_RawDatStruct,saveON);
-
-
 
 
 

@@ -137,8 +137,10 @@ Params.SeqFilter.BaselineDays=1:5;
 
 Params.SeqFilter.SylLists.FieldsToPlot{1}={'cB','cbB','aB','abB','abbB'};
 Params.SeqFilter.SylLists.FieldsToPlot{2}={'Ab','Ac','aC','acC'};
+
 Params.SeqFilter.SylLists.FieldsInOrder{1}={'Ab','aB','abB','abbB'};
 Params.SeqFilter.SylLists.FieldsInOrder{2}={'Ac','aC','acC','cB','cbB'};
+
 Params.SeqFilter.SylLists.TargetSyls={'aB'};
 Params.SeqFilter.SylLists.SylsSame={'cB','cbB','abB','abbB'};
 Params.SeqFilter.SylLists.SylsDifferent={'Ab','Ac','aC','acC'};

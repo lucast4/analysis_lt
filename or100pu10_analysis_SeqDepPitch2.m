@@ -45,7 +45,7 @@ lt_check_hit_templ_freq_NoLabelRequired(Params)
 clear all; close all
 phrase = 'SeqDepPitch2';
 first_day= '27Jun2015';
-last_day= '02Jul2015';
+last_day= '27Jun2015';
 % first_day= '19Nov2014';
 % last_day= '22Nov2014';
 save_results=1;
@@ -103,10 +103,10 @@ Params.SeqFilter.BaselineDays=1:3;
 
 Params.SeqFilter.SylLists.TargetSyls={'acB'};
 
-Params.SeqFilter.SylLists.FieldsInOrder{1}={'a', 'acB','acbB','acbbB','acbbbB'};
-Params.SeqFilter.SylLists.SylsSame={'acbB', 'acbbB','acbbbB'};
-Params.SeqFilter.SylLists.SylsDifferent={'a', 'g'};
- 
+Params.SeqFilter.SylLists.FieldsInOrder{1}={'a', 'c', 'acB','acbB','acbbB','acbbbB', 'acbbbbB' ,'g'};
+Params.SeqFilter.SylLists.SylsSame={'acbB', 'acbbB','acbbbB','acbbbbB'};
+Params.SeqFilter.SylLists.SylsDifferent={'a', 'c','g'};
+
 % Params.SeqFilter.DaysForSnapshot{1}={'09Dec2014','11Dec2014'};
 % Params.SeqFilter.DaysToMark= {'11Dec2014-2400'}; % will mark all plots with lines here;
 
@@ -127,8 +127,8 @@ saveON=1;
 
 [Params, AllDays_PlotLearning]=lt_seq_dep_pitch_PlotLearning(Params, AllDays_RawDatStruct,saveON);
 
-% Use this for repeats
-[Params, AllDays_PlotLearning]=lt_seq_dep_pitch_PlotLearningREPEATS(Params, AllDays_RawDatStruct,saveON);
+% % Use this for repeats
+% [Params, AllDays_PlotLearning]=lt_seq_dep_pitch_PlotLearningREPEATS(Params, AllDays_RawDatStruct,saveON);
 
 
 %% ========================== Use regular expressions to sort data from Raw data

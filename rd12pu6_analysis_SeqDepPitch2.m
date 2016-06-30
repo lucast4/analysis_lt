@@ -32,10 +32,41 @@ syl_post = '';
 % config='/bluejay4/lucas/birds/rd12pu6/config_091715_aaB.evconfig2';
 % config='/bluejay4/lucas/birds/rd12pu6/config_091715_2.evconfig2';
 % config='/bluejay4/lucas/birds/rd12pu6/config_091715_3.evconfig2';
-config='/bluejay4/lucas/birds/rd12pu6/091815_SeqDepPitch2_durWN_day1/config.evconfig2';
+% config='/bluejay4/lucas/birds/rd12pu6/091815_SeqDepPitch2_durWN_day1/config.evconfig2';
+% config='/bluejay4/lucas/birds/rd12pu6/092115_SeqDepPitch2_durWN_day4/config.evconfig2'; % 9/21 +, changed tmeplate params
+% config='/bluejay4/lucas/birds/rd12pu6/092315_SeqDepPitch2_durWN_day6/config_092315.evconfig2';
+% config='/bluejay4/lucas/birds/rd12pu6/config_093015.evconfig2';
+config='/bluejay4/lucas/birds/rd12pu6/093015_SeqDepPitch2_TwoTarg_durWN_day1/config.evconfig2';
+config='/bluejay4/lucas/birds/rd12pu6/100515_SeqDepPitch2_TwoTarg_durWN_day6/config_100515.evconfig2';
+
 
 NoteNum =0; 
 check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post, get_WN_hits, get_offline_match, get_FF, config, NoteNum);
+
+
+% ---- TARGET: jaB (start during Two targ)
+clear all; close all;
+batchf= 'batch.labeled.all';
+get_WN_hits=1;
+get_offline_match=1; % do offline matching using template? (ADDX=1)
+get_FF=1; % Analyze FF using offline matching?
+syl = 'b';
+syl_pre = 'ja';
+syl_post = '';
+% config='/bluejay4/lucas/birds/rd12pu6/config_091715_aaB.evconfig2';
+% config='/bluejay4/lucas/birds/rd12pu6/config_091715_2.evconfig2';
+% config='/bluejay4/lucas/birds/rd12pu6/config_091715_3.evconfig2';
+% config='/bluejay4/lucas/birds/rd12pu6/091815_SeqDepPitch2_durWN_day1/config.evconfig2';
+% config='/bluejay4/lucas/birds/rd12pu6/092115_SeqDepPitch2_durWN_day4/config.evconfig2'; % 9/21 +, changed tmeplate params
+% config='/bluejay4/lucas/birds/rd12pu6/092315_SeqDepPitch2_durWN_day6/config_092315.evconfig2';
+% config='/bluejay4/lucas/birds/rd12pu6/092415_SeqDepPitch2_durWN_day7/config.evconfig2';
+% config='/bluejay4/lucas/birds/rd12pu6/config_093015.evconfig2';
+config='/bluejay4/lucas/birds/rd12pu6/093015_SeqDepPitch2_TwoTarg_durWN_day1/config.evconfig2';
+
+NoteNum =1; 
+check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post, get_WN_hits, get_offline_match, get_FF, config, NoteNum);
+
+
 
 %% check, no label
 % Params.batch='batch.rand.keep';
@@ -52,20 +83,21 @@ Params.DayRawDat.fs=32000;
 Params.DayRawDat.pc_harms=1; % harmonics to take weighted avg over. 1 or 2 is good.
 Params.DayRawDat.batch='batch.labeled.all';
 
-Params.DayRawDat.syllables={'a','b','d','g','h','k'};
-Params.DayRawDat.frequency_range={[1000 2150], [3000 4300],[800 2500], [1000 2000], [3100 4600], [800 2400]};
-Params.DayRawDat.pc_dur=[0.13, 0.12, 0.125, 0.2, 0.21, 0.11];
-Params.DayRawDat.pc_time_window={[310 372],[60 210],[152 242],[528 618], [116 168], [200 297]};
+Params.DayRawDat.syllables={'a','b','d','g','h','k', 'jab'};
+Params.DayRawDat.frequency_range={[700 2200], [3000 4300],[800 2500], [1000 2000], [3100 4600], [800 2400], [3000 4300]};
+Params.DayRawDat.pc_dur=[0.13, 0.12, 0.125, 0.2, 0.21, 0.11, 0.12];
+Params.DayRawDat.pc_time_window={[300 370],[52 170],[170 290],[542 627], [116 168], [200 285], [52 170]};
 Params.DayRawDat.pc_sigma=1;
+
 
 % plot and save?
 plotON=1;
-saveON=1;
+saveON=0;
 
 % Related to LMAN inactivation
 plotLMANinact=1;
-Params.DayRawDat.Musc_On_Time='1511'; % time given muscimol - will plot data with temporal lag after this.
-Params.DayRawDat.Musc_Off_Time='1934';
+Params.DayRawDat.Musc_On_Time='1341'; % time given muscimol - will plot data with temporal lag after this.
+Params.DayRawDat.Musc_Off_Time='1827';
 
 [Params, RawDatStruct]=lt_seq_dep_pitch_DayRawDat(Params,1,1,'',plotLMANinact);
 
@@ -76,9 +108,11 @@ Params.DayRawDat.Musc_Off_Time='1934';
 
 clear all; close all
 phrase = 'SeqDepPitch2';
-first_day= '12Sep2015';
-last_day= '16Sep2015';
-Params.DayRawDat.batch='batch.labeled.all';
+first_day= '18Sep2015';
+last_day= '05Oct2015';
+Params.DayRawDat.batch='batch.labeled.catch';
+
+
 save_results=0;
 
 % functions to run (SAME FOR ALL MOTIFS)
@@ -88,11 +122,19 @@ FcnAll={'seq_dep_pitch_2'};
 Params.DayRawDat.fs=32000;
 Params.DayRawDat.pc_harms=1; % harmonics to take weighted avg over. 1 or 2 is good.
 
-Params.DayRawDat.syllables={'a','b','d','g','h','k'};
-Params.DayRawDat.frequency_range={[700 2200], [3000 4300],[800 2500], [1000 2000], [3100 4600], [800 2400]};
-Params.DayRawDat.pc_dur=[0.13, 0.12, 0.125, 0.2, 0.21, 0.11];
-Params.DayRawDat.pc_time_window={[300 370],[52 170],[170 290],[542 627], [116 168], [200 285]};
+% OLD
+% Params.DayRawDat.syllables={'a','b','d','g','h','k'};
+% Params.DayRawDat.frequency_range={[1295 2320], [3000 4300],[967 2250], [1175 1840], [3670 4475], [1235 2330]};
+% Params.DayRawDat.pc_dur=[0.13, 0.12, 0.125, 0.2, 0.21, 0.11];
+% Params.DayRawDat.pc_time_window={[256 306],[52 170],[167 215],[560 620], [108 181], [195 242]};
+
+Params.DayRawDat.syllables={'a','b','d','g','h','k', 'j'};
+Params.DayRawDat.frequency_range={[1295 2320], [3000 4300],[967 2250], [1175 1840], [3670 4475], [1235 2330], [3600 4400]};
+Params.DayRawDat.pc_dur=[0.13, 0.12, 0.125, 0.2, 0.21, 0.11, 0.11];
+Params.DayRawDat.pc_time_window={[256 306],[52 170],[167 215],[560 620], [108 181], [195 242], [100 200]};
+
 Params.DayRawDat.pc_sigma=1;
+
 
 plotON=0;
 saveON=1;
@@ -104,7 +146,7 @@ WithinParams={'ParamsSDP',Params,'plotON_SDP',plotON,'saveON_SDP',saveON};
 
 
 %% 2) Seq filter, remove outliers, and compile raw data, and enter experiment info into params
-cd seq_dep_pitch_SeqDepPitch2
+% cd seq_dep_pitch_SeqDepPitch2
 clear all; close all;
 
 % 0) keep?
@@ -116,25 +158,33 @@ Params.SeqFilter.FirstDay='';
 Params.SeqFilter.LastDay='';
 
 
-Params.SeqFilter.SeqPreList={'','a','ab','abb','h','j', 'jb','bd','da','aa','ab','d','g'};
-Params.SeqFilter.SylTargList={'a','b','b','b','k', 'b', 'd', 'a', 'a',  'b', 'd', 'g','g'};
-Params.SeqFilter.SeqPostList={'bb','b','','','','','','','','','','',''};
+% Params.SeqFilter.SeqPreList={'','a','ab','abb','h','j', 'jb','bd','da','aa','ab','d','g'};
+% Params.SeqFilter.SylTargList={'a','b','b','b','k', 'b', 'd', 'a', 'a',  'b', 'd', 'g','g'};
+% Params.SeqFilter.SeqPostList={'bb','b','','','','','','','','','','',''};
+Params.SeqFilter.SeqPreList={'','j','','','a','ab','abb','h','j', 'jb','bd','da','aa','ab','d','g'};
+Params.SeqFilter.SylTargList={'j','j','j','a','b','b','b','k', 'b', 'd', 'a', 'a',  'b', 'd', 'g','g'};
+Params.SeqFilter.SeqPostList={'jb','b','a','bb','b','','','','','','','','','','',''};
 
 
 % 2) experiment info
-Params.SeqFilter.WNTimeON='16Sep2015-0000'; % Time WN turned on (1st WN day)
-Params.SeqFilter.WNTimeOFF= '16Sep2015-2400'; % Time WN turned off (last WN day) ( use 0000 and 2400 if only plotting days)
-Params.SeqFilter.BaselineDays=1:4;
+Params.SeqFilter.WNTimeON='18Sep2015-0000'; % Time WN turned on (1st WN day)
+Params.SeqFilter.WNTimeOFF= '09Oct2015-2400'; % Time WN turned off (last WN day) ( use 0000 and 2400 if only plotting days)
+Params.SeqFilter.BaselineDays=1:7;
 
-Params.SeqFilter.SylLists.FieldsInOrder{1}={'Abb','aBb','abB','abbB','h','hK'};
-Params.SeqFilter.SylLists.FieldsInOrder{2}={'jB','jbD','bdA','daA','aaB','abD','dG','gG'};
+% Params.SeqFilter.SylLists.FieldsInOrder{1}={'Abb','aBb','abB','abbB','h','hK'};
+% Params.SeqFilter.SylLists.FieldsInOrder{2}={'jB','jbD','bdA','daA','aaB','abD','dG','gG'};
+
+Params.SeqFilter.SylLists.FieldsInOrder{1}={'Ja','Abb','aBb','abB','abbB','h','hK'};
+Params.SeqFilter.SylLists.FieldsInOrder{2}={'Jjb','jJb','jB','jbD','bdA','daA','aaB','abD','dG','gG'};
+
 
 Params.SeqFilter.SylLists.FieldsToPlot=Params.SeqFilter.SylLists.FieldsInOrder;
 
 
 Params.SeqFilter.SylLists.TargetSyls={'aaB'};
 Params.SeqFilter.SylLists.SylsSame={'aBb','abB','abbB','jB'};
-Params.SeqFilter.SylLists.SylsDifferent={'Abb','h','hK','jbD','bdA','daA','abD','dG','gG'};
+% Params.SeqFilter.SylLists.SylsDifferent={'Abb','h','hK','jbD','bdA','daA','abD','dG','gG'};
+Params.SeqFilter.SylLists.SylsDifferent={'Jjb','jJb','Ja','Abb','h','hK','jbD','bdA','daA','abD','dG','gG'};
 
 % Params.SeqFilter.DaysForSnapshot{1}={'06Jun2015','08Jun2015'};
 % Params.SeqFilter.DaysToMark= {'08Jun2015-2400', '16Jun2015-2400', '18Jun2015-2400'}; % will mark all plots with lines here;

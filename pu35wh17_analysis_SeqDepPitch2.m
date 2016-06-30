@@ -53,6 +53,7 @@ last_day= '30Jun2015';
 % first_day= '01Jun2015';
 % last_day= '01Jun2015';
 save_results=1;
+Params.DayRawDat.batch='batch.labeled.catch';
 
 % functions to run (SAME FOR ALL MOTIFS)
 FcnAll={'seq_dep_pitch_2'};
@@ -60,12 +61,11 @@ FcnAll={'seq_dep_pitch_2'};
 % Parameters for functions within
 Params.DayRawDat.fs=32000;
 Params.DayRawDat.pc_harms=1; % harmonics to take weighted avg over. 1 or 2 is good.
-Params.DayRawDat.batch='batch.labeled.catch';
-Params.DayRawDat.syllables={'a','b'};
-Params.DayRawDat.frequency_range={[1400 2400], [2700 3800]};
-Params.DayRawDat.pc_dur=[0.12,0.11];
+Params.DayRawDat.syllables={'a','b', 'j'};
+Params.DayRawDat.frequency_range={[1400 2400], [2700 3800], [3600 4800]};
+Params.DayRawDat.pc_dur=[0.12,0.11, 0.1];
 
-Params.DayRawDat.pc_time_window={[350 470],[65 200]};
+Params.DayRawDat.pc_time_window={[350 470],[65 200], [50 150]};
 Params.DayRawDat.pc_sigma=1;
 
 plotON=0;
@@ -93,9 +93,9 @@ Params.SeqFilter.LastDay='';
 % Params.SeqFilter.SeqPreList={'jj','jjb','jjbb','aj','ajb','ajbb','ja','jab','jabb','bj','bjb','bjbb','',''}; % To skip seq filter, keep blank. (i.e. {})
 % Params.SeqFilter.SylTargList={'b','b','b','b','b','b','b','b','b','b','b','b','a','a'};
 % Params.SeqFilter.SeqPostList={'','','','','','','','','','','','','j','b'};
-Params.SeqFilter.SeqPreList={'j','jb','jbb','a','ab','abb','',''}; % To skip seq filter, keep blank. (i.e. {})
-Params.SeqFilter.SylTargList={'b','b','b','b','b','b','a','a'};
-Params.SeqFilter.SeqPostList={'','','','','','','j','b'};
+Params.SeqFilter.SeqPreList={'','j','jb','jbb','a','ab','abb','',''}; % To skip seq filter, keep blank. (i.e. {})
+Params.SeqFilter.SylTargList={'j','b','b','b','b','b','b','a','a'};
+Params.SeqFilter.SeqPostList={'b','','','','','','','j','b'};
 
 
 % 2) experiment info
@@ -105,13 +105,13 @@ Params.SeqFilter.BaselineDays=1:6;
 
 
 Params.SeqFilter.SylLists.FieldsInOrder{1}={'Ab','aB','abB','abbB'};
-Params.SeqFilter.SylLists.FieldsInOrder{2}={'jB','jbB','jbbB'};
+Params.SeqFilter.SylLists.FieldsInOrder{2}={'Jb','jB','jbB','jbbB'};
 % Params.SeqFilter.SylLists.FieldsInOrder{1}={'Aj','ajB', 'ajbB', 'ajbbB'};
 % Params.SeqFilter.SylLists.FieldsInOrder{4}={'jjB', 'jjbB', 'jjbbB'};
 
 Params.SeqFilter.SylLists.TargetSyls={'abB'};
 Params.SeqFilter.SylLists.SylsSame={'aB','abbB', 'jB','jbB','jbbB'};
-Params.SeqFilter.SylLists.SylsDifferent={'Ab'};
+Params.SeqFilter.SylLists.SylsDifferent={'Jb','Ab'};
 
 Params.SeqFilter.SylLists.FieldsToPlot{1}=[Params.SeqFilter.SylLists.TargetSyls Params.SeqFilter.SylLists.SylsSame];
 Params.SeqFilter.SylLists.FieldsToPlot{2}=Params.SeqFilter.SylLists.SylsDifferent;

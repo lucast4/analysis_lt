@@ -36,11 +36,16 @@ Params.DayRawDat.fs=32000;
 Params.DayRawDat.pc_harms=1; % harmonics to take weighted avg over. 1 or 2 is good.
 Params.DayRawDat.batch='batch.labeled.all';
 Params.DayRawDat.syllables={'a','b','c'};
-Params.DayRawDat.frequency_range={[1000 2250], [2700 4100],[2250 3000]};
-Params.DayRawDat.pc_dur=[0.125,0.115,0.125];
-
-Params.DayRawDat.pc_time_window={[300 425],[65 228],[80 405]};
 Params.DayRawDat.pc_sigma=1;
+
+Params.DayRawDat.frequency_range={[1400 2050], [2975 3900],[2450 2950]};
+Params.DayRawDat.pc_dur=[0.125,0.115,0.125];
+Params.DayRawDat.pc_time_window={[310 405],[80 175],[125 385]};
+
+% % OLD
+% Params.DayRawDat.frequency_range={[1000 2250], [2700 4100],[2250 3000]};
+% Params.DayRawDat.pc_dur=[0.125,0.115,0.125];
+% Params.DayRawDat.pc_time_window={[300 425],[65 228],[80 405]};
 
 % --- trying to get all syllables - look at code to check
 % Params.DayRawDat.syllables={'a','ab','cb','bb','cc','bc','dc'};
@@ -65,8 +70,10 @@ Params.DayRawDat.Musc_Off_Time='1746';
 
 clear all; close all
 phrase = 'SeqDepPitchLMAN';
-first_day= '01Jul2015';
+first_day= '13Jun2015';
 last_day= '02Jul2015';
+Params.DayRawDat.batch='batch.labeled.all';
+
 save_results=1;
 
 % functions to run (SAME FOR ALL MOTIFS)
@@ -75,12 +82,11 @@ FcnAll={'seq_dep_pitch_2'};
 % Parameters for functions within
 Params.DayRawDat.fs=32000;
 Params.DayRawDat.pc_harms=1; % harmonics to take weighted avg over. 1 or 2 is good.
-Params.DayRawDat.batch='batch.labeled.all';
 Params.DayRawDat.syllables={'a','b','c'};
-Params.DayRawDat.frequency_range={[1000 2250], [2700 4100],[2250 3000]};
+Params.DayRawDat.frequency_range={[1400 2050], [2975 3900],[2450 2950]};
 Params.DayRawDat.pc_dur=[0.125,0.115,0.125];
+Params.DayRawDat.pc_time_window={[310 405],[80 175],[125 385]};
 
-Params.DayRawDat.pc_time_window={[300 425],[65 228],[80 405]};
 Params.DayRawDat.pc_sigma=1;
 
 
@@ -136,7 +142,7 @@ plotON=0;
 %% Recalculate FF using new time windows
 
 Params.RecalculateFF.pc_time_window_list=Params.SeqFilter.pc_time_window_list{1}; % list is the same as specified for seq filter, except one change:
-Params.RecalculateFF.pc_time_window_list(:,7)=[21 37]; % abB should have different time window.
+Params.RecalculateFF.pc_time_window_list(:,7)=[25 30]; % abB should have different time window.
 plotON=0;
 
 [Params, AllDays_RawDatStruct] = lt_seq_dep_pitch_RecalculateFF(Params, AllDays_RawDatStruct, plotON);
@@ -162,7 +168,10 @@ Params.PlotLearning.MuscimolSchedule={...
     {'02Jul2015', '1251', '1745'}}; 
 
 
-Params.PlotLearning.MuscimolDaysToThrowout={'07Jun2015'};
+Params.PlotLearning.MuscimolDaysToThrowout={'07Jun2015', '15Jun2015', '17Jun2015',...
+    '19Jun2015','21Jun2015', '23Jun2015', ...
+    '25Jun2015', '27Jun2015', '29Jun2015'}; % these days lower musc and no CV drop
+
 
 Params.PlotLearning.plotWNdays=1; % if 1, then plots WN lines, if 0, then no.
 Params.PlotLearning.DayBinSize=3; % 3 day running avg.

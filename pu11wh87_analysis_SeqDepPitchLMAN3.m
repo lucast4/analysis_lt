@@ -45,23 +45,20 @@ clear all; close all;
 Params.DayRawDat.fs=32000;
 Params.DayRawDat.pc_harms=1; % harmonics to take weighted avg over. 1 or 2 is good.
 Params.DayRawDat.batch='batch.labeled.all';
-% Params.DayRawDat.syllables={'a','b','c'};
-% Params.DayRawDat.frequency_range={[1300 2200], [2800 3950],[2150 3150]};
-% Params.DayRawDat.pc_dur=[0.12,0.11,0.10];
-% % Params.DayRawDat.pc_time_window={[375 525],[60 220],[55 320]};
-% Params.DayRawDat.pc_time_window={[375 525],[30 50],[55 320]}; % WN over b
+
+% OLD
+% Params.DayRawDat.syllables={'a','b','c', 'd'};
+% Params.DayRawDat.frequency_range={[1300 2200], [2800 3950],[2150 3150], [1100 2700]};
+% Params.DayRawDat.pc_dur=[0.13,0.115,0.115, 0.11];
+% Params.DayRawDat.pc_time_window={[375 475],[50 170],[55 320],[10 180]};
+
 Params.DayRawDat.syllables={'a','b','c', 'd'};
-Params.DayRawDat.frequency_range={[1300 2200], [2800 3950],[2150 3150], [1100 2700]};
+Params.DayRawDat.frequency_range={[1460 1890], [2860 3830],[2270 3060], [1520 2620]};
 Params.DayRawDat.pc_dur=[0.13,0.115,0.115, 0.11];
-Params.DayRawDat.pc_time_window={[375 475],[50 170],[55 320],[10 180]};
+Params.DayRawDat.pc_time_window={[375 430],[75 140],[140 305],[13 95]};
+
 
 Params.DayRawDat.pc_sigma=1;
-
-% --- trying to get all syllables - look at code to check
-% Params.DayRawDat.syllables={'a','ab','cb','bb','cc','bc','dc'};
-% Params.DayRawDat.frequency_range={[1300 2200], [2800 3950],[2800 3950],[2800 3950],[2150 3150],[2150 3150],[2150 3150]};
-% Params.DayRawDat.pc_dur=[0.12,0.09,0.09,0.09,0.11,0.11,0.11];
-% Params.DayRawDat.pc_time_window={[375 525],[60 220],[60 220],[60 220],[55 320],[55 320],[55 320]};
 
 % plot and save?
 plotON=1;
@@ -106,8 +103,8 @@ Params.DayRawDat.Musc_Off_Time='1754';
 
 clear all; close all
 phrase = 'SeqDepPitchLMAN3';
-first_day= '18Aug2015';
-last_day= '18Aug2015';
+first_day= '10Aug2015';
+last_day= '24Aug2015';
 Params.DayRawDat.batch='batch.labeled.catch';
 
 save_results=0;
@@ -119,9 +116,15 @@ FcnAll={'seq_dep_pitch_2'};
 Params.DayRawDat.fs=32000;
 Params.DayRawDat.pc_harms=1; % harmonics to take weighted avg over. 1 or 2 is good.
 Params.DayRawDat.syllables={'a','b','c', 'd'};
-Params.DayRawDat.frequency_range={[1300 2200], [2800 3950],[2150 3150], [1100 2700]};
 Params.DayRawDat.pc_dur=[0.13,0.115,0.115, 0.11];
-Params.DayRawDat.pc_time_window={[375 475],[50 170],[55 320],[10 180]};
+Params.DayRawDat.frequency_range={[1460 1890], [2860 3830],[2270 3060], [1520 2620]};
+Params.DayRawDat.pc_time_window={[375 430],[75 140],[140 305],[13 95]};
+
+% OLD
+% Params.DayRawDat.frequency_range={[1300 2200], [2800 3950],[2150 3150], [1100 2700]};
+% Params.DayRawDat.pc_time_window={[375 475],[50 170],[55 320],[10 180]};
+
+
 
 Params.DayRawDat.pc_sigma=1;
 
@@ -316,8 +319,8 @@ Params.PlotLearning.timeline.consolid_start='17Aug2015';
 % end
 % 
 %% Script to replace PBS with MUSC (or vice versa) in file names of all songs in day
-StringToRemove='MUSC';
-StringToAdd='PBS';
+StringToRemove='PBS';
+StringToAdd='MUSC';
 
 FilesInFolder=dir('*'); % get all cbins, cbinnotmat, and rec
 

@@ -106,7 +106,9 @@ lt_check_hit_templ_freq_NoLabelRequired(Params)
 clear all; close all
 phrase = 'SeqDepPitch3';
 first_day= '12Jul2015';
-last_day= '12Jul2015';
+last_day= '13Jul2015';
+Params.DayRawDat.batch='batch.labeled.all';
+
 save_results=1;
 
 % functions to run (SAME FOR ALL MOTIFS)
@@ -115,7 +117,6 @@ FcnAll={'seq_dep_pitch_2'};
 % Parameters for functions within
 Params.DayRawDat.fs=32000;
 Params.DayRawDat.pc_harms=1; % harmonics to take weighted avg over. 1 or 2 is good.
-Params.DayRawDat.batch='batch.labeled.all';
 Params.DayRawDat.syllables={'a','b','c','g'};
 Params.DayRawDat.frequency_range={[1300 2500], [2800 3950], [1000 1750], [1200 1900]};
 Params.DayRawDat.pc_dur=[0.115, 0.115, 0.125, 0.245];
@@ -131,10 +132,13 @@ WithinParams={'ParamsSDP',Params,'plotON_SDP',plotON,'saveON_SDP',saveON};
 
 [filename_save all_days_various]=lt_all_days_various_calculations_FUNCTION(phrase,first_day,last_day,FcnAll,WithinParams,save_results);
 
+
+
 % ==== DURING WN (catch)
 phrase = 'SeqDepPitch3';
-first_day= '22Jul2015';
-last_day= '24Jul2015';
+first_day= '14Jul2015';
+last_day= '17Jul2015';
+Params.DayRawDat.batch='batch.labeled.catch';
 save_results=1;
 
 % functions to run (SAME FOR ALL MOTIFS)
@@ -143,7 +147,6 @@ FcnAll={'seq_dep_pitch_2'};
 % Parameters for functions within
 Params.DayRawDat.fs=32000;
 Params.DayRawDat.pc_harms=1; % harmonics to take weighted avg over. 1 or 2 is good.
-Params.DayRawDat.batch='batch.labeled.catch';
 Params.DayRawDat.syllables={'a','b','c','g'};
 Params.DayRawDat.frequency_range={[1300 2500], [2800 3950], [1000 1750], [1200 1900]};
 Params.DayRawDat.pc_dur=[0.115, 0.115, 0.125, 0.245];
@@ -186,17 +189,17 @@ Params.SeqFilter.Repeats={'acB'}; % to skip repeat filter, don't even define the
 
 % 2) experiment info
 Params.SeqFilter.WNTimeON='14Jul2015-0000'; % Time WN turned on (1st WN day)
-Params.SeqFilter.WNTimeOFF= '24Jul2015-2400'; % Time WN turned off (last WN day) ( use 0000 and 2400 if only plotting days)
-Params.SeqFilter.BaselineDays=1:2;
+Params.SeqFilter.WNTimeOFF= '08Aug2015-2400'; % Time WN turned off (last WN day) ( use 0000 and 2400 if only plotting days)
+Params.SeqFilter.BaselineDays=1:4;
 
-Params.SeqFilter.SylLists.TargetSyls={'acbB'};
+Params.SeqFilter.SylLists.TargetSyls={'acbbB'};
 
-Params.SeqFilter.SylLists.FieldsInOrder{1}={'a', 'acB','acbB','acbbB','acbbbB'};
-Params.SeqFilter.SylLists.SylsSame={'acB', 'acbbB','acbbbB'};
-Params.SeqFilter.SylLists.SylsDifferent={'a', 'g'};
+Params.SeqFilter.SylLists.FieldsInOrder{1}={'a','c','acB', 'acbB','acbbB','acbbbB', 'acbbbbB','g'};
+Params.SeqFilter.SylLists.SylsSame={'acB', 'acbB','acbbbB', 'acbbbbB'};
+Params.SeqFilter.SylLists.SylsDifferent={'a', 'c','g'};
  
 % Params.SeqFilter.DaysForSnapshot{1}={'09Dec2014','11Dec2014'};
-% Params.SeqFilter.DaysToMark= {'11Dec2014-2400'}; % will mark all plots with lines here;
+Params.SeqFilter.DaysToMark= {'25Jul2015-2400', '01Aug2015-2400','03Aug2015-2400','08Aug2015-2400'}; % will mark all plots with lines here;
 
 % Params.SeqFilter.SylLists.FieldsToPlot{1}=[Params.SeqFilter.SylLists.TargetSyls Params.SeqFilter.SylLists.SylsSame];
 % Params.SeqFilter.SylLists.FieldsToPlot{2}=Params.SeqFilter.SylLists.SylsDifferent;
@@ -207,6 +210,7 @@ plotON=0;
 
 
 %% 3) Perform various analyses on that data structure
+close all;
 Params.PlotLearning.plotWNdays=1; % if 1, then plots WN lines, if 0, then no.
 Params.PlotLearning.DayBinSize=3; % 3 day running avg.
 saveON=1;

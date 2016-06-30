@@ -103,9 +103,9 @@ check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post
 
 clear all; close all
 phrase = 'SeqDepPitchLMAN5';
-first_day= '12Sep2015';
-last_day= '12Sep2015';
-Params.DayRawDat.batch='batch.labeled.all';
+first_day= '18Sep2015';
+last_day= '19Sep2015';
+Params.DayRawDat.batch='batch.labeled.catch';
 
 save_results=0;
 
@@ -149,8 +149,8 @@ Params.SeqFilter.SeqPostList={'','','','','','','','','',''};
 
 
 % 2) experiment info
-Params.SeqFilter.WNTimeON='17Sep2015-0000'; % Time WN turned on (1st WN day)
-Params.SeqFilter.WNTimeOFF= '17Sep2015-2400'; % Time WN turned off (last WN day) ( use 0000 and 2400 if only plotting days)
+Params.SeqFilter.WNTimeON='18Sep2015-0000'; % Time WN turned on (1st WN day)
+Params.SeqFilter.WNTimeOFF= '19Sep2015-2400'; % Time WN turned off (last WN day) ( use 0000 and 2400 if only plotting days)
 Params.SeqFilter.BaselineDays=1:5;
 
 Params.SeqFilter.SylLists.FieldsToPlot{1}={'aB','abB','bccB','bccbB','dccB','dccbB'};

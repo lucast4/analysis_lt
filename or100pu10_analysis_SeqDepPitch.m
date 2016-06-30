@@ -139,8 +139,8 @@ WithinParams={'ParamsSDP',Params,'plotON_SDP',plotON,'saveON_SDP',saveON};
 
 % ==== DURING WN (catch)
 phrase = 'SeqDepPitch';
-first_day= '15Jun2015';
-last_day= '17Jun2015';
+first_day= '08Jun2015';
+last_day= '09Jun2015';
 % first_day= '19Nov2014';
 % last_day= '22Nov2014';
 save_results=1;
@@ -199,9 +199,9 @@ Params.SeqFilter.BaselineDays=1:3;
 
 Params.SeqFilter.SylLists.TargetSyls={'acbB'};
 
-Params.SeqFilter.SylLists.FieldsInOrder{1}={'a', 'acB','acbB','acbbB','acbbbB'};
-Params.SeqFilter.SylLists.SylsSame={'acB', 'acbbB','acbbbB'};
-Params.SeqFilter.SylLists.SylsDifferent={'a'};
+Params.SeqFilter.SylLists.FieldsInOrder{1}={'a', 'c', 'acB','acbB','acbbB','acbbbB', 'acbbbbB', 'g'};
+Params.SeqFilter.SylLists.SylsSame={'acB', 'acbbB','acbbbB', 'acbbbbB'};
+Params.SeqFilter.SylLists.SylsDifferent={'a','c','g'};
  
 Params.SeqFilter.DaysForSnapshot{1}={'13Jun2015','15Jun2015'};
 Params.SeqFilter.DaysToMark= {'15Jun2015-2400'}; % will mark all plots with lines here;
@@ -216,15 +216,13 @@ plotON=0;
 
 
 %% 3) Perform various analyses on that data structure
+close all;
 Params.PlotLearning.plotWNdays=1; % if 1, then plots WN lines, if 0, then no.
 Params.PlotLearning.DayBinSize=3; % 3 day running avg.
 saveON=1;
 
 
 [Params, AllDays_PlotLearning]=lt_seq_dep_pitch_PlotLearning(Params, AllDays_RawDatStruct,saveON);
-
-% Use this for repeats
-[Params, AllDays_PlotLearning]=lt_seq_dep_pitch_PlotLearningREPEATS(Params, AllDays_RawDatStruct,saveON);
 
 
 %% ========================== Use regular expressions to sort data from Raw data

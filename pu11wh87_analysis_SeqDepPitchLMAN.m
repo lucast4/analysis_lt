@@ -65,7 +65,7 @@ end
 
 clear all; close all
 phrase = 'SeqDepPitchLMAN';
-first_day= '13Jun2015';
+first_day= '12May2015';
 last_day= '19Jun2015';
 save_results=1;
 
@@ -77,11 +77,15 @@ Params.DayRawDat.fs=32000;
 Params.DayRawDat.pc_harms=1; % harmonics to take weighted avg over. 1 or 2 is good.
 Params.DayRawDat.batch='batch.labeled.all';
 Params.DayRawDat.syllables={'a','b','c','d'};
-Params.DayRawDat.frequency_range={[1300 2200], [2800 3950],[2150 3150], [1100 2700]};
+Params.DayRawDat.frequency_range={[1300 2200], [2850 3807],[2250 2980], [1470 2680]};
 Params.DayRawDat.pc_dur=[0.12,0.11,0.11, 0.1];
-
-Params.DayRawDat.pc_time_window={[375 525],[60 220],[55 320],[10 180]};
+Params.DayRawDat.pc_time_window={[375 525],[60 220],[190 275],[20 120]};
 Params.DayRawDat.pc_sigma=1;
+
+% OLD
+% Params.DayRawDat.frequency_range={[1300 2200], [2800 3950],[2150 3150], [1100 2700]};
+% Params.DayRawDat.pc_dur=[0.12,0.11,0.11, 0.1];
+% Params.DayRawDat.pc_time_window={[375 525],[60 220],[55 320],[10 180]};
 
 
 plotON=0;
@@ -133,10 +137,12 @@ plotON=0;
 
 
 %% Recalculate FF using new time windows
-
+close all
 Params.RecalculateFF.pc_time_window_list=Params.SeqFilter.pc_time_window_list{1}; % list is the same as specified for seq filter, except one change:
-Params.RecalculateFF.pc_time_window_list(:,7)=[30 50]; % bccb should have different time window.
-Params.RecalculateFF.pc_time_window_list(:,9)=[30 50]; % dccb should have different time window.
+% Params.RecalculateFF.pc_time_window_list(:,7)=[45 55]; % bccb should have different time window.
+% Params.RecalculateFF.pc_time_window_list(:,9)=[49 56]; % dccb should have different time window.
+Params.RecalculateFF.pc_time_window_list(:,7)=[48 61]; % bccb should have different time window.
+Params.RecalculateFF.pc_time_window_list(:,9)=[50 60]; % dccb should have different time window.
 plotON=0;
 
 [Params, AllDays_RawDatStruct] = lt_seq_dep_pitch_RecalculateFF(Params, AllDays_RawDatStruct, plotON);
@@ -173,7 +179,7 @@ Params.PlotLearning.MuscimolSchedule={...
     {'26May2015', '1211', '1709'}, ...
     {'28May2015', '1208', '1745'}, ...
     {'30May2015', '1218', '1730'}, ...
-    {'01Jun2015', '1202', '1700'}, ...
+    {'01Jun2015', '1336', '1700'}, ... % actually, 1202, but effects really slow.
     {'03Jun2015', '1156', '1654'}, ... 
     {'04Jun2015', '1210', '1723'}, ...
     {'06Jun2015', '1236', '1701'}, ...
@@ -199,7 +205,7 @@ saveON=1;
 %% 4) PLOT - looking at effects of LMAN inactivation
 close all;
 Params.PlotLearning.Lag_time=2;
-Params.PlotLearning.PBS_window=[-2 0];
+Params.PlotLearning.PBS_window=[-3 1];
 
 Params.PlotLearning.timeline.consolid_start='26May2015';
 Params.PlotLearning.timeline.consolid_end='08Jun2015';

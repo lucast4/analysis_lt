@@ -3,15 +3,13 @@
 % === GETTING aB
 clear all; close all;
 batchf='batch.labeled.all';
-% config='/bluejay4/lucas/birds/gr87bu18/config.evconfig2'; % using new a
-% config='/bluejay4/lucas/birds/gr87bu18/config_092215.evconfig2'; % using new a
-% config='/bluejay4/lucas/birds/gr87bu18/config_092215_2.evconfig2'; % not b
-% config='/bluejay4/lucas/birds/gr87bu18/config_092215_3_2.evconfig2'; % not b -GOOD
-% config='/bluejay4/lucas/birds/gr87bu18/config_092215_3_3.evconfig2'; % not b
-% config='/bluejay4/lucas/birds/gr87bu18/092315_SeqDepPitch_durWN_day1/config.evconfig2'; % WN start
-config='/bluejay4/lucas/birds/gr87bu18/092315_SeqDepPitch_durWN_day1/config_092315.evconfig2'; % 9.23 end changed
+% config='/bluejay4/lucas/birds/gr87bu18/config_110915.evconfig2';
+% config='/bluejay4/lucas/birds/gr87bu18/config_110915_mod.evconfig2';
+config = '/bluejay4/lucas/birds/gr87bu18/111015_RepDepPitch_durWN_day1/config.evconfig2';
+config = '/bluejay4/lucas/birds/gr87bu18/config_111015.evconfig2';
+config = '/bluejay4/lucas/birds/gr87bu18/config_111215.evconfig2';
 syl='b';
-syl_pre='ab';
+syl_pre='a';
 syl_post='';
 get_WN_hits=1;
 get_offline_match=1;
@@ -39,6 +37,14 @@ check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post
 % 
 % lt_autolabel_EvTAFv4(batch, config, syl, NoteNum, ampThresh, min_dur, min_int, overwrite_notmat)
 
+
+%% === check, no label required
+% clear all; close all;
+% Params.batch='batch.rand.keep';
+% Params.config='/bluejay4/lucas/birds/gr87bu18/101115_SeqDepPitch2_AllB2_durWN_REAL_day1/config.evconfig2'; % 10/3 new
+%  
+% Params.NoteNum_to_plot=0; % for the note you want to analyze
+% lt_check_hit_templ_freq_NoLabelRequired(Params)
 
 %% 1) Gather raw data for this day
 % clear all; close all;
@@ -103,108 +109,92 @@ check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post
 
 
 %% ANALYSIS ACROSS DAYS ============================================================
-%% 1) GATHER RAW DATA ACROSS DAYS
+% 1) GATHER RAW DATA ACROSS DAYS
 
-% clear all; close all
-% phrase = 'SeqDepPitchLMAN5';
-% first_day= '12Sep2015';
-% last_day= '12Sep2015';
-% Params.DayRawDat.batch='batch.labeled.all';
-% 
-% save_results=0;
-% 
-% % functions to run (SAME FOR ALL MOTIFS)
-% FcnAll={'seq_dep_pitch_2'};
-% 
-% % Parameters for functions within
-% Params.DayRawDat.fs=32000;
-% Params.DayRawDat.pc_harms=1; % harmonics to take weighted avg over. 1 or 2 is good.
-% Params.DayRawDat.syllables={'a','b','c', 'd'};
-% Params.DayRawDat.frequency_range={[1300 2200], [2800 3950],[2150 3150], [1100 2700]};
-% Params.DayRawDat.pc_dur=[0.135,0.125,0.125, 0.115];
-% Params.DayRawDat.pc_time_window={[365 485],[50 165],[48 310],[10 180]};
-% 
-% Params.DayRawDat.pc_sigma=1;
-% 
-% plotON=0;
-% saveON=1;
-% 
-% WithinParams={'ParamsSDP',Params,'plotON_SDP',plotON,'saveON_SDP',saveON};
-% 
-% [filename_save all_days_various]=lt_all_days_various_calculations_FUNCTION(phrase,first_day,last_day,FcnAll,WithinParams,save_results);
-% 
-% 
-% 
-% %% 2) Seq filter, remove outliers, and compile raw data, and enter experiment info into params
-% cd seq_dep_pitch_SeqDepPitchLMAN5/
-% clear all; close all;
-% 
-% % 0) keep?
-% Params.SeqFilter.AmplThr=19000;
-% 
-% % 1) Seq filter and remove outliers and compile into one struct
-% Params.SeqFilter.all_daysON=1; % If 1, then doesn't matter what I enter for days argumemtns.
-% Params.SeqFilter.FirstDay='';
-% Params.SeqFilter.LastDay='';
-% 
-% Params.SeqFilter.SeqPreList={'a','ab','bcc','bccb','dcc','dccb','b','bc','d','dc'};
-% Params.SeqFilter.SylTargList={'b','b','b','b','b','b','c','c','c','c'};
-% Params.SeqFilter.SeqPostList={'','','','','','','','','',''};
-% 
-% 
-% % 2) experiment info
-% Params.SeqFilter.WNTimeON='17Sep2015-0000'; % Time WN turned on (1st WN day)
-% Params.SeqFilter.WNTimeOFF= '17Sep2015-2400'; % Time WN turned off (last WN day) ( use 0000 and 2400 if only plotting days)
-% Params.SeqFilter.BaselineDays=1:5;
-% 
+clear all; close all
+phrase = 'RepDepPitch';
+first_day= '11Nov2015';
+last_day= '12Nov2015';
+Params.DayRawDat.batch='batch.labeled.catch';
+
+save_results=0;
+
+% functions to run (SAME FOR ALL MOTIFS)
+FcnAll={'seq_dep_pitch_2'};
+
+% Parameters for functions within
+Params.DayRawDat.fs=32000;
+Params.DayRawDat.pc_harms=1; % harmonics to take weighted avg over. 1 or 2 is good.
+
+Params.DayRawDat.syllables={'a','b','c','d', 'g','k', 'h'};
+
+Params.DayRawDat.frequency_range={[1300 2200], [3000 4100],[1700 2400], [600 2400], [600 2100], [650 2250], [800 2600]};
+Params.DayRawDat.pc_dur=[0.11, 0.12, 0.125, 0.1, 0.1, 0.1, 0.1];
+Params.DayRawDat.pc_time_window={[290 445],[45 90],[110 215],[10 120],[20 95], [245 290], [33 57]};
+
+Params.DayRawDat.pc_sigma=1;
+
+plotON=0;
+saveON=1;
+
+WithinParams={'ParamsSDP',Params,'plotON_SDP',plotON,'saveON_SDP',saveON};
+
+[filename_save all_days_various]=lt_all_days_various_calculations_FUNCTION(phrase,first_day,last_day,FcnAll,WithinParams,save_results);
+
+
+
+%% 2) Seq filter, remove outliers, and compile raw data, and enter experiment info into params
+clear all; close all;
+
+% 0) keep?
+Params.SeqFilter.AmplThr=3500;
+
+% 1) Seq filter and remove outliers and compile into one struct
+Params.SeqFilter.all_daysON=1; % If 1, then doesn't matter what I enter for days argumemtns.
+Params.SeqFilter.FirstDay='';
+Params.SeqFilter.LastDay='';
+
+Params.SeqFilter.SeqPreList={'k','h','hb','hbb','hbbb','hbbbb', 'd','dc','dcc','a','ab','abb','abbb','abbbb'};
+Params.SeqFilter.SylTargList={'b','b','b','b','b','b','c','c','c','b','b','b','b','b'};
+Params.SeqFilter.SeqPostList={'','','','','','','','','','','','','',''};
+    
+% 2) experiment info
+Params.SeqFilter.WNTimeON='10Nov2015-0000'; % Time WN turned on (1st WN day)
+Params.SeqFilter.WNTimeOFF= '14Nov2015-2400'; % Time WN turned off (last WN day) ( use 0000 and 2400 if only plotting days)
+Params.SeqFilter.BaselineDays=1:4;
+
 % Params.SeqFilter.SylLists.FieldsToPlot{1}={'aB','abB','bccB','bccbB','dccB','dccbB'};
 % Params.SeqFilter.SylLists.FieldsToPlot{2}={'d','bC','bcC','dC','dcC'};
-% 
-% Params.SeqFilter.SylLists.FieldsInOrder{1}={'a','aB','abB','bC','bcC','bccB','bccbB'};
-% Params.SeqFilter.SylLists.FieldsInOrder{2}={'d','dC','dcC','dccB','dccbB'};
-% 
-% Params.SeqFilter.SylLists.TargetSyls={'aB'};
-% Params.SeqFilter.SylLists.SylsSame={'abB','bccB','bccbB','dccB','dccbB'};
-% Params.SeqFilter.SylLists.SylsDifferent={'a','d','bC','bcC','dC','dcC'};
-% 
+
+Params.SeqFilter.SylLists.FieldsInOrder{1}={'k','kB'};
+Params.SeqFilter.SylLists.FieldsInOrder{2}={'g','h','hB','hbB','hbbB','hbbbB','hbbbbB'};
+Params.SeqFilter.SylLists.FieldsInOrder{3}={'d','dC','dcC','dccC'};
+Params.SeqFilter.SylLists.FieldsInOrder{4}={'a','aB','abB','abbB','abbbB','abbbbB'};
+
+
+Params.SeqFilter.SylLists.TargetSyls={'aB'};
+Params.SeqFilter.SylLists.SylsSame={'kB','hB','hbB','hbbB','hbbbB','hbbbbB', 'abB', 'abbB','abbbB','abbbbB'};
+Params.SeqFilter.SylLists.SylsDifferent={'k','g','h','d','a'};
+
 % % Params.SeqFilter.DaysForSnapshot{1}={'06Jun2015','08Jun2015'};
 % % Params.SeqFilter.DaysToMark= {'08Jun2015-2400', '16Jun2015-2400', '18Jun2015-2400'}; % will mark all plots with lines here;
-% 
-% % 3) RUN
-% plotON=0;
-% [Params, AllDays_RawDatStruct]=lt_seq_dep_pitch_SeqFilterCompile(Params,plotON);
-% 
-% 
 
-%% Recalculate FF using new time windows
-% % 
-% % Params.RecalculateFF.pc_time_window_list=Params.SeqFilter.pc_time_window_list{1}; % list is the same as specified for seq filter, except one change:
-% % Params.RecalculateFF.pc_time_window_list(:,6)=[27 47]; % bccb should have different time window.
-% % % Params.RecalculateFF.pc_time_window_list(:,9)=[30 50]; % dccb should have different time window.
-% % plotON=0;
-% % 
-% % [Params, AllDays_RawDatStruct] = lt_seq_dep_pitch_RecalculateFF(Params, AllDays_RawDatStruct, plotON);
-% % 
-% 
+% 3) RUN
+plotON=0;
+[Params, AllDays_RawDatStruct]=lt_seq_dep_pitch_SeqFilterCompile(Params,plotON);
+
+
 %% 3) Perform various analyses on that data structure
-% close all; 
-% 
-% Params.PlotLearning.MuscimolSchedule={...
-%     {'14Sep2015', '1404', '1825'}, ...
-%     {'16Sep2015', '1407', '1826'}};
-%     
-% 
-% % Params.PlotLearning.MuscimolDaysToThrowout={'06Jul2015'};
-% 
-% Params.PlotLearning.plotWNdays=1; % if 1, then plots WN lines, if 0, then no.
-% Params.PlotLearning.DayBinSize=3; % 3 day running avg.
-% saveON=1;
-% 
-% 
-% [Params, AllDays_PlotLearning, AllDays_RawDatStruct]=lt_seq_dep_pitch_PlotLearning(Params, AllDays_RawDatStruct,saveON);
-% 
-% 
-% %% 4) PLOT - looking at effects of LMAN inactivation
+close all; 
+Params.PlotLearning.plotWNdays=1; % if 1, then plots WN lines, if 0, then no.
+Params.PlotLearning.DayBinSize=3; % 3 day running avg.
+saveON=1;
+
+
+[Params, AllDays_PlotLearning, AllDays_RawDatStruct]=lt_seq_dep_pitch_PlotLearning(Params, AllDays_RawDatStruct,saveON);
+
+
+%% 4) PLOT - looking at effects of LMAN inactivation
 % close all;
 % Params.PlotLearning.Lag_time=2;
 % Params.PlotLearning.PBS_window=[-6.5 0];

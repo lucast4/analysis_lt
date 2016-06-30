@@ -145,8 +145,10 @@ check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post
 
 clear all; close all
 phrase = 'SeqDepPitchLMAN2';
-first_day= '28Jul2015';
-last_day= '28Jul2015';
+first_day= '15Jul2015';
+last_day= '24Jul2015';
+Params.DayRawDat.batch='batch.labeled.catch';
+
 save_results=0;
 
 % functions to run (SAME FOR ALL MOTIFS)
@@ -155,12 +157,17 @@ FcnAll={'seq_dep_pitch_2'};
 % Parameters for functions within
 Params.DayRawDat.fs=32000;
 Params.DayRawDat.pc_harms=1; % harmonics to take weighted avg over. 1 or 2 is good.
-Params.DayRawDat.batch='batch.labeled.all';
 Params.DayRawDat.syllables={'a','b','c','d'};
-Params.DayRawDat.frequency_range={[1300 2200], [2800 3950],[2150 3150], [1100 2700]};
+Params.DayRawDat.frequency_range={[1440 1860], [2840 3830],[1990 2850], [1340 2600]};
 Params.DayRawDat.pc_dur=[0.12,0.11,0.11, 0.1];
+Params.DayRawDat.pc_time_window={[343 439],[90 150],[265 317],[27 105]};
 
-Params.DayRawDat.pc_time_window={[325 485],[40 165],[55 320],[8 140]};
+% % OLD
+% Params.DayRawDat.frequency_range={[1300 2200], [2800 3950],[2150 3150], [1100 2700]};
+% Params.DayRawDat.pc_dur=[0.12,0.11,0.11, 0.1];
+% Params.DayRawDat.pc_time_window={[325 485],[40 165],[55 320],[8 140]};
+
+
 Params.DayRawDat.pc_sigma=1;
 
 
@@ -217,8 +224,9 @@ plotON=0;
 %% Recalculate FF using new time windows
 close all;
 Params.RecalculateFF.pc_time_window_list=Params.SeqFilter.pc_time_window_list{1}; % list is the same as specified for seq filter, except one change:
-Params.RecalculateFF.pc_time_window_list(:,6)=[27 47]; % bccb should have different time window.
-% Params.RecalculateFF.pc_time_window_list(:,9)=[30 50]; % dccb should have different time window.
+% Params.RecalculateFF.pc_time_window_list(:,6)=[27 47]; % old
+Params.RecalculateFF.pc_time_window_list(:,6)=[4 22]; % 
+% Params.RecalculateFF.pc_time_window_list(:,9)=[30 50]; % 
 plotON=0;
 
 [Params, AllDays_RawDatStruct] = lt_seq_dep_pitch_RecalculateFF(Params, AllDays_RawDatStruct, plotON);
@@ -257,7 +265,7 @@ saveON=1;
 
 %% 4) PLOT - looking at effects of LMAN inactivation
 close all;
-Params.PlotLearning.Lag_time=2;
+Params.PlotLearning.Lag_time=2.2;
 Params.PlotLearning.PBS_window=[-6 0];
 Params.PlotLearning.timeline.consolid_start='06Jul2015';
 Params.PlotLearning.timeline.consolid_end='14Jul2015';

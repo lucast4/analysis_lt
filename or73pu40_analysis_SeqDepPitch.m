@@ -88,8 +88,8 @@ WithinParams={'ParamsSDP',Params,'plotON_SDP',plotON,'saveON_SDP',saveON};
 
 % ==== DURING WN (catch)
 phrase = 'SeqDepPitch';
-first_day= '10Jun2015';
-last_day= '10Jun2015';
+first_day= '06Jun2015';
+last_day= '09Jun2015';
 % first_day= '19Nov2014';
 % last_day= '22Nov2014';
 save_results=1;
@@ -165,7 +165,7 @@ Params.SeqFilter.SylTargList={};
 Params.SeqFilter.SeqPostList={};
 
 % repeats?
-Params.SeqFilter.Repeats={'acBg','acBj'}; % to skip repeat filter, don't even define the field "repeats"
+Params.SeqFilter.Repeats={'acB'}; % to skip repeat filter, don't even define the field "repeats"
 
 
 % 2) experiment info
@@ -175,8 +175,8 @@ Params.SeqFilter.BaselineDays=1:3;
 
 Params.SeqFilter.SylLists.TargetSyls={'acB'};
 
-Params.SeqFilter.SylLists.FieldsInOrder{1}={'a', 'acB','acbB','acbbB','acbbbB'};
-Params.SeqFilter.SylLists.SylsSame={'acbB', 'acbbB','acbbbB'};
+Params.SeqFilter.SylLists.FieldsInOrder{1}={'a', 'acB','acbB','acbbB','acbbbB','acbbbbB','acbbbbbB','acbbbbbbB','acbbbbbbbB','acbbbbbbbbB','acbbbbbbbbbB','g'}; % up to 10
+Params.SeqFilter.SylLists.SylsSame={'acbB','acbbB','acbbbB','acbbbbB','acbbbbbB','acbbbbbbB','acbbbbbbbB','acbbbbbbbbB','acbbbbbbbbbB'};
 Params.SeqFilter.SylLists.SylsDifferent={'a', 'c', 'g'};
  
 % Params.SeqFilter.DaysForSnapshot{1}={'09Dec2014','11Dec2014'};
@@ -192,6 +192,7 @@ plotON=0;
 
 
 %% 3) Perform various analyses on that data structure
+close all;
 Params.PlotLearning.plotWNdays=1; % if 1, then plots WN lines, if 0, then no.
 Params.PlotLearning.DayBinSize=3; % 3 day running avg.
 saveON=1;
@@ -205,7 +206,7 @@ saveON=1;
 %% ========================== Use regular expressions to sort data from Raw data
 % Run on raw data
 
-Params.RegExpr.expressions={'acb+g', 'acb+'};
+Params.RegExpr.expressions={'acb+'};
 [Params, AllDays_RegExpr] = lt_seq_dep_pitch_RegExpr(Params, AllDays_RawDatStruct);
 
 

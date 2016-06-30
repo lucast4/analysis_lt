@@ -1,4 +1,150 @@
-%% 12/13/14 - to check template
+%% -----------------------------------------------
+%% -----------------------------------------------
+%% 1/6/15 - compile and analyze data in new way [USE THIS]
+% NOTE: Modified 9/16 to also extract "d"
+
+% EXTRACT DATA
+clear all; close all
+phrase = 'SeqDepPitchShift';
+first_day= '14Dec2014';
+last_day= '28Dec2014';
+Params.DayRawDat.batch='batch.labeled.catch';
+
+% functions to run (SAME FOR ALL MOTIFS)
+FcnAll={'seq_dep_pitch_2'};
+
+% Parameters for functions within
+Params.DayRawDat.fs=32000;
+Params.DayRawDat.pc_harms=1; % harmonics to take weighted avg over. 1 or 2 is good.
+Params.DayRawDat.syllables={'b','d'};
+Params.DayRawDat.frequency_range={[2900 4000], [800 2250]};
+Params.DayRawDat.pc_dur=[0.12, 0.11];
+
+Params.DayRawDat.pc_time_window={[45 125], [247 308]};
+Params.DayRawDat.pc_sigma=1;
+
+
+plotON=0;
+saveON=1;
+
+WithinParams={'ParamsSDP',Params,'plotON_SDP',plotON,'saveON_SDP',saveON};
+save_results=0;
+[filename_save all_days_various]=lt_all_days_various_calculations_FUNCTION(phrase,first_day,last_day,FcnAll,WithinParams,save_results);
+
+
+
+
+%% SEQ FILTER (new, only looking at dbbb) - modified 9/16 to also include d
+clear all; close all;
+% 0) keep?
+Params.SeqFilter.AmplThr=4500;
+
+% 1) Seq filter and remove outliers and compile into one struct
+Params.SeqFilter.all_daysON=1; % If 1, then doesn't matter what I enter for days argumemtns.
+Params.SeqFilter.FirstDay='';
+Params.SeqFilter.LastDay='';
+
+Params.SeqFilter.SeqPreList={'d','db','dbb'};
+Params.SeqFilter.SylTargList={'b','b','b'};
+Params.SeqFilter.SeqPostList={'','',''};
+
+
+% 2) experiment info
+Params.SeqFilter.WNTimeON='14Dec2014-0000'; % Time WN turned on (1st WN day)
+Params.SeqFilter.WNTimeOFF= '28Dec2014-2400'; % Time WN turned off (last WN day) ( use 0000 and 2400 if only plotting days)
+Params.SeqFilter.BaselineDays=1:4;
+
+Params.SeqFilter.SylLists.FieldsToPlot{1}={'d','dB','dbB','dbbB'};
+Params.SeqFilter.SylLists.FieldsInOrder{1}={'d','dB','dbB','dbbB'};
+
+Params.SeqFilter.SylLists.TargetSyls={'dbB'};
+
+Params.SeqFilter.SylLists.SylsSame={'dB','dbB','dbbB'};
+Params.SeqFilter.SylLists.SylsDifferent={'d'};
+
+Params.SeqFilter.DaysForSnapshot{1}={'19Dec2014','21Dec2014'};
+Params.SeqFilter.DaysToMark= {'21Dec2014-2400'}; % will mark all plots with lines here;
+
+
+% 3) RUN
+plotON=0;
+[Params, AllDays_RawDatStruct]=lt_seq_dep_pitch_SeqFilterCompile(Params,plotON);
+
+
+%% 3) Perform various analyses on that data structure
+
+Params.PlotLearning.plotWNdays=1; % if 1, then plots WN lines, if 0, then no.
+Params.PlotLearning.DayBinSize=3; % 3 day running avg.
+saveON=1;
+
+
+[Params, AllDays_PlotLearning]=lt_seq_dep_pitch_PlotLearning(Params, AllDays_RawDatStruct,saveON);
+
+
+%% 3) Extract structure statistics
+
+% to extract data
+[Params, AllDays_StructStatsStruct]=lt_seq_dep_pitch_StructureStats(Params, AllDays_RawDatStruct);
+
+% to look at syllable similarity - being replaced by "Correlations" below
+% [Params, AllDays_StructStatsStruct]=lt_seq_dep_pitch_StructureStats_SylSimilarity(Params, AllDays_StructStatsStruct);
+
+% to plot and perform PCA on syl structure
+Params.PCA.epoch='baseline'; % will look at baseline
+% Params.PCA.epoch=[21 24]; % days 21 to 24
+
+[Params, PCA_Struct]=lt_seq_dep_pitch_StructureStats_featurePCA(Params, AllDays_StructStatsStruct,1);
+
+
+
+%% 4) Look at correlations between syllables
+% work in progress
+DaysWanted=40:41; % either baseline (astring) or array
+lt_seq_dep_pitch_Correlations(Params, AllDays_StructStatsStruct,DaysWanted);
+
+
+
+% SEQ FILTER (OLD, using both jbbb and dbbb.)
+% % 0) keep?
+% Params.SeqFilter.AmplThr=4500;
+% 
+% % 1) Seq filter and remove outliers and compile into one struct
+% Params.SeqFilter.all_daysON=1; % If 1, then doesn't matter what I enter for days argumemtns.
+% Params.SeqFilter.FirstDay='';
+% Params.SeqFilter.LastDay='';
+% 
+% Params.SeqFilter.SeqPreList={'j','jb','jbb','d','db','dbb'};
+% Params.SeqFilter.SylTargList={'b','b','b','b','b','b'};
+% Params.SeqFilter.SeqPostList={'','','','','',''};
+% 
+% 
+% % 2) experiment info
+% Params.SeqFilter.WNTimeON='14Dec2014-0000'; % Time WN turned on (1st WN day)
+% Params.SeqFilter.WNTimeOFF= '28Dec2014-2400'; % Time WN turned off (last WN day) ( use 0000 and 2400 if only plotting days)
+% Params.SeqFilter.BaselineDays=1:4;
+% 
+% Params.SeqFilter.SylLists.FieldsToPlot{1}={'jB','jbB','jbbB','dB','dbB','dbbB'};
+% 
+% Params.SeqFilter.SylLists.FieldsInOrder{1}={'jB','jbB','jbbB'};
+% Params.SeqFilter.SylLists.FieldsInOrder{2}={'dB','dbB','dbbB'};
+% 
+% Params.SeqFilter.SylLists.TargetSyls={'dbB'};
+% 
+% Params.SeqFilter.SylLists.SylsSame={'jB','jbB','jbbB','dB','dbB','dbbB'};
+% Params.SeqFilter.SylLists.SylsDifferent={};
+% 
+% Params.SeqFilter.DaysForSnapshot{1}={'19Dec2014','21Dec2014'};
+% Params.SeqFilter.DaysToMark= {'21Dec2014-2400'}; % will mark all plots with lines here;
+% 
+% 
+% % 3) RUN
+% plotON=0;
+% [Params, AllDays_RawDatStruct]=lt_seq_dep_pitch_SeqFilterCompile(Params,plotON);
+
+
+
+
+%% ++++++++++++[ OLD WAY]  12/13/14 - to check template
 
 % TARGET: b(2)
 clear all; close all;
@@ -148,145 +294,3 @@ lt_compile_seq_dep_pitch_data_PLOTDirUndir(DirFilename,UndirFilename,plotDIR,...
 
 
 
-%% -----------------------------------------------
-%% -----------------------------------------------
-%% 1/6/15 - compile and analyze data in new way [USE THIS]
-% NOTE: Modified 9/16 to also extract "d"
-
-% EXTRACT DATA
-clear all; close all
-phrase = 'SeqDepPitchShift';
-first_day= '14Dec2014';
-last_day= '28Dec2014';
-Params.DayRawDat.batch='batch.labeled.catch';
-
-% functions to run (SAME FOR ALL MOTIFS)
-FcnAll={'seq_dep_pitch_2'};
-
-% Parameters for functions within
-Params.DayRawDat.fs=32000;
-Params.DayRawDat.pc_harms=1; % harmonics to take weighted avg over. 1 or 2 is good.
-Params.DayRawDat.syllables={'b','d'};
-Params.DayRawDat.frequency_range={[2900 4000], [800 2250]};
-Params.DayRawDat.pc_dur=[0.12, 0.11];
-
-Params.DayRawDat.pc_time_window={[45 125], [247 308]};
-Params.DayRawDat.pc_sigma=1;
-
-
-plotON=0;
-saveON=1;
-
-WithinParams={'ParamsSDP',Params,'plotON_SDP',plotON,'saveON_SDP',saveON};
-save_results=0;
-[filename_save all_days_various]=lt_all_days_various_calculations_FUNCTION(phrase,first_day,last_day,FcnAll,WithinParams,save_results);
-
-
-
-
-%% SEQ FILTER (new, only looking at dbbb) - modified 9/16 to also include d
-clear all; close all;
-% 0) keep?
-Params.SeqFilter.AmplThr=4500;
-
-% 1) Seq filter and remove outliers and compile into one struct
-Params.SeqFilter.all_daysON=1; % If 1, then doesn't matter what I enter for days argumemtns.
-Params.SeqFilter.FirstDay='';
-Params.SeqFilter.LastDay='';
-
-Params.SeqFilter.SeqPreList={'d','db','dbb'};
-Params.SeqFilter.SylTargList={'b','b','b'};
-Params.SeqFilter.SeqPostList={'','',''};
-
-
-% 2) experiment info
-Params.SeqFilter.WNTimeON='14Dec2014-0000'; % Time WN turned on (1st WN day)
-Params.SeqFilter.WNTimeOFF= '28Dec2014-2400'; % Time WN turned off (last WN day) ( use 0000 and 2400 if only plotting days)
-Params.SeqFilter.BaselineDays=1:4;
-
-Params.SeqFilter.SylLists.FieldsToPlot{1}={'d','dB','dbB','dbbB'};
-Params.SeqFilter.SylLists.FieldsInOrder{1}={'d','dB','dbB','dbbB'};
-
-Params.SeqFilter.SylLists.TargetSyls={'dbB'};
-
-Params.SeqFilter.SylLists.SylsSame={'dB','dbB','dbbB'};
-Params.SeqFilter.SylLists.SylsDifferent={'d'};
-
-Params.SeqFilter.DaysForSnapshot{1}={'19Dec2014','21Dec2014'};
-Params.SeqFilter.DaysToMark= {'21Dec2014-2400'}; % will mark all plots with lines here;
-
-
-% 3) RUN
-plotON=0;
-[Params, AllDays_RawDatStruct]=lt_seq_dep_pitch_SeqFilterCompile(Params,plotON);
-
-
-%% 3) Perform various analyses on that data structure
-
-Params.PlotLearning.plotWNdays=1; % if 1, then plots WN lines, if 0, then no.
-Params.PlotLearning.DayBinSize=3; % 3 day running avg.
-saveON=0;
-
-
-[Params, AllDays_PlotLearning]=lt_seq_dep_pitch_PlotLearning(Params, AllDays_RawDatStruct,saveON);
-
-
-%% 3) Extract structure statistics
-
-% to extract data
-[Params, AllDays_StructStatsStruct]=lt_seq_dep_pitch_StructureStats(Params, AllDays_RawDatStruct);
-
-% to look at syllable similarity - being replaced by "Correlations" below
-% [Params, AllDays_StructStatsStruct]=lt_seq_dep_pitch_StructureStats_SylSimilarity(Params, AllDays_StructStatsStruct);
-
-% to plot and perform PCA on syl structure
-Params.PCA.epoch='baseline'; % will look at baseline
-% Params.PCA.epoch=[21 24]; % days 21 to 24
-
-[Params, PCA_Struct]=lt_seq_dep_pitch_StructureStats_featurePCA(Params, AllDays_StructStatsStruct,1);
-
-
-
-%% 4) Look at correlations between syllables
-% work in progress
-DaysWanted=40:41; % either baseline (astring) or array
-lt_seq_dep_pitch_Correlations(Params, AllDays_StructStatsStruct,DaysWanted);
-
-
-
-% SEQ FILTER (OLD, using both jbbb and dbbb.)
-% % 0) keep?
-% Params.SeqFilter.AmplThr=4500;
-% 
-% % 1) Seq filter and remove outliers and compile into one struct
-% Params.SeqFilter.all_daysON=1; % If 1, then doesn't matter what I enter for days argumemtns.
-% Params.SeqFilter.FirstDay='';
-% Params.SeqFilter.LastDay='';
-% 
-% Params.SeqFilter.SeqPreList={'j','jb','jbb','d','db','dbb'};
-% Params.SeqFilter.SylTargList={'b','b','b','b','b','b'};
-% Params.SeqFilter.SeqPostList={'','','','','',''};
-% 
-% 
-% % 2) experiment info
-% Params.SeqFilter.WNTimeON='14Dec2014-0000'; % Time WN turned on (1st WN day)
-% Params.SeqFilter.WNTimeOFF= '28Dec2014-2400'; % Time WN turned off (last WN day) ( use 0000 and 2400 if only plotting days)
-% Params.SeqFilter.BaselineDays=1:4;
-% 
-% Params.SeqFilter.SylLists.FieldsToPlot{1}={'jB','jbB','jbbB','dB','dbB','dbbB'};
-% 
-% Params.SeqFilter.SylLists.FieldsInOrder{1}={'jB','jbB','jbbB'};
-% Params.SeqFilter.SylLists.FieldsInOrder{2}={'dB','dbB','dbbB'};
-% 
-% Params.SeqFilter.SylLists.TargetSyls={'dbB'};
-% 
-% Params.SeqFilter.SylLists.SylsSame={'jB','jbB','jbbB','dB','dbB','dbbB'};
-% Params.SeqFilter.SylLists.SylsDifferent={};
-% 
-% Params.SeqFilter.DaysForSnapshot{1}={'19Dec2014','21Dec2014'};
-% Params.SeqFilter.DaysToMark= {'21Dec2014-2400'}; % will mark all plots with lines here;
-% 
-% 
-% % 3) RUN
-% plotON=0;
-% [Params, AllDays_RawDatStruct]=lt_seq_dep_pitch_SeqFilterCompile(Params,plotON);

@@ -50,9 +50,9 @@ Params.SeqFilter.LastDay='';
 % Params.SeqFilter.SeqPreList={'j','jb','jbb'};
 % Params.SeqFilter.SylTargList={'b','b','b'};
 % Params.SeqFilter.SeqPostList={'','',''};
-Params.SeqFilter.SeqPreList={}; 
-Params.SeqFilter.SylTargList={};
-Params.SeqFilter.SeqPostList={};
+Params.SeqFilter.SeqPreList={'','d','g'}; 
+Params.SeqFilter.SylTargList={'d','d','d'};
+Params.SeqFilter.SeqPostList={'d','',''};
 
 Params.SeqFilter.Repeats={'jB'};
 
@@ -62,11 +62,10 @@ Params.SeqFilter.WNTimeON='02Dec2014-0000'; % Time WN turned on (1st WN day)
 Params.SeqFilter.WNTimeOFF= '21Dec2014-2400'; % Time WN turned off (last WN day) ( use 0000 and 2400 if only plotting days)
 Params.SeqFilter.BaselineDays=1:5;
 
-Params.SeqFilter.SylLists.FieldsToPlot{1}={'jB','jbB','jbbB','jbbbB','jbbbbB','jbbbbbB'};
-Params.SeqFilter.SylLists.FieldsInOrder{1}={'jB','jbB','jbbB','jbbbB','jbbbbB','jbbbbbB'};
+Params.SeqFilter.SylLists.FieldsInOrder{1}={'Dd','dD','jB','jbB','jbbB','jbbbB','jbbbbB','jbbbbbB','jbbbbbbB','jbbbbbbbB','g','gD'};
 Params.SeqFilter.SylLists.TargetSyls={'jbbB'};
-Params.SeqFilter.SylLists.SylsSame={'jB','jbB','jbbbB','jbbbbB','jbbbbbB'};
-Params.SeqFilter.SylLists.SylsDifferent={};
+Params.SeqFilter.SylLists.SylsSame={'jB','jbB','jbbbB','jbbbbB','jbbbbbB','jbbbbbbB','jbbbbbbbB',};
+Params.SeqFilter.SylLists.SylsDifferent={'Dd','dD','g','gD'};
 
 % Params.SeqFilter.DaysForSnapshot{1}={};
 Params.SeqFilter.DaysToMark= {'08Dec2014-1952','11Dec2014-2200','14Dec2014-1750'}; % will mark all plots with lines here;
@@ -80,8 +79,19 @@ plotON=0;
 [Params, AllDays_RawDatStruct]=lt_seq_dep_pitch_SeqFilterCompile(Params,plotON);
 
 
-%% ========================== Use regular expressions to sort data from Raw data
+%% 3) Perform various analyses on that data structure
+close all;
+% params
+Params.PlotLearning.plotWNdays=1; % if 1, then plots WN lines, if 0, then no.
+Params.PlotLearning.DayBinSize=3; % 3 day running avg.
+saveON=1;
 
+
+[Params, AllDays_PlotLearning]=lt_seq_dep_pitch_PlotLearning(Params, AllDays_RawDatStruct,saveON);
+
+
+%% ========================== Use regular expressions to sort data from Raw data
+close all;
 Params.RegExpr.expressions={'jb+'};
 [Params, AllDays_RegExpr] = lt_seq_dep_pitch_RegExpr(Params, AllDays_RawDatStruct);
 
@@ -294,8 +304,8 @@ WithinParams={'batchSDP',batchSDP,'syllables_SDP',syllables_SDP,'frequency_range
 % TO DO OVER ALL DAYS
 clear all; close all
 phrase = 'RepDepPitchShift';
-first_day= '02Dec2014';
-last_day= '21Dec2014';
+first_day= '08Dec2014';
+last_day= '08Dec2014';
 Params.DayRawDat.batch='batch.labeled.catch';
 
 % BASELINE
@@ -350,14 +360,14 @@ Params.SeqFilter.SeqPostList={};
 
 Params.SeqFilter.Repeats={'jB'};
 
-
 % 2) experiment info
 Params.SeqFilter.WNTimeON='02Dec2014-0000'; % Time WN turned on (1st WN day)
-Params.SeqFilter.WNTimeOFF= '21Dec2014-2400'; % Time WN turned off (last WN day) ( use 0000 and 2400 if only plotting days)
+% Params.SeqFilter.WNTimeOFF= '21Dec2014-2400'; % Time WN turned off (last WN day) ( use 0000 and 2400 if only plotting days)
+Params.SeqFilter.WNTimeOFF= '08Dec2014-2400'; % Time WN turned off (last WN day) ( use 0000 and 2400 if only plotting days)
 Params.SeqFilter.BaselineDays=1:5;
 
-Params.SeqFilter.SylLists.FieldsToPlot{1}={'jB','jbB','jbbB','jbbbB','jbbbbB','jbbbbbB'};
 Params.SeqFilter.SylLists.FieldsInOrder{1}={'jB','jbB','jbbB','jbbbB','jbbbbB','jbbbbbB'};
+
 Params.SeqFilter.SylLists.TargetSyls={'jbbB'};
 Params.SeqFilter.SylLists.SylsSame={'jB','jbB','jbbbB','jbbbbB','jbbbbbB'};
 Params.SeqFilter.SylLists.SylsDifferent={};
@@ -372,14 +382,15 @@ plotON=0;
 [Params, AllDays_RawDatStruct]=lt_seq_dep_pitch_SeqFilterCompile(Params,plotON);
 
 %% 3) Perform various analyses on that data structure
+close all;
 Params.PlotLearning.plotWNdays=1; % if 1, then plots WN lines, if 0, then no.
 Params.PlotLearning.DayBinSize=3; % 3 day running avg.
 saveON=0;
 
 
-% [Params, AllDays_PlotLearning]=lt_seq_dep_pitch_PlotLearning(Params, AllDays_RawDatStruct,saveON);
+[Params, AllDays_PlotLearning]=lt_seq_dep_pitch_PlotLearning(Params, AllDays_RawDatStruct,saveON);
 
 % Use this for repeats
-[Params, AllDays_PlotLearning]=lt_seq_dep_pitch_PlotLearningREPEATS(Params, AllDays_RawDatStruct,saveON);
+% [Params, AllDays_PlotLearning]=lt_seq_dep_pitch_PlotLearningREPEATS(Params, AllDays_RawDatStruct,saveON);
 
 

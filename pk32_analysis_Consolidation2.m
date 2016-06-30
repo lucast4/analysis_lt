@@ -248,7 +248,7 @@ clear all; close all;
 Params_metadata.experiment='Consolidation2'; % 1st underscore ...
 Params_metadata.condition='';
 Params_metadata.notes='';
-Params_metadata.date_range={'15Sep2015', '16Sep2015'};
+Params_metadata.date_range={'17Sep2015', '20Sep2015'};
 Params_metadata.only_labeled_dirs=1;
 
 
@@ -320,7 +320,7 @@ MetadataStruct=lt_metadata_collect;
 experiment = 'Consolidation2';
 condition='';
 notes='';
-date_range={'05Sep2015','16Sep2015'};
+date_range={'05Sep2015','20Sep2015'};
 only_labeled_dirs=1;
 
 ListOfDirs2=lt_metadata_find_dirs(MetadataStruct, experiment, condition, notes, date_range, only_labeled_dirs);

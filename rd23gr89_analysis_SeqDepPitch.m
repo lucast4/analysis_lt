@@ -39,6 +39,10 @@ first_day= '03Jun2015';
 last_day= '14Jun2015';
 Params.DayRawDat.batch='batch.labeled.catch';
 
+first_day= '28May2015';
+last_day= '02Jun2015';
+Params.DayRawDat.batch='batch.labeled.all';
+
 save_results=1;
 
 % functions to run (SAME FOR ALL MOTIFS)
@@ -47,10 +51,18 @@ FcnAll={'seq_dep_pitch_2'};
 % Parameters for functions within
 Params.DayRawDat.fs=32000;
 Params.DayRawDat.pc_harms=1; % harmonics to take weighted avg over. 1 or 2 is good.
-Params.DayRawDat.syllables={'n','a','h','k','d','b','g','c'};
-Params.DayRawDat.frequency_range={[1750 1950], [1550 2250], [900 1600], [900 2850], [1100 2400], [3000 4000], [1100 1700], [2250 3150]};
-Params.DayRawDat.pc_dur=[0.1, 0.11, 0.12, 0.09, 0.11, 0.11, 0.16, 0.125];
-Params.DayRawDat.pc_time_window={[30 345], [210 276], [80 180], [50 115], [150 240], [60 150], [155 380], [185 400]};
+
+Params.DayRawDat.syllables={'a','h','k','d','b','g','c'};
+Params.DayRawDat.frequency_range={[1550 2250], [1050 1410], [1450 2450], [1430 2400], [3000 4000], [1270 1470], [2550 2870]};
+Params.DayRawDat.pc_dur=[0.11, 0.12, 0.09, 0.11, 0.11, 0.16, 0.125];
+Params.DayRawDat.pc_time_window={[225 276], [92 155], [50 115], [135 220], [60 150], [177 260], [230 326]};
+
+% OLD
+% Params.DayRawDat.frequency_range={[1550 2250], [1050 1410], [1450 2450], [1430 2400], [3000 4000], [1230 1550], [2250 3150]};
+% Params.DayRawDat.pc_dur=[0.11, 0.12, 0.09, 0.11, 0.11, 0.16, 0.125];
+% Params.DayRawDat.pc_time_window={[225 276], [92 155], [50 115], [135 220], [60 150], [175 360], [185 400]};
+
+
 Params.DayRawDat.pc_sigma=1;
 
 
@@ -132,6 +144,7 @@ plotON=0;
 
 
 %% == PLOT
+close all;
 % params
 Params.PlotLearning.plotWNdays=1; % if 1, then plots WN lines, if 0, then no.
 Params.PlotLearning.DayBinSize=3; % 3 day running avg.

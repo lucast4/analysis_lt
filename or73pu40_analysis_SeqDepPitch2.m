@@ -91,7 +91,7 @@ lt_check_hit_templ_freq_NoLabelRequired(Params)
 % -- BASELINE
 clear all; close all
 phrase = 'SeqDepPitch2';
-first_day= '24Jun2015';
+first_day= '25Jun2015';
 last_day= '26Jun2015';
 % first_day= '19Nov2014';
 % last_day= '22Nov2014';
@@ -122,7 +122,7 @@ WithinParams={'ParamsSDP',Params,'plotON_SDP',plotON,'saveON_SDP',saveON};
 % ==== DURING WN (catch)
 phrase = 'SeqDepPitch2';
 first_day= '27Jun2015';
-last_day= '16Jul2015';
+last_day= '30Jun2015';
 % first_day= '19Nov2014';
 % last_day= '22Nov2014';
 save_results=1;
@@ -152,7 +152,7 @@ WithinParams={'ParamsSDP',Params,'plotON_SDP',plotON,'saveON_SDP',saveON};
 
 %% COMPILE
 %% 2) Seq filter, remove outliers, and compile raw data, and enter experiment info into params
-
+cd seq_dep_pitch_SeqDepPitch2
 clear all; close all;
 
 % 0) keep?
@@ -177,12 +177,12 @@ Params.SeqFilter.BaselineDays=1:3;
 
 Params.SeqFilter.SylLists.TargetSyls={'acbB'};
 
-Params.SeqFilter.SylLists.FieldsInOrder{1}={'a', 'acB','acbB','acbbB','acbbbB'};
-Params.SeqFilter.SylLists.SylsSame={'acB', 'acbbB','acbbbB'};
+Params.SeqFilter.SylLists.FieldsInOrder{1}={'a', 'acB','acbB','acbbB','acbbbB','acbbbbB','acbbbbbB','acbbbbbbB','acbbbbbbbB','acbbbbbbbbB','acbbbbbbbbbB','acbbbbbbbbbbB','g'}; % up to 11
+Params.SeqFilter.SylLists.SylsSame={'acB','acbbB','acbbbB','acbbbbB','acbbbbbB','acbbbbbbB','acbbbbbbbB','acbbbbbbbbB','acbbbbbbbbbB','acbbbbbbbbbbB'};
 Params.SeqFilter.SylLists.SylsDifferent={'a', 'c', 'g'};
  
 % Params.SeqFilter.DaysForSnapshot{1}={'09Dec2014','11Dec2014'};
-% Params.SeqFilter.DaysToMark= {'11Dec2014-2400'}; % will mark all plots with lines here;
+Params.SeqFilter.DaysToMark= {'08Jul2015-2400'}; % will mark all plots with lines here;
 
 % Params.SeqFilter.SylLists.FieldsToPlot{1}=[Params.SeqFilter.SylLists.TargetSyls Params.SeqFilter.SylLists.SylsSame];
 % Params.SeqFilter.SylLists.FieldsToPlot{2}=Params.SeqFilter.SylLists.SylsDifferent;
