@@ -336,16 +336,38 @@ clear NeuronDatabase;
 NeuronDatabase.global.basedir='/bluejay4/lucas/birds/bk7/NEURAL';
 ind=0;
 
+% === obsolete, is a subset of Batch1860_DurLearn
+% ind=ind+1;
+% NeuronDatabase.neurons(ind).date='100516'; % date
+% NeuronDatabase.neurons(ind).batchfile='BatchNotAllSongs'; % batchfile (songs)
+% NeuronDatabase.neurons(ind).chan=10; % channel
+% NeuronDatabase.neurons(ind).clustnum=1; % cluster
+% NeuronDatabase.neurons(ind).NOTE_is_single_unit='no'; % is_single_unit
+% NeuronDatabase.neurons(ind).NOTE_clust_qual_confirmed='no'; % cluster_quality_confirmed
+% NeuronDatabase.neurons(ind).NOTE_all_songs_gotten='no'; % all_songs_gotten
+% NeuronDatabase.neurons(ind).NOTE_random='IMPORTANT: just to develop code - DATA NOT COMPLETE'; % random note
 
 ind=ind+1;
 NeuronDatabase.neurons(ind).date='100516'; % date
-NeuronDatabase.neurons(ind).batchfile='BatchNotAllSongs'; % batchfile (songs)
+NeuronDatabase.neurons(ind).batchfile='Batch1860_DurLearn'; % batchfile (songs)
 NeuronDatabase.neurons(ind).chan=10; % channel
 NeuronDatabase.neurons(ind).clustnum=1; % cluster
 NeuronDatabase.neurons(ind).NOTE_is_single_unit='no'; % is_single_unit
 NeuronDatabase.neurons(ind).NOTE_clust_qual_confirmed='no'; % cluster_quality_confirmed
 NeuronDatabase.neurons(ind).NOTE_all_songs_gotten='no'; % all_songs_gotten
-NeuronDatabase.neurons(ind).NOTE_random='IMPORTANT: just to develop code - DATA NOT COMPLETE'; % random note
+NeuronDatabase.neurons(ind).NOTE_random='HAVE NOT LOOKED THRU CLUSTER RESULTS REL SONG'; % random note
+
+ind=ind+1;
+NeuronDatabase.neurons(ind).date='100516'; % date
+NeuronDatabase.neurons(ind).batchfile='Batch1860DurLearnChan23'; % batchfile (songs)
+NeuronDatabase.neurons(ind).chan=23; % channel
+NeuronDatabase.neurons(ind).clustnum=1; % cluster
+NeuronDatabase.neurons(ind).NOTE_is_single_unit='no'; % is_single_unit
+NeuronDatabase.neurons(ind).NOTE_clust_qual_confirmed='no'; % cluster_quality_confirmed
+NeuronDatabase.neurons(ind).NOTE_all_songs_gotten='no'; % all_songs_gotten
+NeuronDatabase.neurons(ind).NOTE_random='HAVE NOT LOOKED THRU CLUSTER RESULTS REL SONG'; % random note
+
+
 
 
 
@@ -494,28 +516,30 @@ lt_neural_MultNeur_SongMod(NeuronDatabase, regexpr_str, predur, postdur, ...
 
 %% COLLECT AND PLOT STATS ACROSS NEURONS [CHOOSE ONE MOTIF]
 close all;
-% ================ MOTIF STATISTICS (E.G. FIRING RATE, BURSTS, ...)
-motif_regexpr_str='[^b](b)bb';
-motif_regexpr_str='n(h)hh';
-motif_regexpr_str='nn(h)hhh[^h]';
-motif_regexpr_str='(h)hhhh-';
-
-motif_regexpr_str='(g)b';
-motif_regexpr_str='(g)hh';
-
-motif_regexpr_str='(h)';
-
-
-motif_predur=0.2;
-motif_postdur=0.2;
-
-% --- to plot entire bouts
-motif_regexpr_str='WHOLEBOUTS';
-motif_predur=6; % to be able to collect about 2 sec pre and post after stretch, account for up to 3x contraction (so get 6s)
-motif_postdur=6;
-% TO DO: make this not have to do linear stretch
-
-lt_neural_MultNeur_MotifRasters(NeuronDatabase, motif_regexpr_str, motif_predur, motif_postdur)
+% ===================== OBSOLETE ---> USE MULTIPLE MOTIFS CODE BELOW
+% 
+% % ================ MOTIF STATISTICS (E.G. FIRING RATE, BURSTS, ...)
+% motif_regexpr_str='[^b](b)bb';
+% motif_regexpr_str='n(h)hh';
+% motif_regexpr_str='nn(h)hhh[^h]';
+% motif_regexpr_str='(h)hhhh-';
+% 
+% motif_regexpr_str='(g)b';
+% motif_regexpr_str='(g)h';
+% 
+% motif_regexpr_str='(h)';
+% 
+% motif_regexpr_str='n(h)';
+% motif_predur=0.2;
+% motif_postdur=0.1;
+% 
+% % --- to plot entire bouts
+% motif_regexpr_str='WHOLEBOUTS';
+% motif_predur=6; % to be able to collect about 2 sec pre and post after stretch, account for up to 3x contraction (so get 6s)
+% motif_postdur=6;
+% % TO DO: make this not have to do linear stretch
+% 
+% lt_neural_MultNeur_MotifRasters(NeuronDatabase, motif_regexpr_str, motif_predur, motif_postdur)
 
 
 %% SAME AS ABOVE, BUT CHOOSE MULTIPLE MOTIFS
@@ -525,6 +549,10 @@ close all;
 motif_regexpr_str={'(b)', '(h)'};
 motif_predur=0.2;
 motif_postdur=0;
+
+motif_regexpr_str={'n(h)'};
+motif_predur=0.2;
+motif_postdur=0.1;
 
 
 motif_regexpr_str={'n(h)', 'g(h)'};
@@ -543,8 +571,19 @@ motif_regexpr_str={'nn(h)hh', 'nnh(h)h'};
 motif_predur=0.3;
 motif_postdur=0.2;
 
-lt_neural_MultNeur_MotifRasters_v2(NeuronDatabase, motif_regexpr_str, motif_predur, motif_postdur);
+% --- for whole motif
+motif_regexpr_str='WHOLEBOUTS';
+motif_predur=6; % to be able to collect about 2 sec pre and post after stretch, account for up to 3x contraction (so get 6s)
+motif_postdur=6;
+LinScaleGlobal=1;
+% --
 
+LinScaleGlobal=0; % 0:NONE; 1: global (across neurosn and motifs); 2: local (specific to neuron x motif)
+lt_neural_MultNeur_MotifRasters_v2(NeuronDatabase, motif_regexpr_str, motif_predur, motif_postdur, LinScaleGlobal);
+
+
+%% ========================== BUILD LINEAR MODEL OF FIRING RATES
+lt_neural_MultNeur_CollectFeats
 
 
 %% ++++++++++++++++++++++++++++++++++++++++++++++++++++++ LEARNING
@@ -555,6 +594,36 @@ lt_neural_MultNeur_MotifRasters_v2(NeuronDatabase, motif_regexpr_str, motif_pred
 % TIME 
 % - I.E. same as above code, except noting when learning began, gets FF,
 % hit/escape, and catch song information
+close all; 
+motif_regexpr_str={'g(h)', 'nnn(h)hh','v(b)bb'};
+motif_predur=0.2;
+motif_postdur=0.1;
+LinScaleGlobal=0; % 0:NONE; 1: global (across neurosn and motifs); 2: local (specific to neuron x motif)
+
+
+FFparams.collectFF=1; % note, will try to collect FF for each motif inputed in the cell array. will 
+FFparams.FF_PosRelToken=0; % syl to get FF of, relative to token (i.e. -1 is 1 before token;
+    % +1 is 1 after token
+FFparams.FF_sylName=''; % Optional: what syl do you expect this to be? if incompatible will raise error
+    % not required (can set as []);
+FFparams.cell_of_freqwinds={'h', [1100 2600], 'b', [2400 3500], ...
+            'v', [2450 4300]};
+% FFparams.cell_of_FFtimebins={'h', [0.042 0.058], 'b', [0.053 0.07], ...
+%             'v', [0.052 0.07]}; % in sec, relative to onset (i.e. see vector T)
+FFparams.cell_of_FFtimebins={'h', [0.034 0.038], 'b', [0.053 0.07], ...
+            'v', [0.052 0.07]}; % WN on g H
+% NOTE: will also determine whether was hit or miss, based on WN sound
+% detection.
+        
+% LEARNING PARAMS
+WNchangeDateStrings={'05Oct2016-1348'};
+
+OnlyPlotNoHit=0; % then only plots trials that were not hit (WN)
+
+
+        lt_neural_MultNeur_MotifRasters_Learning(NeuronDatabase, motif_regexpr_str, ...
+    motif_predur, motif_postdur, LinScaleGlobal, FFparams, WNchangeDateStrings, OnlyPlotNoHit)
+
 
 
 
