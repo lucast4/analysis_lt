@@ -1,17 +1,4 @@
-%%  =========== EMPTY TEMPLATE
-
-ind=ind+1;
-NeuronDatabase.neurons(ind).date=''; % date
-NeuronDatabase.neurons(ind).batchfile=''; % batchfile (songs)
-NeuronDatabase.neurons(ind).chan=[]; % channel
-NeuronDatabase.neurons(ind).clustnum=[]; % cluster
-NeuronDatabase.neurons(ind).NOTE_is_single_unit=''; % is_single_unit
-NeuronDatabase.neurons(ind).NOTE_clust_qual_confirmed=''; % cluster_quality_confirmed
-NeuronDatabase.neurons(ind).NOTE_all_songs_gotten=''; % all_songs_gotten
-NeuronDatabase.neurons(ind).NOTE_random=''; % random note
-
-
-%% neuron database [ALL]
+%% neuron database [NONLEARNING (CODING)]
 clear NeuronDatabase;
 NeuronDatabase.global.basedir='/bluejay4/lucas/birds/bk7/NEURAL';
 ind=0;
@@ -144,6 +131,10 @@ NeuronDatabase.neurons(ind).NOTE_all_songs_gotten='yes'; % all_songs_gotten
 NeuronDatabase.neurons(ind).NOTE_random='Potentially SU, but maybe 2 units, also not perfectly clean'; % random note
 
 
+
+
+
+
 % ================ NOISY MU, FOR CHECKING STABILITY OF MU OVER DAYS AND
 % WITHIN DAY
 ind=ind+1;
@@ -171,7 +162,7 @@ t = uitable('Parent', f, 'Data',dat,'ColumnName',cnames, 'Position',[0 0 900 450
 
 % === if there are any empty neurons, then move another neuron
 
-%% neuron database [CHAN 18 ONLY]
+%% neuron database [CHAN 18 ONLY] - for comparing MU activity across days.
 clear NeuronDatabase;
 NeuronDatabase.global.basedir='/bluejay4/lucas/birds/bk7/NEURAL';
 ind=0;
@@ -331,22 +322,14 @@ t = uitable('Parent', f, 'Data',dat,'ColumnName',cnames, 'Position',[0 0 900 450
 % === if there are any empty neurons, then move another neuron
 
 
-%% neuron database [LEARNING - TEMP]
+
+
+%% neuron database [LEARNING]
 clear NeuronDatabase;
 NeuronDatabase.global.basedir='/bluejay4/lucas/birds/bk7/NEURAL';
 ind=0;
 
-% === obsolete, is a subset of Batch1860_DurLearn
-% ind=ind+1;
-% NeuronDatabase.neurons(ind).date='100516'; % date
-% NeuronDatabase.neurons(ind).batchfile='BatchNotAllSongs'; % batchfile (songs)
-% NeuronDatabase.neurons(ind).chan=10; % channel
-% NeuronDatabase.neurons(ind).clustnum=1; % cluster
-% NeuronDatabase.neurons(ind).NOTE_is_single_unit='no'; % is_single_unit
-% NeuronDatabase.neurons(ind).NOTE_clust_qual_confirmed='no'; % cluster_quality_confirmed
-% NeuronDatabase.neurons(ind).NOTE_all_songs_gotten='no'; % all_songs_gotten
-% NeuronDatabase.neurons(ind).NOTE_random='IMPORTANT: just to develop code - DATA NOT COMPLETE'; % random note
-
+% ======================================== [LearnLMAN1 - first epoch]
 ind=ind+1;
 NeuronDatabase.neurons(ind).date='100516'; % date
 NeuronDatabase.neurons(ind).batchfile='Batch1860_DurLearn'; % batchfile (songs)
@@ -356,6 +339,9 @@ NeuronDatabase.neurons(ind).NOTE_is_single_unit='no'; % is_single_unit
 NeuronDatabase.neurons(ind).NOTE_clust_qual_confirmed='no'; % cluster_quality_confirmed
 NeuronDatabase.neurons(ind).NOTE_all_songs_gotten='no'; % all_songs_gotten
 NeuronDatabase.neurons(ind).NOTE_random='HAVE NOT LOOKED THRU CLUSTER RESULTS REL SONG'; % random note
+NeuronDatabase.neurons(ind).LEARN_exptID='LearnLMAN1';
+NeuronDatabase.neurons(ind).LEARN_WNonDatestr='05Oct2016-1348';
+NeuronDatabase.neurons(ind).LEARN_WNotherImportantDates={}; % leave empty if nothing.
 
 ind=ind+1;
 NeuronDatabase.neurons(ind).date='100516'; % date
@@ -366,12 +352,74 @@ NeuronDatabase.neurons(ind).NOTE_is_single_unit='no'; % is_single_unit
 NeuronDatabase.neurons(ind).NOTE_clust_qual_confirmed='no'; % cluster_quality_confirmed
 NeuronDatabase.neurons(ind).NOTE_all_songs_gotten='no'; % all_songs_gotten
 NeuronDatabase.neurons(ind).NOTE_random='HAVE NOT LOOKED THRU CLUSTER RESULTS REL SONG'; % random note
+NeuronDatabase.neurons(ind).LEARN_exptID='LearnLMAN1';
+NeuronDatabase.neurons(ind).LEARN_WNonDatestr='05Oct2016-1348';
+NeuronDatabase.neurons(ind).LEARN_WNotherImportantDates={}; % leave empty if nothing.
+
+% -------- LATE, WN ACUTE RESPONSE?
+ind=ind+1;
+NeuronDatabase.neurons(ind).date='100516'; % date
+NeuronDatabase.neurons(ind).batchfile='Batch1980PeakLearnChan10MUearly'; % batchfile (songs)
+NeuronDatabase.neurons(ind).chan=10; % channel
+NeuronDatabase.neurons(ind).clustnum=1; % cluster
+NeuronDatabase.neurons(ind).NOTE_is_single_unit='no'; % is_single_unit
+NeuronDatabase.neurons(ind).NOTE_clust_qual_confirmed='ok'; % cluster_quality_confirmed
+NeuronDatabase.neurons(ind).NOTE_all_songs_gotten='yes'; % all_songs_gotten
+NeuronDatabase.neurons(ind).NOTE_random='have not looked thru clust closely - potentially more MU after SU that comes after this>?'; % random note
+NeuronDatabase.neurons(ind).LEARN_exptID='LearnLMAN1';
+NeuronDatabase.neurons(ind).LEARN_WNonDatestr='05Oct2016-1348';
+NeuronDatabase.neurons(ind).LEARN_WNotherImportantDates={}; % leave empty if nothing.
+
+
+
+% ======================================== [LearnLMAN1 - second epoch]
+ind=ind+1;
+NeuronDatabase.neurons(ind).date='100616'; % date
+NeuronDatabase.neurons(ind).batchfile='BatchChan10oppdirlearn'; % batchfile (songs)
+NeuronDatabase.neurons(ind).chan=10; % channel
+NeuronDatabase.neurons(ind).clustnum=1; % cluster
+NeuronDatabase.neurons(ind).NOTE_is_single_unit='no'; % is_single_unit
+NeuronDatabase.neurons(ind).NOTE_clust_qual_confirmed='no'; % cluster_quality_confirmed
+NeuronDatabase.neurons(ind).NOTE_all_songs_gotten='no'; % all_songs_gotten
+NeuronDatabase.neurons(ind).NOTE_random='HAVE NOT LOOKED THRU CLUSTER RESULTS REL SONG. Have not labeled all.'; % random note
+NeuronDatabase.neurons(ind).LEARN_exptID='LearnLMAN1';
+NeuronDatabase.neurons(ind).LEARN_WNonDatestr='06Oct2016-1225';
+NeuronDatabase.neurons(ind).LEARN_WNotherImportantDates={}; % leave empty if nothing.
+
+
+% ======================================== [LearnLMAN2 - first epoch]
+ind=ind+1;
+NeuronDatabase.neurons(ind).date='101716'; % date
+NeuronDatabase.neurons(ind).batchfile='batchall'; % batchfile (songs)
+NeuronDatabase.neurons(ind).chan=23; % channel
+NeuronDatabase.neurons(ind).clustnum=1; % cluster
+NeuronDatabase.neurons(ind).NOTE_is_single_unit='no'; % is_single_unit
+NeuronDatabase.neurons(ind).NOTE_clust_qual_confirmed='no'; % cluster_quality_confirmed
+NeuronDatabase.neurons(ind).NOTE_all_songs_gotten='no'; % all_songs_gotten
+NeuronDatabase.neurons(ind).NOTE_random='QUICK LOOK, have not verified anything'; % random note
+NeuronDatabase.neurons(ind).LEARN_exptID='LearnLMAN1';
+NeuronDatabase.neurons(ind).LEARN_WNonDatestr='17Oct2016-1332';
+NeuronDatabase.neurons(ind).LEARN_WNotherImportantDates={}; % leave empty if nothing.
+
+
+% =========================== [LearnLMAN2 - second epoch]
+ind=ind+1;
+NeuronDatabase.neurons(ind).date='101716'; % date
+NeuronDatabase.neurons(ind).batchfile='BatchLate2700um'; % batchfile (songs)
+NeuronDatabase.neurons(ind).chan=23; % channel
+NeuronDatabase.neurons(ind).clustnum=1; % cluster
+NeuronDatabase.neurons(ind).NOTE_is_single_unit='yes'; % is_single_unit
+NeuronDatabase.neurons(ind).NOTE_clust_qual_confirmed='no'; % cluster_quality_confirmed
+NeuronDatabase.neurons(ind).NOTE_all_songs_gotten='no'; % all_songs_gotten
+NeuronDatabase.neurons(ind).NOTE_random='HAVE NOT GONE THRU CLUST RESULTS'; % random note
+NeuronDatabase.neurons(ind).LEARN_exptID='LearnLMAN1';
+NeuronDatabase.neurons(ind).LEARN_WNonDatestr='17Oct2016-1940';
+NeuronDatabase.neurons(ind).LEARN_WNotherImportantDates={}; % leave empty if nothing.
 
 
 
 
-
-% ======== CONVERT TO TABLE
+%% ======== CONVERT TO TABLE
 NeuronDatabase_table=struct2table(NeuronDatabase.neurons);
 summary(NeuronDatabase_table);
 disp(NeuronDatabase_table)
@@ -383,7 +431,6 @@ cnames=fieldnames(NeuronDatabase_table);
 t = uitable('Parent', f, 'Data',dat,'ColumnName',cnames, 'Position',[0 0 900 450]);
 
 % === if there are any empty neurons, then move another neuron
-
 
 
 %% +++++++++++++++++++++ PLOTS
@@ -444,7 +491,8 @@ end
 
 
 %% FOR ALL NEURONS PLOT RASTERS, ETC, FOR A GIVEN MOTIF
-% NOTE: need to throw this out (redundant with below) or put into a
+% NOTE: USE BELOW INSTEAD!!!!!
+% need to throw this out (redundant with below) or put into a
 % function
 % ================ MOTIF STATISTICS (E.G. FIRING RATE, BURSTS, ...)
 for i=1:NumNeurons
@@ -571,8 +619,14 @@ motif_regexpr_str={'nn(h)hh', 'nnh(h)h'};
 motif_predur=0.3;
 motif_postdur=0.2;
 
+motif_regexpr_str={'g(h)', 'n(h)', 'g(v)', 'g(b)'};
+motif_predur=0.1;
+motif_postdur=0.1;
+
+
+
 % --- for whole motif
-motif_regexpr_str='WHOLEBOUTS';
+motif_regexpr_str={'WHOLEBOUTS'};
 motif_predur=6; % to be able to collect about 2 sec pre and post after stretch, account for up to 3x contraction (so get 6s)
 motif_postdur=6;
 LinScaleGlobal=1;
@@ -587,16 +641,22 @@ lt_neural_MultNeur_CollectFeats
 
 
 %% ++++++++++++++++++++++++++++++++++++++++++++++++++++++ LEARNING
-% === CURRENTLY ASSUMES THAT ALL NERUONS IN CURRENT DATABASE WERE COLLECTED
-% DURING LEARNING (NOT NECESSARILY 100% OVERLAPPING TEMPORALLY)
+%% +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+% IMPORTANT - THIS CODE IS FOR ONE NEURON ONLY - WILL TAKE FIRST NEURON IN NEURONDATABASE
 
 % FOR EACH NEURON, PLOT RASTER AND SMOOTHED FIRING FOR A GIVEN MOTIF ACROSS
 % TIME 
 % - I.E. same as above code, except noting when learning began, gets FF,
 % hit/escape, and catch song information
 close all; 
-motif_regexpr_str={'g(h)', 'nnn(h)hh','v(b)bb'};
-motif_predur=0.2;
+% motif_regexpr_str={'g(h)'};
+motif_regexpr_str={'g(h)', 'nnn(h)h'};
+% motif_regexpr_str={'g(h)', 'nnn(h)h','v(b)bb', 'g(b)'};
+% motif_regexpr_str={'g(h)', 'nn(h)h','v(b)b', 'n(b)b', 'jk(k)kkkl', 'g(v)', 'g([bv])', '[oh](p)pp', 'r(s)'};
+% motif_regexpr_str={'g(h)', 'nn(h)h','v(b)b', 'g([vb])', 'j(k)kk', 'y(o)o', 'o(p)p'}; % latest
+% motif_regexpr_str={'g(h)', 'nnn(h)hh','v(b)bb', 'n(b)bb', 'jk(k)kkkl', 'g(v)', 'o(p)pp', 'h(p)pp', 'r(s)'}; % -- old
+
+motif_predur=0.1;
 motif_postdur=0.1;
 LinScaleGlobal=0; % 0:NONE; 1: global (across neurosn and motifs); 2: local (specific to neuron x motif)
 
@@ -616,13 +676,44 @@ FFparams.cell_of_FFtimebins={'h', [0.034 0.038], 'b', [0.053 0.07], ...
 % detection.
         
 % LEARNING PARAMS
-WNchangeDateStrings={'05Oct2016-1348'};
+% WNchangeDateStrings={'05Oct2016-1348'}; % LearnLMAN1 - first epoch
+% WNchangeDateStrings={'06Oct2016-1225'}; % LearnLMAN1 - second epoch
+% WNchangeDateStrings={'17Oct2016-1332'}; % LearnLMAN2
+% WNchangeDateStrings={'17Oct2016-1940'}; % LearnLMAN2 - second epoch - arbitrary, since did not actually change WN during this.
+
 
 OnlyPlotNoHit=0; % then only plots trials that were not hit (WN)
+TrialBinSize=10;
+
+% === ONLY DOES ONE NEURON AT A TIME!! - FIRST INDEX IN NeuronDatabase;
+lt_neural_MultNeur_MotifRasters_Learning(NeuronDatabase, motif_regexpr_str, ...
+    motif_predur, motif_postdur, LinScaleGlobal, FFparams, OnlyPlotNoHit, TrialBinSize)
 
 
-        lt_neural_MultNeur_MotifRasters_Learning(NeuronDatabase, motif_regexpr_str, ...
-    motif_predur, motif_postdur, LinScaleGlobal, FFparams, WNchangeDateStrings, OnlyPlotNoHit)
+%% ====== [USE PARAMS ABOVE] - only plots summary figures
+% d-prime of firing rate change in premotor window summary plots, relative
+% to learning timepoints and FF change
+close all;
+% === NEW PARAMS.
+UseEntireBaseline = 0; % if 1, uses entire baseline, otherwise uses 1st bin.
+TypesToPlot={'mean', 'abs', 'std', 'corr'}; % for d-prime summary metric (which ones to plot?)
+TrialBinSize=5;
+
+lt_neural_MultNeur_MotifRasters_LearnSum(NeuronDatabase, motif_regexpr_str, ...
+    motif_predur, motif_postdur, LinScaleGlobal, FFparams, ...
+    OnlyPlotNoHit, UseEntireBaseline, TypesToPlot, TrialBinSize)
+
+
+%% ====== ACUTE EFFECT OF WN?
+close all;
+motif_regexpr_str={'g(h)h'};
+motif_predur=0.1;
+motif_postdur=0.1;
+NumTrialsBin=10;
+LinScaleGlobal=0; % 0:NONE; 1: global (across neurosn and motifs); 2: local (specific to neuron x motif)
+
+lt_neural_MultNeur_MotifRasters_WNacute(NeuronDatabase, motif_regexpr_str, ...
+    motif_predur,motif_postdur, FFparams, NumTrialsBin, LinScaleGlobal)
 
 
 
