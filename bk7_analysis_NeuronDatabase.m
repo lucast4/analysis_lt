@@ -1,7 +1,6 @@
-%% NOTE (11/19/16) - OBSOLETE
-%^ all code below is now in lt_neural_MasterScript_AcrossNeurons, whcih
-% calls a [birdname]_analysis_NeuronDatabase file for each bird to extract
-% his neurons.
+%% NOTE: this file called by lt_neural_MasterScript_AcrossNeurons -
+% this file should contain only neuron database information, and when
+% executed should append to NeuronDatabase structure
 
 
 %% neuron database [NONLEARNING (CODING)]
