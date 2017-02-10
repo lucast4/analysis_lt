@@ -17,3 +17,10 @@ check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post
 
 
 
+%%  NO LABEL REQUIRED - USED FOR ANALYSIS OF LEARNING SCREENING
+close all;
+
+Params.batch='batch.keep';
+Params.config='/bluejay5/lucas/birds/or60/config.evconfig2';
+Params.NoteNum_to_plot=0; % for the note you want to analyze
+[AllSongsData_toplot, AllData] = lt_check_hit_templ_freq_NoLabelRequired(Params);
