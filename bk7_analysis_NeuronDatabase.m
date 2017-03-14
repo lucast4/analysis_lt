@@ -19,6 +19,7 @@ NeuronDatabase.neurons(ind).NOTE_clust_qual_confirmed='yes'; % cluster_quality_c
 NeuronDatabase.neurons(ind).NOTE_all_songs_gotten='yes'; % all_songs_gotten
 NeuronDatabase.neurons(ind).NOTE_random='TOO MANYS SONGS, LABELED MANY, NOT ALL. excluded some noises songs'; % random note
 NeuronDatabase.neurons(ind).NOTE_all_labeled='yes'; % 
+% DONE
 
 ind=ind+1;
 NeuronDatabase.neurons(ind).date='080916'; % date
@@ -30,6 +31,7 @@ NeuronDatabase.neurons(ind).NOTE_clust_qual_confirmed='no'; % cluster_quality_co
 NeuronDatabase.neurons(ind).NOTE_all_songs_gotten='no'; % all_songs_gotten
 NeuronDatabase.neurons(ind).NOTE_random='TOO MANYS SONGS, LABELED MANY, NOT ALL. incr or decrease threshold'; % random note
 NeuronDatabase.neurons(ind).NOTE_all_labeled='yes'; % 
+% DONE
 
 ind=ind+1;
 NeuronDatabase.neurons(ind).date='080916'; % date
@@ -41,7 +43,7 @@ NeuronDatabase.neurons(ind).NOTE_clust_qual_confirmed='yes'; % cluster_quality_c
 NeuronDatabase.neurons(ind).NOTE_all_songs_gotten='yes'; % all_songs_gotten
 NeuronDatabase.neurons(ind).NOTE_random='MANY SONGS, LABELED MANY NOT ALL. last song miss some spikes - excluded some noisy songs'; % random note
 NeuronDatabase.neurons(ind).NOTE_all_labeled='yes'; % 
-
+% DONE
 
 ind=ind+1;
 NeuronDatabase.neurons(ind).date='081616'; % date
@@ -53,7 +55,7 @@ NeuronDatabase.neurons(ind).NOTE_clust_qual_confirmed='no'; % cluster_quality_co
 NeuronDatabase.neurons(ind).NOTE_all_songs_gotten='no'; % all_songs_gotten
 NeuronDatabase.neurons(ind).NOTE_random='could get more song; missing some spikes'; % random note
 NeuronDatabase.neurons(ind).NOTE_all_labeled='yes'; % 
-
+% DONE
 
 ind=ind+1;
 NeuronDatabase.neurons(ind).date='080916'; % date
@@ -65,6 +67,7 @@ NeuronDatabase.neurons(ind).NOTE_clust_qual_confirmed='no'; % cluster_quality_co
 NeuronDatabase.neurons(ind).NOTE_all_songs_gotten='yes'; % all_songs_gotten
 NeuronDatabase.neurons(ind).NOTE_random='[CHECKED - DOES LOOK SIMILAR. COMBINE THEM]. IMPORTANT: is likely similar, but not identical, MU to BatchChan14good_v4 [Could combine or only use one, but should not consider them as independent] [C'; % random note
 NeuronDatabase.neurons(ind).NOTE_all_labeled='yes'; % 
+% DONE
 
 ind=ind+1;
 NeuronDatabase.neurons(ind).date='081616'; % date
@@ -76,6 +79,8 @@ NeuronDatabase.neurons(ind).NOTE_clust_qual_confirmed='yes'; % cluster_quality_c
 NeuronDatabase.neurons(ind).NOTE_all_songs_gotten='no'; % all_songs_gotten
 NeuronDatabase.neurons(ind).NOTE_random='IDENTICAL TO PREVIOUS NEURON 4 (already removed)'; % random note
 NeuronDatabase.neurons(ind).NOTE_all_labeled='yes'; % 
+% DONE
+
 
 ind=ind+1;
 NeuronDatabase.neurons(ind).date='081616'; % date
@@ -87,7 +92,7 @@ NeuronDatabase.neurons(ind).NOTE_clust_qual_confirmed='no'; % cluster_quality_co
 NeuronDatabase.neurons(ind).NOTE_all_songs_gotten='yes'; % all_songs_gotten
 NeuronDatabase.neurons(ind).NOTE_random='[still more songs to label] some noise (Intan LVDS problem), usually outside song [song mod is clear, so noise not likely issue]; long duration - confirm that similar modulation througout [yes is similar]'; % random note
 NeuronDatabase.neurons(ind).NOTE_all_labeled='yes'; % 
-
+% DONE
 
 ind=ind+1;
 NeuronDatabase.neurons(ind).date='081616'; % date
@@ -99,6 +104,8 @@ NeuronDatabase.neurons(ind).NOTE_clust_qual_confirmed='yes'; % cluster_quality_c
 NeuronDatabase.neurons(ind).NOTE_all_songs_gotten='no'; % all_songs_gotten
 NeuronDatabase.neurons(ind).NOTE_random='could get more song'; % random note
 NeuronDatabase.neurons(ind).NOTE_all_labeled='yes'; % 
+% DONE
+
 
 % ======================= IGNORE THIS ONE, LIKELY NOT LMAN
 % ind=9;
@@ -122,6 +129,8 @@ NeuronDatabase.neurons(ind).NOTE_clust_qual_confirmed='yes'; % cluster_quality_c
 NeuronDatabase.neurons(ind).NOTE_all_songs_gotten='yes'; % all_songs_gotten
 NeuronDatabase.neurons(ind).NOTE_random='looks good'; % random note
 NeuronDatabase.neurons(ind).NOTE_all_labeled='yes'; % 
+% DONE
+
 
 % ------------------- CHECK SONG MOD BELOW:
 ind=ind+1;
@@ -134,6 +143,7 @@ NeuronDatabase.neurons(ind).NOTE_clust_qual_confirmed='ok'; % cluster_quality_co
 NeuronDatabase.neurons(ind).NOTE_all_songs_gotten='yes'; % all_songs_gotten
 NeuronDatabase.neurons(ind).NOTE_random='[CHECKED - LOOKS SIMILAR FOR SOME MOTIFS, NOT OTHERS, LOOK AT MORE MOTIFS TO MAKE SURE] CHECK: no overlap with other from this batch [CHECKED - looks different]'; % random note
 NeuronDatabase.neurons(ind).NOTE_all_labeled='yes'; % 
+
 
 ind=ind+1;
 NeuronDatabase.neurons(ind).date='082216'; % date

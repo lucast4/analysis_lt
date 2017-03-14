@@ -132,7 +132,7 @@ NeuronDatabase.neurons(ind).NOTE_all_labeled='no'; %
 ind=ind+1;
 NeuronDatabase.neurons(ind).exptID='LMANlearn1'; % 
 NeuronDatabase.neurons(ind).date='020517'; % date
-NeuronDatabase.neurons(ind).batchfile='BatchLearnSubset020817'; % batchfile (songs)
+NeuronDatabase.neurons(ind).batchfile='BatchLearnSubset021017'; % batchfile (songs)
 NeuronDatabase.neurons(ind).chan=9; % channel
 NeuronDatabase.neurons(ind).clustnum=1; % cluster
 NeuronDatabase.neurons(ind).NOTE_is_single_unit='no'; % is_single_unit
@@ -145,21 +145,21 @@ NeuronDatabase.neurons(ind).LEARN_WNotherImportantDates={'07Feb2017-1509'}; % le
 NeuronDatabase.neurons(ind).NOTE_all_labeled='no'; % 
 
 
-% ================= TEMP - CHECKING ON 2/7/17
-ind=ind+1;
-NeuronDatabase.neurons(ind).exptID='LMANlearn1'; % 
-NeuronDatabase.neurons(ind).date='020517'; % date
-NeuronDatabase.neurons(ind).batchfile='Batch020717Check'; % batchfile (songs)
-NeuronDatabase.neurons(ind).chan=9; % channel
-NeuronDatabase.neurons(ind).clustnum=1; % cluster
-NeuronDatabase.neurons(ind).NOTE_is_single_unit='no'; % is_single_unit
-NeuronDatabase.neurons(ind).NOTE_clust_qual_confirmed='no'; % cluster_quality_confirmed
-NeuronDatabase.neurons(ind).NOTE_all_songs_gotten='no'; % all_songs_gotten
-NeuronDatabase.neurons(ind).NOTE_random='HAVE NOT LOOKED THRU CLUSTER RESULTS REL SONG'; % random note
-NeuronDatabase.neurons(ind).LEARN_exptID='LMANlearn1';
-NeuronDatabase.neurons(ind).LEARN_WNonDatestr='07Feb2017-1257';
-NeuronDatabase.neurons(ind).LEARN_WNotherImportantDates={}; % leave empty if nothing.
-NeuronDatabase.neurons(ind).NOTE_all_labeled='no'; % 
+% % ================= TEMP - CHECKING ON 2/7/17
+% ind=ind+1;
+% NeuronDatabase.neurons(ind).exptID='LMANlearn1'; % 
+% NeuronDatabase.neurons(ind).date='020517'; % date
+% NeuronDatabase.neurons(ind).batchfile='Batch020717Check'; % batchfile (songs)
+% NeuronDatabase.neurons(ind).chan=9; % channel
+% NeuronDatabase.neurons(ind).clustnum=1; % cluster
+% NeuronDatabase.neurons(ind).NOTE_is_single_unit='no'; % is_single_unit
+% NeuronDatabase.neurons(ind).NOTE_clust_qual_confirmed='no'; % cluster_quality_confirmed
+% NeuronDatabase.neurons(ind).NOTE_all_songs_gotten='no'; % all_songs_gotten
+% NeuronDatabase.neurons(ind).NOTE_random='HAVE NOT LOOKED THRU CLUSTER RESULTS REL SONG'; % random note
+% NeuronDatabase.neurons(ind).LEARN_exptID='LMANlearn1';
+% NeuronDatabase.neurons(ind).LEARN_WNonDatestr='07Feb2017-1257';
+% NeuronDatabase.neurons(ind).LEARN_WNotherImportantDates={}; % leave empty if nothing.
+% NeuronDatabase.neurons(ind).NOTE_all_labeled='no'; % 
 
 % % % OBSOLETE - use one for all learning trajectory
 % % ======================================== [LMANlearn1]
@@ -193,6 +193,29 @@ NeuronDatabase.neurons(ind).NOTE_all_labeled='no'; %
 % NeuronDatabase.neurons(ind).LEARN_WNonDatestr='05Feb2017-1718';
 % NeuronDatabase.neurons(ind).LEARN_WNotherImportantDates={}; % leave empty if nothing.
 % NeuronDatabase.neurons(ind).NOTE_all_labeled='no'; % 
+
+
+
+%% neuron database [LEARNING]
+clear NeuronDatabase;
+NeuronDatabase.global.basedir='/bluejay5/lucas/birds/bu77wh13/NEURAL';
+ind=0;
+
+% ======================================== [LMANlearn1]
+ind=ind+1;
+NeuronDatabase.neurons(ind).exptID='LMANlearn2'; % 
+NeuronDatabase.neurons(ind).date='022117'; % date
+NeuronDatabase.neurons(ind).batchfile='BatchMorningSub'; % batchfile (songs)
+NeuronDatabase.neurons(ind).chan=9; % channel
+NeuronDatabase.neurons(ind).clustnum=1; % cluster
+NeuronDatabase.neurons(ind).NOTE_is_single_unit='no'; % is_single_unit
+NeuronDatabase.neurons(ind).NOTE_clust_qual_confirmed='no'; % cluster_quality_confirmed
+NeuronDatabase.neurons(ind).NOTE_all_songs_gotten='no'; % all_songs_gotten
+NeuronDatabase.neurons(ind).NOTE_random='HAVE NOT LOOKED THRU CLUSTER RESULTS REL SONG'; % random note
+NeuronDatabase.neurons(ind).LEARN_exptID='LMANlearn2';
+NeuronDatabase.neurons(ind).LEARN_WNonDatestr='';
+NeuronDatabase.neurons(ind).LEARN_WNotherImportantDates={''}; % leave empty if nothing.
+NeuronDatabase.neurons(ind).NOTE_all_labeled='no'; % 
 
 
 %% CHECKING TEMPLATE MATCHING a(b);
