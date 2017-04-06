@@ -7,7 +7,7 @@ ind=0;
 ind=ind+1;
 NeuronDatabase.neurons(ind).exptID='LMANneural1'; % 
 NeuronDatabase.neurons(ind).date='020317'; % date
-NeuronDatabase.neurons(ind).batchfile='Batch2150Sub'; % batchfile (songs)
+NeuronDatabase.neurons(ind).batchfile='BatchNight2150'; % batchfile (songs)
 NeuronDatabase.neurons(ind).chan=9; % channel
 NeuronDatabase.neurons(ind).clustnum=1; % cluster
 NeuronDatabase.neurons(ind).NOTE_is_single_unit='no'; % is_single_unit
@@ -21,7 +21,7 @@ NeuronDatabase.neurons(ind).electrode_depth=2150; % in um
 ind=ind+1;
 NeuronDatabase.neurons(ind).exptID='LMANneural1'; % 
 NeuronDatabase.neurons(ind).date='020417'; % date
-NeuronDatabase.neurons(ind).batchfile='Batch2150Morning'; % batchfile (songs)
+NeuronDatabase.neurons(ind).batchfile='Batch2150MorningAll'; % batchfile (songs)
 NeuronDatabase.neurons(ind).chan=9; % channel
 NeuronDatabase.neurons(ind).clustnum=1; % cluster
 NeuronDatabase.neurons(ind).NOTE_is_single_unit='no'; % is_single_unit
@@ -36,7 +36,7 @@ NeuronDatabase.neurons(ind).electrode_depth=2150; % in um
 ind=ind+1;
 NeuronDatabase.neurons(ind).exptID='LMANneural1'; % 
 NeuronDatabase.neurons(ind).date='020417'; % date
-NeuronDatabase.neurons(ind).batchfile='Batch1940NightSub'; % batchfile (songs)
+NeuronDatabase.neurons(ind).batchfile='Batch1940Night'; % batchfile (songs)
 NeuronDatabase.neurons(ind).chan=9; % channel
 NeuronDatabase.neurons(ind).clustnum=1; % cluster
 NeuronDatabase.neurons(ind).NOTE_is_single_unit='no'; % is_single_unit
@@ -77,16 +77,16 @@ NeuronDatabase.neurons(ind).electrode_depth=1835; % in um [leave empty [] if no]
 
 % ======== add neurons
 ind=ind+1;
-NeuronDatabase.neurons(ind).exptID='LMANneural1'; % 
+NeuronDatabase.neurons(ind).exptID='LMANlearn1'; % 
 NeuronDatabase.neurons(ind).date='020517'; % date
-NeuronDatabase.neurons(ind).batchfile='Batch1975'; % batchfile (songs)
+NeuronDatabase.neurons(ind).batchfile='Batch1550to1707'; % batchfile (songs)
 NeuronDatabase.neurons(ind).chan=9; % channel
 NeuronDatabase.neurons(ind).clustnum=1; % cluster
 NeuronDatabase.neurons(ind).NOTE_is_single_unit='no'; % is_single_unit
-NeuronDatabase.neurons(ind).NOTE_clust_qual_confirmed='no'; % cluster_quality_confirmed
-NeuronDatabase.neurons(ind).NOTE_all_songs_gotten='no'; % all_songs_gotten
-NeuronDatabase.neurons(ind).NOTE_random='just checking if clearly song mod'; % random note
-NeuronDatabase.neurons(ind).NOTE_all_labeled='no'; % 
+NeuronDatabase.neurons(ind).NOTE_clust_qual_confirmed='yes'; % cluster_quality_confirmed
+NeuronDatabase.neurons(ind).NOTE_all_songs_gotten='yes'; % all_songs_gotten
+NeuronDatabase.neurons(ind).NOTE_random='DONE'; % random note
+NeuronDatabase.neurons(ind).NOTE_all_labeled='yes'; % 
 NeuronDatabase.neurons(ind).electrode_depth=1975; % in um [leave empty [] if no]
 
 
@@ -103,6 +103,24 @@ NeuronDatabase.neurons(ind).NOTE_all_songs_gotten='no'; % all_songs_gotten
 NeuronDatabase.neurons(ind).NOTE_random='just checking if clearly song mod'; % random note
 NeuronDatabase.neurons(ind).NOTE_all_labeled='no'; % 
 NeuronDatabase.neurons(ind).electrode_depth=1975; % in um [leave empty [] if no]
+
+
+
+% ======================== CHECKING
+ind=ind+1;
+NeuronDatabase.neurons(ind).exptID='LMANlearn2'; % 
+NeuronDatabase.neurons(ind).date='022117'; % date
+NeuronDatabase.neurons(ind).batchfile='Batch1314to1337'; % batchfile (songs)
+NeuronDatabase.neurons(ind).chan=11; % channel
+NeuronDatabase.neurons(ind).clustnum=1; % cluster
+NeuronDatabase.neurons(ind).NOTE_is_single_unit=''; % is_single_unit
+NeuronDatabase.neurons(ind).NOTE_clust_qual_confirmed=''; % cluster_quality_confirmed
+NeuronDatabase.neurons(ind).NOTE_all_songs_gotten=''; % all_songs_gotten
+NeuronDatabase.neurons(ind).NOTE_random='just checking if clearly song mod'; % random note
+NeuronDatabase.neurons(ind).NOTE_all_labeled='no'; % 
+NeuronDatabase.neurons(ind).electrode_depth=[]; % in um [leave empty [] if no]
+
+
 
 
 %% neuron database [LEARNING]
@@ -238,5 +256,26 @@ get_FF=1;
 NoteNum=0;
 
 check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post, get_WN_hits,get_offline_match,get_FF,config,NoteNum);
+
+
+% ======== GETTING abb(h)
+clear all; close all;
+batchf='batch.labeled.all';
+config='/bluejay5/lucas/birds/bu77wh13/config_032817_2.evconfig2';
+
+syl='h';
+syl_pre='abb';
+syl_post='';
+get_WN_hits=1;
+get_offline_match=1;
+get_FF=1;
+NoteNum=0;
+
+check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post, get_WN_hits,get_offline_match,get_FF,config,NoteNum);
+
+
+
+
+
 
 
