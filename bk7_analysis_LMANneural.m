@@ -410,7 +410,7 @@ NeuronDatabase.neurons(ind).NOTE_clust_qual_confirmed='no'; % cluster_quality_co
 NeuronDatabase.neurons(ind).NOTE_all_songs_gotten='no'; % all_songs_gotten
 NeuronDatabase.neurons(ind).NOTE_random='HAVE NOT LOOKED THRU CLUSTER RESULTS REL SONG. Have not labeled all.'; % random note
 NeuronDatabase.neurons(ind).LEARN_exptID='LearnLMAN1';
-NeuronDatabase.neurons(ind).LEARN_WNonDatestr='06Oct2016-1225';
+NeuronDatabase.neurons(ind).LEARN_WNonDatestr='06Oct2016-1215';
 NeuronDatabase.neurons(ind).LEARN_WNotherImportantDates={}; % leave empty if nothing.
 NeuronDatabase.neurons(ind).NOTE_all_labeled='no'; % 
 

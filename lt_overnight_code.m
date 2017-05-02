@@ -1,9 +1,9 @@
-%% ======
+%% ====== or60
 clear all; close all;
 
 ListOfDirs = {...
-   '/bluejay5/lucas/birds/or60/040517_Association2_durWN_STIMon', ...
-    };
+    '/bluejay5/lucas/birds/or60/042217_Association2_durWN_STIMon', ...
+    '/bluejay5/lucas/birds/or60/042317_Association2_durWN_STIMon'};
 
 
 %%

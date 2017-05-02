@@ -16,7 +16,7 @@ config='/bluejay5/lucas/birds/br92br54/config042017.evconfig2';
 config='/bluejay5/lucas/birds/br92br54/config042017_2.evconfig2';
 config='/bluejay5/lucas/birds/br92br54/config042717.evconfig2';
 config='/bluejay5/lucas/birds/br92br54/config_042917.evconfig2';
-config='/bluejay5/lucas/birds/br92br54/config050117.evconfig2'; % 5/1/17
+config='/bluejay5/lucas/birds/br92br54/config050117.evconfig2';
 
 % === WN (nk[h])
 syl='h';

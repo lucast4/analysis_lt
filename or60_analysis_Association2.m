@@ -286,7 +286,7 @@ close all;
 Params_metadata.experiment='Association2'; % 1st underscore ...
 Params_metadata.condition='';
 Params_metadata.notes='';
-Params_metadata.date_range={'04Apr2017', '04Apr2017'};
+Params_metadata.date_range={'15Apr2017', '17Apr2017'};
 Params_metadata.only_labeled_dirs=1;
 
 % ===== For opto analysis
@@ -420,7 +420,7 @@ Params.pc_harms_list=[1];
 Params.batch='batch.labeled.all';
 Params.experiment = 'Association2';
 
-date_range={'28Mar2017','28Mar2017'}; % e.g. {'20Apr2015','20May2015'}. leave blank ('') for all days
+date_range={'21Apr2017','23Apr2017'}; % e.g. {'20Apr2015','20May2015'}. leave blank ('') for all days
 
 % ---- 2) Collect note group information? 
 CollectNoteGroup = 1; % set to 1 if want to use online NoteGroups. Otherwise will do context stuff using the 
@@ -433,6 +433,7 @@ lt_extract_AllDaysPC(Params, date_range, CollectNoteGroup)
 %% %% Compiling data - go to "extract" folder first
 clear all; close all;
 Params_global.CompilePC.PC_window_list={'b', [22 74]}; % syl, value pairs [single syls]
+Params_global.CompilePC.PC_window_list={'b', [60 80]}; % syl, value pairs [single syls]
 Params_global.CompilePC.FirstDay='';
 Params_global.CompilePC.LastDay='';
 plotON=1; % pitch contours, all days, all syls
@@ -475,13 +476,16 @@ Params_alldays.NoteToPlot=1;
 Params_alldays.RunBin=10;
 
 Params_alldays.BoundaryTimes={'27Mar2017-0931', '28Mar2017-1019', ...
-     '31Mar2017-1139', '02Apr2017-1904'}; % in format of e.g. 05May2014-1423, these are times of switching in experiment (e.g. turning WN off and on, changing pitch contingency, etc)
-Params_alldays.Edge_Num_Rends = 20; % num rends to call "edges"
+     '31Mar2017-1139', '02Apr2017-1904', '04Apr2017-0900', ...
+     '10Apr2017-1024', '13Apr2017-2027', '17Apr2017-1326'}; % in format of e.g. 05May2014-1423, these are times of switching in experiment (e.g. turning WN off and on, changing pitch contingency, etc)
+Params_alldays.Edge_Num_Rends = 5; % num rends to call "edges"
 
 Params_alldays.throw_out_if_epoch_diff_days=0; % throws out any transitions that overlap with O/N (potentially 2 per O/N)
 one_switch_a_day=0; % manual switching experiemnts.
 
-lt_context_PLOT(AllSongsDataMatrix, Params_alldays, one_switch_a_day);
+plotIndTrials = 1;
+
+lt_context_PLOT(AllSongsDataMatrix, Params_alldays, one_switch_a_day, plotIndTrials);
 
 
 

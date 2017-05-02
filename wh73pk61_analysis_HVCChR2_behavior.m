@@ -303,6 +303,7 @@ lt_Opto_Stim_analy_SUMMARY_PlotOverTime(BirdDir,ListOfDirs,TimeFieldsOfInterest,
 
 
 % ======================= EXPERIMENT 2 - keeping WN on and quantifying pitch in early part of syl
+% NOTE, OBSOLETE, COMBINED WITH NEWER EXPERIMENTS BELOW
 BirdDir='/bluejay3/lucas/birds/wh73pk61/';
 
 ListOfDirs=...
@@ -338,7 +339,7 @@ lt_Opto_Stim_analy_SUMMARY_PlotOverTime(BirdDir,ListOfDirs,TimeFieldsOfInterest,
 
 
 % ================== COMBINING EXPTS 1 and 2 (REVERSION, EARLY TURNED OFF WN, LATER DAYS DID NOT) - 
-BirdDir='/bluejay3/lucas/birds/wh73pk61/';
+BirdDir='/bluejay5/lucas/birds/wh73pk61/';
 
 ListOfDirs=...
     {'031215_HVCChR2_XStimON_PitchShiftOFF_day4/lt_Opto_Stim_analy_batch.labeled.all_13Mar2015_1208X/PLOT_StimCatch_StimNotCatch_13Mar2015_1210/TimeWindow_13Mar2015_1213/OverTime_13Mar2015_1217',...
@@ -464,7 +465,7 @@ lt_Opto_Stim_analy_SUMMARY_PlotOverTime(BirdDir,ListOfDirs,TimeFieldsOfInterest,
 
 % -- Get directories of interest
 
-BirdDir='/bluejay3/lucas/birds/wh73pk61/';
+BirdDir='/bluejay5/lucas/birds/wh73pk61/';
 
 ListOfDirs1=...
     {'030815_HVCChR2_XStim_StimOFF/lt_Opto_Stim_analy_batch.labeled.all_12Mar2015_2009/PLOT_All_12Mar2015_2010/TimeWindow_12Mar2015_2010/OverTime_12Mar2015_2010',...
@@ -488,6 +489,7 @@ ListOfDirs1=...
     '040115_HVCChR2_NoteGroups_StimONWnON_Targb2only_day6/lt_Opto_Stim_analy_v2/Stim',...
     '040115_HVCChR2_NoteGroups_StimOffWnON_Targb2only_day6/lt_Opto_Stim_analy_v2/All'};
     
+
 
 MetadataStruct=lt_metadata_collect;
 
@@ -532,6 +534,7 @@ ListOfDirs_all=[ListOfDirs1 ListOfDirs2_modified];
 
 % Params for analysis
 TimeFieldsOfInterest = 1:4;
+% TimeFieldsOfInterest = 4;
 statfield='ffvals';
 BaselineDays=1:3;
 plotStimEpochs=1;

@@ -1,32 +1,31 @@
 %%  NO LABEL REQUIRED - USED FOR ANALYSIS OF LEARNING SCREENING
-close all;
-
-Params.batch='batch';
-Params.config='/bluejay5/lucas/birds/or60/config.evconfig2';
-Params.NoteNum_to_plot=0; % for the note you want to analyze
-[AllSongsData_toplot, AllData] = lt_check_hit_templ_freq_NoLabelRequired(Params);
-
-
+% close all;
+% 
+% Params.batch='batch';
+% Params.config='/bluejay5/lucas/birds/or60/config.evconfig2';
+% Params.NoteNum_to_plot=0; % for the note you want to analyze
+% [AllSongsData_toplot, AllData] = lt_check_hit_templ_freq_NoLabelRequired(Params);
+% 
+% 
 %% ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 %% ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 %% Reversion1
 
 %% CHECKING TEMPLATE MATCHING;
 
+
+
+% ----------------------------- v2: (laser , wn c1)
+% === WN (cc[b])
 clear all; close all;
 batchf='batch.labeled.all';
-% config='/bluejay5/lucas/birds/or60/config.evconfig2'; % WN TEST
-% config='/bluejay5/lucas/birds/or60/config021817.evconfig2';
-% config='/bluejay5/lucas/birds/or60/config021917_2.evconfig2';
-config='/bluejay5/lucas/birds/or60/config022017.evconfig2';
-config='/bluejay5/lucas/birds/or60/config022017_2.evconfig2';
-config='/bluejay5/lucas/birds/or60/config022117_2.evconfig2';
-config='/bluejay5/lucas/birds/or60/config022117_3.evconfig2';
-config='/bluejay5/lucas/birds/or60/config022217.evconfig2';
-% === WN (cc[b])
+config = '/bluejay5/lucas/birds/or1/config041017.evconfig2';
+config = '/bluejay5/lucas/birds/or1/config041017_2.evconfig2';
+config = '/bluejay5/lucas/birds/or1/041117_Reversion1_durWN_STIMon/config.evconfig2';
+config = '/bluejay5/lucas/birds/or1/config041317.evconfig2';
 
-syl='b';
-syl_pre='c';
+syl='c';
+syl_pre='f';
 syl_post='';
 get_WN_hits=1;
 get_offline_match=1;
@@ -35,9 +34,10 @@ NoteNum=0;
 
 check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post, get_WN_hits,get_offline_match,get_FF,config,NoteNum);
 
+
 % === LASER
-syl='c';
-syl_pre='d';
+syl='d';
+syl_pre='h';
 syl_post='';
 get_WN_hits=1;
 get_offline_match=1;
@@ -48,20 +48,84 @@ check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post
 
 
 %% ====== ALIGNING STIM TO SONG
+close all; 
+songf = 'or1_STIMon_260317_214921.1362.cbin'; % either .cbin file or batch
+songf = 'batch.keep'; % either .cbin file or batch
+lasernote = 1;
 
-songf = 'or60_STIMon_140317_172020.61.cbin';
+if any(strfind(songf, 'cbin'));
+    lt_figure; hold on;
+    % then assume is a single song
+    % 1) song
+    [dat, Fs, DOFILT, ext]=ReadDataFile(songf,'0');
+    x = [1:length(dat)]./Fs;
+    plot(x, dat, '-k')
+    
+    % 2) trigger
+    [dat, Fs, DOFILT, ext]=ReadDataFile(songf,'1');
+    plot(x, dat, '-r')
+    
+    % -- ad trig time with rec file ...
+    rd = readrecf_LT_evtafv4(songf);
+    
+    
+else
+    
+    figcount=1;
+    subplotrows=4;
+    subplotcols=2;
+    fignums_alreadyused=[];
+    hfigs=[];
+    
+    hsplots = [];
+    % ---------- go thur all songs in batch
+    batchf = songf;
+    fid = fopen(batchf);
+    songf = fgetl(fid);
+    
+    while ischar(songf)
+        
+        
+        [fignums_alreadyused, hfigs, figcount, hsplot]=lt_plot_MultSubplotsFigs('', subplotrows, subplotcols, fignums_alreadyused, hfigs, figcount);
+        title(songf);
+        hsplots = [hsplots hsplot];
+        
+        % 1) song
+        [dat, Fs, DOFILT, ext]=ReadDataFile(songf,'0');
+        x = [1:length(dat)]./Fs;
+        plot(x, dat, '-k')
+        
+        % 2) trigger
+        [dat, Fs, DOFILT, ext]=ReadDataFile(songf,'1');
+        plot(x, dat, '-r')
+        
+        % -- ad trig time with rec file ...
+        rd = readrecf_LT_evtafv4(songf);
+        if ~isempty(rd.ttimes)
+            for i=1:length(rd.ttimes)
+                if rd.trignote(i)==lasernote
+                    if rd.catch(i) ==1
+                        plot(rd.ttimes(i)/1000, 0, '^g');
+                    else
+                        plot(rd.ttimes(i)/1000, 0, '^r');
+                        lt_plot_text(rd.ttimes(i)/1000 +0.05, 0, 'hit', 'r');
+                    end
+                    
+                end
+                
+            end
+        end
+        
+        % - next
+        songf = fgetl(fid);
+    end
+    linkaxes(hsplots, 'y');
+end
 
 
-% 1) song
-[dat, Fs, DOFILT, ext]=ReadDataFile(songf,'0');
-figure; hold on; plot(dat, '-k')
 
-% 2) trigger
-[dat, Fs, DOFILT, ext]=ReadDataFile(songf,'1');
-plot(dat, '-r')
 
-% -- ad trig time with rec file ...
-rd = readrecf_LT_evtafv4(songf);
+
 
 
 %% ====================== ANALYSIS
@@ -73,26 +137,26 @@ clear StatsStruct
     Params.DataInfo='UnDir'; % To note information about data, 'Dir' and 'UnDir' means this is directed or undirected song.
     Params.Fs=32000;
 %         WHERE TO ALIGN SONGS
-    Params.SylTarg='b'; % aligns to onset of this
-    Params.PreNote='c';
+    Params.SylTarg='c'; % aligns to onset of this
+    Params.PreNote='f';
     
-    Params.PreDur=0.25; % sec, how much data to take before targ
-    Params.PostSylOnsetDur=0.15; % sec, data post to take
+    Params.PreDur=0.5; % sec, how much data to take before targ
+    Params.PostSylOnsetDur=0.2; % sec, data post to take
     Params.TargNoteNum=0; % template note directed to target
     Params.TargTrigCatchRate=0; % catch trial fraction at target
 
 %         STIM
     Params.notenum_stim=1; % of Stim - CONFIRMED THIS WORKS
-    Params.StimDelay=20; % in ms, delay from trigger to stim on
-    Params.StimDur=150; % duration of Stim, in ms
+    Params.StimDelay=150; % in ms, delay from trigger to stim on
+    Params.StimDur=350; % duration of Stim, in ms
     Params.StimType='pulse'; % either 'constant' or 'pulse'
     
 %     	for pitch contour
-    Params.PC_freqrange=[3800 5200]; % for both pitch contour and find note
+    Params.PC_freqrange=[1800 3000]; % for both pitch contour and find note
     Params.pc_harms=1;
 
 %     	To sort into stim vs. notstim trials
-    Params.StimLatencyWindow=[-250, 0]; % [a b] a and b are times (in negative ms) preceding syl onset. If stim is within this window, then will call a "stim trial."
+    Params.StimLatencyWindow=[-450, -250]; % [a b] a and b are times (in negative ms) preceding syl onset. If stim is within this window, then will call a "stim trial."
 
 
 % RUN DATA EXTRACT --------------------------------------------
@@ -107,15 +171,15 @@ close all;
 % For 2 or more, will plot comaprisons, so enter all fields names
 % Params.FieldsToCheck{1}='COMBO_StimCatch_TargAllCatch';
 % Params.FieldsToCheck{2}='COMBO_StimNotCatch_TargAllCatch';
-% Params.FieldsToCheck{1}='StimCatch';
-% Params.FieldsToCheck{2}='StimNotCatch';
+Params.FieldsToCheck{1}='StimCatch';
+Params.FieldsToCheck{2}='StimNotCatch';
 % Params.FieldsToCheck{1}='NotStim';
 % Params.FieldsToCheck{2}='Stim';
 % Params.FieldsToCheck{1}='COMBO_StimCatch_TargAllCatch';
 % Params.FieldsToCheck{2}='COMBO_StimNotCatch_TargAllCatch';
 % Params.FieldsToCheck{1}='SIMULATE_Catch';
 % Params.FieldsToCheck{2}='SIMULATE_NotCatch';
-Params.FieldsToCheck{1}='All';
+% Params.FieldsToCheck{1}='All';
 % Params.FieldsToCheck{1}='COMBO_TargAllCatch';
 % Params.FieldsToCheck{1}='COMBO_TargAllCatch';
  
@@ -132,9 +196,7 @@ close all
 Params.TimeWindowList = {};
 
 % NEW - targetting b2 with WN(2bins) (changed to this0
-Params.TimeWindowList{1}=[254 268]; % entire syl
-
-Params.TimeWindowList{1}= [254 262]; % during WN
+Params.TimeWindowList{1}= [532 542]; % during WN
 
     for i=1:length(Params.TimeWindowList);
         TimeWind = Params.TimeWindowList{i};
@@ -150,7 +212,7 @@ Params.TimeWindowList{1}= [254 262]; % during WN
     KeepOutliers=1; % for running stats and plotting.
 [StatsStruct, Params]=lt_Opto_Stim_analy_PLOT_TimeWindow_v2(StatsStruct, Params, RunStats, KeepOutliers);
 
-% % DISPLAY SUMMARY STATS
+% DISPLAY SUMMARY STATS
 % lt_Opto_Stim_analy_PL
 
 
@@ -193,7 +255,7 @@ close all;
 Params_metadata.experiment='Reversion2'; % 1st underscore ...
 Params_metadata.condition='';
 Params_metadata.notes='';
-Params_metadata.date_range={'17Mar2017', '18Mar2017'};
+Params_metadata.date_range={'19Apr2017', '19Apr2017'};
 Params_metadata.only_labeled_dirs=1;
 
 % ===== For opto analysis
@@ -201,30 +263,30 @@ Params_glob.DataInfo='UnDir'; % To note information about data, 'Dir' and 'UnDir
 Params_glob.Fs=32000;
 
 %         WHERE TO ALIGN SONGS
-Params_glob.SylTarg='b'; % aligns to onset of this
-Params_glob.PreNote='c';
+Params_glob.SylTarg='c'; % aligns to onset of this
+Params_glob.PreNote='f';
 
-Params_glob.PreDur=0.25; % sec, how much data to take before targ
-Params_glob.PostSylOnsetDur=0.5; % sec, data post to take
+Params_glob.PreDur=0.5; % sec, how much data to take before targ
+Params_glob.PostSylOnsetDur=0.2; % sec, data post to take
 Params_glob.TargNoteNum=0; % template note directed to target
 Params_glob.TargTrigCatchRate=0; % catch trial fraction at target
 
 %         STIM
 Params_glob.notenum_stim=1; % of Stim - CONFIRMED THIS WORKS
-Params_glob.StimDelay=20; % in ms, delay from trigger to stim on
-Params_glob.StimDur=150; % duration of Stim, in ms
-Params_glob.StimType='const'; % either 'constant' or 'pulse'
+Params_glob.StimDelay=150; % in ms, delay from trigger to stim on
+Params_glob.StimDur=350; % duration of Stim, in ms
+Params_glob.StimType='pulse'; % either 'constant' or 'pulse'
 
 %     	for pitch contour
-Params_glob.PC_freqrange=[4150 5100]; % for both pitch contour and find note
+Params_glob.PC_freqrange=[1800 3000]; % for both pitch contour and find note
 Params_glob.pc_harms=1;
 
 %     	To sort into stim vs. notstim trials
-Params_glob.StimLatencyWindow=[-250, 0]; % [a b] a and b are times (in negative ms) preceding syl onset. If stim is within this window, then will call a "stim trial."
+Params_glob.StimLatencyWindow=[-450, -250]; % [a b] a and b are times (in negative ms) preceding syl onset. If stim is within this window, then will call a "stim trial."
 
 % Time Window List
 % DURING WN (on window 3)
-Params_glob.TimeWindowList{1}=[254 262];
+Params_glob.TimeWindowList{1}=[532 542];
 
 % Plotting over time
 Params_glob.SmthBin=15; % smooth # rends
@@ -237,15 +299,14 @@ Params_glob.Delete_old_analysis_folder=1;
 KeepOutliers=1; % for running stats and plotting.
 lt_Opto_Stim_analy_SUMMARY_MultDayAnaly_v3(Params_metadata, Params_glob, KeepOutliers);
 
-cd ../../
+cd ../../../
 
 
 %% ==================== PLOT ACROSS DAYS
 close all;
-clear all;
 
 % ==== Params for analysis
-BirdDir='/bluejay5/lucas/birds/or60/';
+BirdDir='/bluejay5/lucas/birds/or1/';
 TimeFieldsOfInterest = 1; % i.e. time windows in pitch contour
 statfield='ffvals';
 BaselineDays=1;
@@ -259,7 +320,7 @@ MetadataStruct=lt_metadata_collect;
 experiment = 'Reversion2';
 condition='';
 notes='';
-date_range={'13Mar2017', '18Mar2017'};
+date_range={'06Apr2017', '19Apr2017'};
 only_labeled_dirs=1;
 
 ListOfDirs2=lt_metadata_find_dirs(MetadataStruct, experiment, condition, notes, date_range, only_labeled_dirs);
@@ -268,7 +329,6 @@ ListOfDirs2=lt_metadata_find_dirs(MetadataStruct, experiment, condition, notes, 
 c=1;
 for i=1:length(ListOfDirs2);
     cd(ListOfDirs2{i});
-    
     
     tmp=[];
     try
@@ -298,16 +358,12 @@ end
 % ===== COMBINE DIRS
 ListOfDirs_all=[ListOfDirs1 ListOfDirs2_modified];
 
-MetaParams.WNonDates = {'13Mar2017-2312-up', '15Mar2017-2300-dn', '18Mar2017-1432-up'}; % times when WN epochs began
+
+MetaParams.WNonDates = {'07Apr2017-1109-up', '14Apr2017-1330-dn'}; % times when WN epochs began
 
 
 lt_Opto_Stim_analy_SUMMARY_PlotOverTime(BirdDir, ListOfDirs_all,TimeFieldsOfInterest, ...
     statfield,BaselineDays,plotStimEpochs, MetaParams)
-
-
-
-
-
 
 
 
@@ -316,17 +372,17 @@ lt_Opto_Stim_analy_SUMMARY_PlotOverTime(BirdDir, ListOfDirs_all,TimeFieldsOfInte
 %% AUTOLABEL
 
 % batch = 'batch.keep.UNLABELED';
-batch = 'batch.rec_FB';
-config='/bluejay5/lucas/birds/or60/config022217.evconfig2';
+batch = 'batch.keep';
+config = '/bluejay5/lucas/birds/or1/config_autolabel.evconfig2';
 
-syl.targ='b';
-syl.pre='dcc';
+syl.targ='c';
+syl.pre='kkmhdef';
 syl.post=''; 
 NoteNum=0; 
 
-ampThresh=47000;
-min_dur=30;
-min_int=4;
+ampThresh=9000;
+min_dur=20;
+min_int=5;
 
 overwrite_notmat=1; % will always make backup folder
 

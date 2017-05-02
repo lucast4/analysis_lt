@@ -438,7 +438,9 @@ smthbin=25;
 
 FieldNames={'StimOFF','StimCatch_pulse','StimNotCatch_pulse','StimCatch_const','StimNotCatch_const'};
 PlotColors=lt_make_plot_colors(length(FieldNames),0);
-
+tmp = PlotColors{1};
+PlotColors{1} = PlotColors{2};
+PlotColors{2} = tmp;
 
 
 % 1) Plot day means

@@ -18,6 +18,8 @@ batchf='batch.keep';
 config='/bluejay5/lucas/birds/or1/config_032517.evconfig2'; % WN TEST
 config = '/bluejay5/lucas/birds/or1/config_032717.evconfig2';
 
+
+% ----------------------------- v1: (laser c, wn b)
 % === WN (cc[b])
 
 syl='b';
@@ -33,6 +35,38 @@ check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post
 % === LASER
 syl='c';
 syl_pre='f';
+syl_post='';
+get_WN_hits=1;
+get_offline_match=1;
+get_FF=0;
+NoteNum=1;
+
+check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post, get_WN_hits,get_offline_match,get_FF,config,NoteNum);
+
+
+% ----------------------------- v2: (laser , wn c1)
+% === WN (cc[b])
+clear all; close all;
+batchf='batch.labeled.all';
+config = '/bluejay5/lucas/birds/or1/config041017.evconfig2';
+config = '/bluejay5/lucas/birds/or1/config041017_2.evconfig2';
+config = '/bluejay5/lucas/birds/or1/041117_Reversion1_durWN_STIMon/config.evconfig2';
+config = '/bluejay5/lucas/birds/or1/config_041217.evconfig2';
+
+syl='c';
+syl_pre='f';
+syl_post='';
+get_WN_hits=1;
+get_offline_match=1;
+get_FF=1;
+NoteNum=0;
+
+check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post, get_WN_hits,get_offline_match,get_FF,config,NoteNum);
+
+
+% === LASER
+syl='d';
+syl_pre='h';
 syl_post='';
 get_WN_hits=1;
 get_offline_match=1;
