@@ -47,7 +47,7 @@ check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post
 
 %% ====== ALIGNING STIM TO SONG
 close all; 
-songf = 'or1_STIMon_260317_214921.1362.cbin'; % either .cbin file or batch
+songf = 'or1_STIMon_040517_165907.4141.cbin'; % either .cbin file or batch
 songf = 'batch.labeled.all'; % either .cbin file or batch
 lasernote = 1;
 
@@ -416,7 +416,7 @@ Params.pc_harms_list=[1];
 Params.batch='batch.labeled.all';
 Params.experiment = 'Association1';
 
-date_range={'26Apr2017','28Apr2017'}; % e.g. {'20Apr2015','20May2015'}. leave blank ('') for all days
+date_range={'06Apr2017', '07Apr2017'}; % e.g. {'20Apr2015','20May2015'}. leave blank ('') for all days
 
 % ---- 2) Collect note group information? 
 CollectNoteGroup = 1; % set to 1 if want to use online NoteGroups. Otherwise will do context stuff using the 
@@ -428,7 +428,7 @@ lt_extract_AllDaysPC(Params, date_range, CollectNoteGroup)
 
 %% Compiling data - go to "extract" folder first
 clear all; close all;
-Params_global.CompilePC.PC_window_list={'c', [260 310]}; % syl, value pairs [single syls]
+Params_global.CompilePC.PC_window_list={'c', [230 287]}; % syl, value pairs [single syls]
 Params_global.CompilePC.FirstDay='';
 Params_global.CompilePC.LastDay='';
 plotON=1; % pitch contours, all days, all syls
@@ -470,7 +470,8 @@ close all;
 Params_alldays.NoteToPlot=1;
 Params_alldays.RunBin=10;
 
-Params_alldays.BoundaryTimes={'19Apr2017-0946', '25Apr2017-2032'}; % in format of e.g. 05May2014-1423, these are times of switching in experiment (e.g. turning WN off and on, changing pitch contingency, etc)
+Params_alldays.BoundaryTimes={'19Apr2017-0946', '25Apr2017-2032', '03May2017-1002', ...
+    '07May2017-2151', '12May2017-1423'}; % laserDN, laserUP, laserPOWERINCREASE
 Params_alldays.Edge_Num_Rends = 5; % num rends to call "edges"
 
 Params_alldays.throw_out_if_epoch_diff_days=0; % throws out any transitions that overlap with O/N (potentially 2 per O/N)

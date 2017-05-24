@@ -420,7 +420,7 @@ Params.pc_harms_list=[1];
 Params.batch='batch.labeled.all';
 Params.experiment = 'Association2';
 
-date_range={'21Apr2017','23Apr2017'}; % e.g. {'20Apr2015','20May2015'}. leave blank ('') for all days
+date_range={'30Apr2017','01May2017'}; % e.g. {'20Apr2015','20May2015'}. leave blank ('') for all days
 
 % ---- 2) Collect note group information? 
 CollectNoteGroup = 1; % set to 1 if want to use online NoteGroups. Otherwise will do context stuff using the 
@@ -477,7 +477,8 @@ Params_alldays.RunBin=10;
 
 Params_alldays.BoundaryTimes={'27Mar2017-0931', '28Mar2017-1019', ...
      '31Mar2017-1139', '02Apr2017-1904', '04Apr2017-0900', ...
-     '10Apr2017-1024', '13Apr2017-2027', '17Apr2017-1326'}; % in format of e.g. 05May2014-1423, these are times of switching in experiment (e.g. turning WN off and on, changing pitch contingency, etc)
+     '10Apr2017-1024', '13Apr2017-2027', '17Apr2017-1326', ...
+     '26Apr2017-2157', '30Apr2017-1120'}; % in format of e.g. 05May2014-1423, these are times of switching in experiment (e.g. turning WN off and on, changing pitch contingency, etc)
 Params_alldays.Edge_Num_Rends = 5; % num rends to call "edges"
 
 Params_alldays.throw_out_if_epoch_diff_days=0; % throws out any transitions that overlap with O/N (potentially 2 per O/N)
