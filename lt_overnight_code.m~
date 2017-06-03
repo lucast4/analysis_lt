@@ -13,12 +13,11 @@ ListOfDirs=lt_metadata_find_dirs(MetadataStruct, experiment, condition, notes, .
     date_range, only_labeled_dirs, 2);
 
 
-
 %%
 
 for i=1:length(ListOfDirs)
     
-    cd(ListOfDirs(i).dirname);
+    cd(ListOfDirs{i});
     
 % 1) make batch
 lt_make_batch(1);
@@ -40,7 +39,6 @@ overwrite_notmat=1; % will always make backup folder
 
 [fnames, sylnum, vlsorfn, vlsorind]=lt_autolabel_EvTAFv4(batch, config, syl, NoteNum, ampThresh, min_dur, min_int, overwrite_notmat);
     
-cd ..
     
 end
 

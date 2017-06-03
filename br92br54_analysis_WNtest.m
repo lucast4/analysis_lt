@@ -68,6 +68,7 @@ check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post
 clear all; close all;
 batchf='batch.labeled.all';
 config='/bluejay5/lucas/birds/br92br54/config_052417.evconfig2'; % 5/1/17
+config='/bluejay5/lucas/birds/br92br54/config_052417_2.evconfig2'; % 5/1/17
 
 % === WN (nk[h])
 syl='h';

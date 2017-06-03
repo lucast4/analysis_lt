@@ -49,7 +49,6 @@ check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post
 
 %% ====== ALIGNING STIM TO SONG
 close all; 
-songf = 'or1_STIMon_260317_214921.1362.cbin'; % either .cbin file or batch
 songf = 'batch.keep'; % either .cbin file or batch
 lasernote = 1;
 

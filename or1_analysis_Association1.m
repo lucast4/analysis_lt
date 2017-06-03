@@ -416,7 +416,7 @@ Params.pc_harms_list=[1];
 Params.batch='batch.labeled.all';
 Params.experiment = 'Association1';
 
-date_range={'06Apr2017', '07Apr2017'}; % e.g. {'20Apr2015','20May2015'}. leave blank ('') for all days
+date_range={'24Mar2017', '25Mar2017'}; % e.g. {'20Apr2015','20May2015'}. leave blank ('') for all days
 
 % ---- 2) Collect note group information? 
 CollectNoteGroup = 1; % set to 1 if want to use online NoteGroups. Otherwise will do context stuff using the 
@@ -470,7 +470,7 @@ close all;
 Params_alldays.NoteToPlot=1;
 Params_alldays.RunBin=10;
 
-Params_alldays.BoundaryTimes={'19Apr2017-0946', '25Apr2017-2032', '03May2017-1002', ...
+Params_alldays.BoundaryTimes={'07Apr2017-1109', '19Apr2017-0946', '25Apr2017-2032', '03May2017-1002', ...
     '07May2017-2151', '12May2017-1423'}; % laserDN, laserUP, laserPOWERINCREASE
 Params_alldays.Edge_Num_Rends = 5; % num rends to call "edges"
 
