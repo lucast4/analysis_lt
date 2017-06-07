@@ -33,7 +33,7 @@ get_offline_match=1;
 get_FF=1;
 NoteNum=0;
 
-check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post, get_WN_hits,get_offline_match,get_FF,config,NoteNum);
+check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim_forRachel(batchf, syl, syl_pre, syl_post, get_WN_hits,get_offline_match,get_FF,config,NoteNum);
 
 % === LASER
 syl='c';

@@ -1,7 +1,7 @@
 %% MATCHING TEMPLATE - gH
 
 clear all; close all;
-batchf= 'batch.rand.keep';
+batchf= 'batch.labeled.all';
 get_WN_hits=1;
 get_offline_match=1; % do offline matching using template? (ADDX=1)
 get_FF=1; % Analyze FF using offline matching?

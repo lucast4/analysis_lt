@@ -7,6 +7,7 @@ experiment = 'RandomWN';
 condition='';
 notes='';
 date_range={'25Jan2017','12Feb2017'};
+date_range={'05Feb2017','12Feb2017'};
 only_labeled_dirs=0;
 
 ListOfDirs=lt_metadata_find_dirs(MetadataStruct, experiment, condition, notes, ...
