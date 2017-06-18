@@ -7,7 +7,7 @@ ind=0;
 ind=ind+1;
 NeuronDatabase.neurons(ind).exptID='LMANneural1'; % 
 NeuronDatabase.neurons(ind).date='020317'; % date
-NeuronDatabase.neurons(ind).batchfile='BatchNight2150'; % batchfile (songs)
+NeuronDatabase.neurons(ind).batchfile='Batch2039to2254'; % batchfile (songs)
 NeuronDatabase.neurons(ind).chan=9; % channel
 NeuronDatabase.neurons(ind).clustnum=1; % cluster
 NeuronDatabase.neurons(ind).NOTE_is_single_unit='no'; % is_single_unit
@@ -118,7 +118,7 @@ NeuronDatabase.neurons(ind).NOTE_clust_qual_confirmed=''; % cluster_quality_conf
 NeuronDatabase.neurons(ind).NOTE_all_songs_gotten=''; % all_songs_gotten
 NeuronDatabase.neurons(ind).NOTE_random='just checking if clearly song mod'; % random note
 NeuronDatabase.neurons(ind).NOTE_all_labeled='no'; % 
-NeuronDatabase.neurons(ind).electrode_depth=[]; % in um [leave empty [] if no]
+NeuronDatabase.neurons(ind).electrode_depth=1800; % in um [leave empty [] if no]
 
 
 

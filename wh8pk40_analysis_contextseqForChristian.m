@@ -120,6 +120,46 @@ birdname = 'wh8pk40';
 transitions = {};
 transitions{1} = 'bc';
 transitions{2} = 'ec';
+transitions{3} = 'c-';
 
 plot_seq_context_LT(exptname,birdname, transitions);
+
+
+%% ========================== ANALYZING CHRISTIAN STUFF
+
+% syl 1
+clear all; close all;
+config = '/bluejay5/lucas/birds/wh8pk40/config_060617.evconfig2';
+config = '/bluejay5/lucas/birds/wh8pk40/config_060717.evconfig2';
+% batchf= 'batch.NoteGroup_0.LABELED';
+batchf= 'batch.labeled.all';
+get_WN_hits=1;
+get_offline_match=1; % do offline matching using template? (ADDX=1)
+get_FF=1; % Analyze FF using offline matching?
+syl = 'c';
+syl_pre = 'b';
+syl_post = '';
+NoteNum = 0; 
+
+lt_check_hit_templ_freq_v2_EvTAFv4Sim_forRachel(batchf, syl, syl_pre, ...
+    syl_post, get_WN_hits, get_offline_match, get_FF, config, NoteNum)
+
+
+% syl 2 - target ec
+config = '/bluejay5/lucas/birds/wh8pk40/config_060617.evconfig2';
+config = '/bluejay5/lucas/birds/wh8pk40/config_060717.evconfig2';
+%batchf= 'batch.NoteGroup_2.LABELED';
+batchf= 'batch.labeled.all';
+
+get_WN_hits=1;
+get_offline_match=1; % do offline matching using template? (ADDX=1)
+get_FF=1; % Analyze FF using offline matching?
+syl = 'c';
+syl_pre = 'e';
+syl_post = '';
+NoteNum = 1; 
+
+lt_check_hit_templ_freq_v2_EvTAFv4Sim_forRachel(batchf, syl, syl_pre, syl_post, get_WN_hits, get_offline_match, get_FF, config, NoteNum)
+
+
 
