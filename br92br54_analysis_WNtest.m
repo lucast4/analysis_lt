@@ -1,8 +1,8 @@
 %%  NO LABEL REQUIRED - USED FOR ANALYSIS OF LEARNING SCREENING
 close all;
 
-Params.batch='batch.keep';
-Params.config='/bluejay5/lucas/birds/br92br54/config_042917.evconfig2';
+Params.batch='batch.rand.keep';
+Params.config='/bluejay5/lucas/birds/br92br54/config_062617.evconfig2';
 Params.NoteNum_to_plot=0; % for the note you want to analyze
 [AllSongsData_toplot, AllData] = lt_check_hit_templ_freq_NoLabelRequired(Params);
 
@@ -50,7 +50,8 @@ check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post
 % ===== (ag(c)c);
 clear all; close all;
 batchf='batch.labeled.all';
-config='/bluejay5/lucas/birds/br92br54/config042317_2.evconfig2';
+config='/bluejay5/lucas/birds/br92br54/config042317_2.evconfig2'; % GETS first c
+config='/bluejay5/lucas/birds/br92br54/config_062617.evconfig2'; % GETS both c
 
 % === WN (nk[h])
 syl='c';
@@ -104,6 +105,7 @@ clear all; close all;
 batchf='batch.labeled.all';
 config='/bluejay5/lucas/birds/br92br54/config_061617_2.evconfig2'; % 
 config='/bluejay5/lucas/birds/br92br54/config_061617_3.evconfig2'; % 6/17/16 - now letting hd get also the shorter h
+config='/bluejay5/lucas/birds/br92br54/config_061617_4.evconfig2'; % 6/25/17 - BOTH NOTES HITTING IN SAME DIRECTION (each note more liberal)
 
 % === WN 
 syl='d';
@@ -122,11 +124,12 @@ clear all; close all;
 batchf='batch.labeled.all';
 config='/bluejay5/lucas/birds/br92br54/config_061617_2.evconfig2'; %
 config='/bluejay5/lucas/birds/br92br54/config_061617_3.evconfig2'; % 6/17/16 - now letting hd get also the shorter h
+config='/bluejay5/lucas/birds/br92br54/config_061617_4.evconfig2'; % 6/25/17 - BOTH NOTES HITTING IN SAME DIRECTION (each note more liberal)
 
 % === WN
 syl='d';
-syl_pre='';
-syl_post='dd';
+syl_pre='x';
+syl_post='';
 get_WN_hits=1;
 get_offline_match=1;
 get_FF=1;
@@ -135,6 +138,39 @@ NoteNum=1;
 check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, ...
     syl_post, get_WN_hits,get_offline_match,get_FF,config,NoteNum);
 
+
+%% ======== LMANlearn7
+
+% ===== (ag(c)c);
+clear all; close all;
+batchf='batch.labeled.all';
+config='/bluejay5/lucas/birds/br92br54/config042317_2.evconfig2'; % GETS first c
+config='/bluejay5/lucas/birds/br92br54/config_062617.evconfig2'; % GETS both c
+
+% === WN (nk[h])
+syl='c';
+syl_pre='';
+syl_post='';
+get_WN_hits=1;
+get_offline_match=1;
+get_FF=1;
+NoteNum=0;
+
+check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post, get_WN_hits,get_offline_match,get_FF,config,NoteNum);
+
+% 
+% % ====== 
+% syl='x';
+% syl_pre='agc';
+% syl_post='';
+% get_WN_hits=1;
+% get_offline_match=1;
+% get_FF=1;
+% NoteNum=0;
+% 
+% check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post, get_WN_hits,get_offline_match,get_FF,config,NoteNum);
+
+%% ==== LMAN
 
 %% 
 clear NeuronDatabase;
