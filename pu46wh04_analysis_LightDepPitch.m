@@ -4,18 +4,16 @@ clear all; close all;
 % batchf='batch.rand.keep.LABELED';
 batchf='batch.labeled.all';
 % config='/bluejay5/lucas/birds/rd28wh47/config_100217_2.evconfig2'; % first config
-config='/bluejay5/lucas/birds/rd28wh47/config_100617.evconfig2'; % starte 10/6
-config='/bluejay5/lucas/birds/rd28wh47/config_100917.evconfig2'; %
-config='/bluejay5/lucas/birds/rd28wh47/config_101317.evconfig2'; %
+config='/bluejay5/lucas/birds/pu46wh04/config101817.evconfig2'; %
 
 % === WN (d[h])
-syl='h';
-syl_pre='d';
+syl='b';
+syl_pre='j';
 syl_post='';
 get_WN_hits=1;
 get_offline_match=1;
 get_FF=1;
-NoteNum=1;
+NoteNum=0;
 
 % % --- temp (testing template)
 % config='/bluejay5/lucas/birds/rd28wh47/config_101217_onenote.evconfig2'; %
