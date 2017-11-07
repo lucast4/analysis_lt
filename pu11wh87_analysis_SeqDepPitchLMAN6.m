@@ -95,26 +95,26 @@ Params.DayRawDat.Musc_Off_Time='1854';
 
 %% Script to change name of all song files in a day to stick "PBS" or "MUSC" right after bird name
 
-% StringToAdd='PBS';
-% 
-% FilesInFolder=dir('*'); % get all cbins, cbinnotmat, and rec
-% 
-% % copy all stuff to backup folder
-% mkdir OldSongFiles
-% !cp * OldSongFiles;
-% 
-% % continue
-% for i=1:length(FilesInFolder);
-%     fn=FilesInFolder(i).name;
-%     
-%     if any(strfind(fn,'.cbin')) || any(strfind(fn,'.rec')) || any(strfind(fn,'.not.mat'));
-%     
-%         fn_new=[fn(1:9) StringToAdd '_' fn(10:end)];
-%         
-%         eval(['!mv ' fn ' ' fn_new]);
-%         
-%     end
-% end
+StringToAdd='PBS';
+
+FilesInFolder=dir('*'); % get all cbins, cbinnotmat, and rec
+
+% copy all stuff to backup folder
+mkdir OldSongFiles
+!cp * OldSongFiles;
+
+% continue
+for i=1:length(FilesInFolder);
+    fn=FilesInFolder(i).name;
+    
+    if any(strfind(fn,'.cbin')) || any(strfind(fn,'.rec')) || any(strfind(fn,'.not.mat'));
+    
+        fn_new=[fn(1:9) StringToAdd '_' fn(10:end)];
+        
+        eval(['!mv ' fn ' ' fn_new]);
+        
+    end
+end
 
 
 
