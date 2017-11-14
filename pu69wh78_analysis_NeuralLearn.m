@@ -51,6 +51,106 @@ NoteNum = 0;
 
 check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post, get_WN_hits, get_offline_match, get_FF, config, NoteNum);
 
+
+%% ============= getting only jb(h)
+
+clear all; close all;
+batchf= 'batch.labeled.all';
+get_WN_hits=1;
+get_offline_match=1; % do offline matching using template? (ADDX=1)
+get_FF=1; % Analyze FF using offline matching?
+syl = 'h';
+syl_pre = 'jbh';
+syl_post = '';
+% config = '/bluejay5/lucas/birds/pu69wh78/config_111017_jb.evconfig2'; % better, works by being slightly conservative as well as using NOT btaf to avoid FP.
+config = '/bluejay5/lucas/birds/pu69wh78/config_111017_jb.evconfig2'; % better, works by being slightly conservative as well as using NOT btaf to avoid FP.
+NoteNum = 1;
+
+check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post, get_WN_hits, get_offline_match, get_FF, config, NoteNum);
+
+
+
+% ====== updating config file
+
+% ---- 3) copy params from first note to other notes
+copyfrom = 1;
+copyto = [2];
+config_fname = '/bluejay5/lucas/birds/pu69wh78/config_111017_jb.evconfig2';
+lv_EvConfigCopyTemplstufftoAllNG(config_fname,copyfrom,copyto)
+
+
+
+
+%% ==================== getting only ab(h)
+
+
+clear all; close all;
+batchf= 'batch.labeled.all';
+get_WN_hits=1;
+get_offline_match=1; % do offline matching using template? (ADDX=1)
+get_FF=1; % Analyze FF using offline matching?
+syl = 'h';
+syl_pre = 'ab';
+syl_post = '';
+config = '/bluejay5/lucas/birds/pu69wh78/config_111017.evconfig2'; % better, works by being slightly conservative as well as using NOT btaf to avoid FP.
+config = '/bluejay5/lucas/birds/pu69wh78/config_111017_2.evconfig2'; % better, works by being slightly conservative as well as using NOT btaf to avoid FP.
+config = '/bluejay5/lucas/birds/pu69wh78/config_111017_3.evconfig2'; % better, works by being slightly conservative as well as using NOT btaf to avoid FP.
+config = '/bluejay5/lucas/birds/pu69wh78/config_111017_4.evconfig2'; % better, works by being slightly conservative as well as using NOT btaf to avoid FP.
+NoteNum = 0;
+
+check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post, get_WN_hits, get_offline_match, get_FF, config, NoteNum);
+
+
+%% ====================== getting ab(h) and abh(h)
+
+clear all; close all;
+batchf= 'batch.labeled.all';
+get_WN_hits=1;
+get_offline_match=1; % do offline matching using template? (ADDX=1)
+get_FF=1; % Analyze FF using offline matching?
+syl = 'h';
+syl_pre = 'ab';
+syl_post = '';
+config = '/bluejay5/lucas/birds/pu69wh78/config_111017_5.evconfig2'; % better, works by being slightly conservative as well as using NOT btaf to avoid FP.
+config = '/bluejay5/lucas/birds/pu69wh78/config_111017_test.evconfig2'; % better, works by being slightly conservative as well as using NOT btaf to avoid FP.
+NoteNum = 0;
+
+check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post, get_WN_hits, get_offline_match, get_FF, config, NoteNum);
+
+
+%% ====================================== adding DIR to end of name
+
+ListOfSongsRegexp = {'5039.31', '714.27', '04.327', '38.329', '937.88'};
+suffix = '_DIR';
+for i=1:length(ListOfSongsRegexp)
+   
+    songname = ListOfSongsRegexp{i};
+    
+    tmp = dir(['*' songname '*.cbin']);
+    assert(length(tmp)==1, 'asdfsd');
+    
+    tmp = tmp(1).name(1:end-5);
+    disp(['renaming ' tmp]);
+    
+    % -- rename cbin
+    uscores = strfind(tmp, '_');
+    eval(['!mv ' tmp '.cbin ' tmp(1:uscores(1)-1) suffix tmp(uscores(1):end) '.cbin']);
+    
+    % -- rename notmat
+    try 
+    eval(['!mv ' tmp '.cbin.not.mat ' tmp(1:uscores(1)-1) suffix tmp(uscores(1):end) '.cbin.not.mat']);
+    catch err
+        % then no .notmat
+    end
+    
+    % -- rename .rec
+    eval(['!mv ' tmp '.rec ' tmp(1:uscores(1)-1) suffix tmp(uscores(1):end) '.rec']);
+end
+
+
+%% ==================================== DUAL TARGET (jb(hh) and ab(hh) both down)
+
+
 %% === autolabel all b
 %% === first all b
 % After this, can run stuff same as for evtaf amp version to replace false
