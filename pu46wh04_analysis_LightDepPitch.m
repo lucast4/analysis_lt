@@ -30,6 +30,44 @@ NoteNum=1;
 check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post, get_WN_hits,get_offline_match,get_FF,config,NoteNum);
 
 
+%% ======== for ab and jb 
+
+% =================== jb (notes 0 and 2)
+clear all; close all;
+% batchf='batch.rand.keep.LABELED';
+batchf='batch.labeled.all';
+config='/bluejay5/lucas/birds/pu46wh04/config111817.evconfig2'; %
+
+% === WN (d[h])
+syl='b';
+syl_pre='j';
+syl_post='';
+get_WN_hits=1;
+get_offline_match=1;
+get_FF=1;
+NoteNum=0;
+
+check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post, get_WN_hits,get_offline_match,get_FF,config,NoteNum);
+
+
+
+% =================== ab (notes 1 and 3)
+clear all; close all;
+% batchf='batch.rand.keep.LABELED';
+batchf='batch.labeled.all';
+config='/bluejay5/lucas/birds/pu46wh04/config111817.evconfig2'; %
+
+% === WN (d[h])
+syl='b';
+syl_pre='a';
+syl_post='';
+get_WN_hits=1;
+get_offline_match=1;
+get_FF=1;
+NoteNum=1;
+
+check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post, get_WN_hits,get_offline_match,get_FF,config,NoteNum);
+
 %% ====== updating config file
 
 % ---- 1) replace with new template
@@ -50,6 +88,14 @@ lv_EvConfigCopyTemplstufftoAllNG(config_fname,copyfrom,copyto)
 
 
 
+%% updating config file
+clear all ; close all;
 
+config_source = '/bluejay5/lucas/birds/pu46wh04/config_111817_ab.evconfig2';
+notenum_source = 1; % 1, 2, ...
 
+config_targ = '/bluejay5/lucas/birds/pu46wh04/config111817_v2.evconfig2';
+notenum_targ = [2 4]; % array (1, 2. ...)
 
+[config_fname] = lt_evconfig_replaceNotes(config_targ, notenum_targ, config_source, ...
+    notenum_source);

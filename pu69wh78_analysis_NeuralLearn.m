@@ -52,34 +52,83 @@ NoteNum = 0;
 check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post, get_WN_hits, get_offline_match, get_FF, config, NoteNum);
 
 
-%% ============= getting only jb(h)
+%% ============= getting ab(h), abh(h), jb(h), jbh(h)
 
+% ================== check ab(h) or abh(h)
 clear all; close all;
 batchf= 'batch.labeled.all';
 get_WN_hits=1;
 get_offline_match=1; % do offline matching using template? (ADDX=1)
 get_FF=1; % Analyze FF using offline matching?
 syl = 'h';
-syl_pre = 'jbh';
+syl_pre = 'ab';
 syl_post = '';
 % config = '/bluejay5/lucas/birds/pu69wh78/config_111017_jb.evconfig2'; % better, works by being slightly conservative as well as using NOT btaf to avoid FP.
-config = '/bluejay5/lucas/birds/pu69wh78/config_111017_jb.evconfig2'; % better, works by being slightly conservative as well as using NOT btaf to avoid FP.
+% config = '/bluejay5/lucas/birds/pu69wh78/config_111017_jb.evconfig2'; % better, works by being slightly conservative as well as using NOT btaf to avoid FP.
+config = '/bluejay5/lucas/birds/pu69wh78/config_111617.evconfig2'; % better, works by being slightly conservative as well as using NOT btaf to avoid FP.
+NoteNum = 0;
+
+check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post, get_WN_hits, get_offline_match, get_FF, config, NoteNum);
+
+
+% ================== check jb(h) or jbh(h)
+clear all; close all;
+batchf= 'batch.labeled.all';
+get_WN_hits=1;
+get_offline_match=1; % do offline matching using template? (ADDX=1)
+get_FF=1; % Analyze FF using offline matching?
+syl = 'h';
+syl_pre = 'jb';
+syl_post = '';
+% config = '/bluejay5/lucas/birds/pu69wh78/config_111017_jb.evconfig2'; % better, works by being slightly conservative as well as using NOT btaf to avoid FP.
+% config = '/bluejay5/lucas/birds/pu69wh78/config_111017_jb.evconfig2'; % better, works by being slightly conservative as well as using NOT btaf to avoid FP.
+config = '/bluejay5/lucas/birds/pu69wh78/config_111617.evconfig2'; % better, works by being slightly conservative as well as using NOT btaf to avoid FP.
 NoteNum = 1;
 
 check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post, get_WN_hits, get_offline_match, get_FF, config, NoteNum);
 
 
 
-% ====== updating config file
+%% ============= getting a(b), ab(h), abh(h), j(b), jb(h), jbh(h)
 
-% ---- 3) copy params from first note to other notes
-copyfrom = 1;
-copyto = [2];
-config_fname = '/bluejay5/lucas/birds/pu69wh78/config_111017_jb.evconfig2';
-lv_EvConfigCopyTemplstufftoAllNG(config_fname,copyfrom,copyto)
+% ================== check ab(h) or abh(h)
+clear all; close all;
+batchf= 'batch.labeled.all';
+get_WN_hits=1;
+get_offline_match=1; % do offline matching using template? (ADDX=1)
+get_FF=1; % Analyze FF using offline matching?
+syl = 'h';
+syl_pre = 'ab';
+syl = 'b';
+syl_pre = 'a';
+syl_post = '';
+% config = '/bluejay5/lucas/birds/pu69wh78/config_111017_jb.evconfig2'; % better, works by being slightly conservative as well as using NOT btaf to avoid FP.
+% config = '/bluejay5/lucas/birds/pu69wh78/config_111017_jb.evconfig2'; % better, works by being slightly conservative as well as using NOT btaf to avoid FP.
+config = '/bluejay5/lucas/birds/pu69wh78/config_111617v2.evconfig2'; % better, works by being slightly conservative as well as using NOT btaf to avoid FP.
+config = '/bluejay5/lucas/birds/pu69wh78/config111717.evconfig2'; % better, works by being slightly conservative as well as using NOT btaf to avoid FP.
+config = '/bluejay5/lucas/birds/pu69wh78/config112017.evconfig2'; % better, works by being slightly conservative as well as using NOT btaf to avoid FP.
+NoteNum = 0;
+
+check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post, get_WN_hits, get_offline_match, get_FF, config, NoteNum);
 
 
+% ================== check jb(h) or jbh(h)
+clear all; close all;
+batchf= 'batch.labeled.all';
+get_WN_hits=1;
+get_offline_match=1; % do offline matching using template? (ADDX=1)
+get_FF=1; % Analyze FF using offline matching?
+syl = 'h';
+syl_pre = 'jb';
+syl_post = '';
+% config = '/bluejay5/lucas/birds/pu69wh78/config_111017_jb.evconfig2'; % better, works by being slightly conservative as well as using NOT btaf to avoid FP.
+% config = '/bluejay5/lucas/birds/pu69wh78/config_111017_jb.evconfig2'; % better, works by being slightly conservative as well as using NOT btaf to avoid FP.
+config = '/bluejay5/lucas/birds/pu69wh78/config_111617v2.evconfig2'; % better, works by being slightly conservative as well as using NOT btaf to avoid FP.
+config = '/bluejay5/lucas/birds/pu69wh78/config111717.evconfig2'; % better, works by being slightly conservative as well as using NOT btaf to avoid FP.
+config = '/bluejay5/lucas/birds/pu69wh78/config112017.evconfig2'; % better, works by being slightly conservative as well as using NOT btaf to avoid FP.
+NoteNum = 1;
 
+check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post, get_WN_hits, get_offline_match, get_FF, config, NoteNum);
 
 %% ==================== getting only ab(h)
 
