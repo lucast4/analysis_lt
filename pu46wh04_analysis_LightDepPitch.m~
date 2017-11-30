@@ -57,7 +57,7 @@ clear all; close all;
 % batchf='batch.rand.keep.LABELED';
 batchf='batch.labeled.all';
 config='/bluejay5/lucas/birds/pu46wh04/config111817.evconfig2'; %
-% config='/bluejay5/lucas/birds/pu46wh04/configtest112717_ab.evconfig2'; %
+config='/bluejay5/lucas/birds/pu46wh04/config112717_ab.evconfig2'; %
 
 % === WN (d[h])
 syl='b';
