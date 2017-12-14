@@ -37,7 +37,9 @@ clear all; close all;
 % batchf='batch.rand.keep.LABELED';
 batchf='batch.labeled.all';
 config='/bluejay5/lucas/birds/pu46wh04/config111817.evconfig2'; %
-% config='/bluejay5/lucas/birds/pu46wh04/config112717_jb.evconfig2'; %
+config='/bluejay5/lucas/birds/pu46wh04/config112717.evconfig2'; %
+config = '/bluejay5/lucas/birds/pu46wh04/config120217.evconfig2';
+config = '/bluejay5/lucas/birds/pu46wh04/config121117.evconfig2';
 
 % === WN (d[h])
 syl='b';
@@ -57,7 +59,9 @@ clear all; close all;
 % batchf='batch.rand.keep.LABELED';
 batchf='batch.labeled.all';
 config='/bluejay5/lucas/birds/pu46wh04/config111817.evconfig2'; %
-% config='/bluejay5/lucas/birds/pu46wh04/configtest112717_ab.evconfig2'; %
+config='/bluejay5/lucas/birds/pu46wh04/config112717.evconfig2'; %
+config = '/bluejay5/lucas/birds/pu46wh04/config120217.evconfig2';
+config = '/bluejay5/lucas/birds/pu46wh04/config121117.evconfig2';
 
 % === WN (d[h])
 syl='b';
@@ -93,11 +97,11 @@ lv_EvConfigCopyTemplstufftoAllNG(config_fname,copyfrom,copyto)
 %% updating config file
 clear all ; close all;
 
-config_source = '/bluejay5/lucas/birds/pu46wh04/config_111817_ab.evconfig2';
+config_source = '/bluejay5/lucas/birds/pu46wh04/config_120117_jb_v1.evconfig2';
 notenum_source = 1; % 1, 2, ...
 
-config_targ = '/bluejay5/lucas/birds/pu46wh04/config111817_v2.evconfig2';
-notenum_targ = [2 4]; % array (1, 2. ...)
+config_targ = '/bluejay5/lucas/birds/pu46wh04/config112717.evconfig2';
+notenum_targ = [1 3]; % array (1, 2. ...)
 
 [config_fname] = lt_evconfig_replaceNotes(config_targ, notenum_targ, config_source, ...
     notenum_source);
