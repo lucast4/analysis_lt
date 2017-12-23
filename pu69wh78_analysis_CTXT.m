@@ -20,14 +20,14 @@ ChannelsDesired = [];
     BrainArea, ExptToKeep, RecordingDepth, LearningOnly, BatchesDesired, ChannelsDesired);
 
 % ==============
-strtype = 'aax'; % a is fixed, x variable, across contexts
+strtype = 'xaa'; % a is fixed, x variable, across contexts
 [CLASSES, prms] = lt_neural_v2_CTXT_Extract(SummaryStruct, strtype);
 
 % &&&&&&&&&&&&& 2) EXTRACT REGEXP STRUCT 
 prms.alignWhichSyl = 2; % which syl (in order) to align to
 prms.alignOnset = 1; % if 1, then onset, if 0, then offset
-prms.motifpredur = 0.15;
-prms.motifpostdur = 0.2;
+prms.motifpredur = 0.2;
+prms.motifpostdur = 0.15;
 prms.preAndPostDurRelSameTimept = 1; % 1, then pre and post both aligned at same time. if 0, then post is aligned to motif ofset.
 CLASSES = lt_neural_v2_CTXT_GetBrnchDat(CLASSES, SummaryStruct, prms);
 
@@ -48,7 +48,7 @@ plotstat = 'F1';
 
 saveON =1;
 LinTimeWarp = 1;
-regionstowarp = [1 2 3];
+regionstowarp = [3 4 5];
 ALLBRANCH = lt_neural_v2_CTXT_ClassSliding(CLASSES, SummaryStruct, prms, ...
     TimeWindowDur, TimeWindowSlide, FRbinsize, savenotes, CVmethod, plotstat, ...
     saveON, LinTimeWarp, regionstowarp);
