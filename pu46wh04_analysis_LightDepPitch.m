@@ -40,6 +40,7 @@ config='/bluejay5/lucas/birds/pu46wh04/config111817.evconfig2'; %
 config='/bluejay5/lucas/birds/pu46wh04/config112717.evconfig2'; %
 config = '/bluejay5/lucas/birds/pu46wh04/config120217.evconfig2';
 config = '/bluejay5/lucas/birds/pu46wh04/config121117.evconfig2';
+config = '/bluejay5/lucas/birds/pu46wh04/config011318.evconfig2';
 
 % === WN (d[h])
 syl='b';
@@ -61,7 +62,7 @@ batchf='batch.labeled.all';
 config='/bluejay5/lucas/birds/pu46wh04/config111817.evconfig2'; %
 config='/bluejay5/lucas/birds/pu46wh04/config112717.evconfig2'; %
 config = '/bluejay5/lucas/birds/pu46wh04/config120217.evconfig2';
-config = '/bluejay5/lucas/birds/pu46wh04/config121117.evconfig2';
+config = '/bluejay5/lucas/birds/pu46wh04/config011318.evconfig2';
 
 % === WN (d[h])
 syl='b';
