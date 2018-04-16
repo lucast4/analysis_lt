@@ -24,119 +24,128 @@ lt_batchsong_calcFF(ListOfDirs_ALL, ListOfBatch, FFparams, plotAllPC, plotEachSy
 MotifsToExtract = {'a(b)', 'j(b)', 'ab(h)', 'jb(h)',  'jbh(h)', '(g)'};
 DATSTRUCT = lt_batchsong_extractFF(ListOfDirs_ALL, {}, ListOfBatch, MotifsToExtract);
 
-
-%% ============== PLOT
+%% plot ff
 close all;
 TrainON = '30Oct2017-1430';
-SwitchTimes = {}; % will places lines in plot at these times
+SwitchTimes = {};
 subtractMean = 1;
+dozscore =1 ;
 
-TrainON_dnum = datenum(TrainON, 'ddmmmyyyy-HHMM');
+lt_batchsong_plotFF(DATSTRUCT, MotifsToExtract, TrainON, SwitchTimes, subtractMean, ...
+    dozscore);
 
-figcount=1;
-subplotrows=4;
-subplotcols=1;
-fignums_alreadyused=[];
-hfigs=[];
-hsplots = [];
-
-for i = 1:length(MotifsToExtract);
-    [fignums_alreadyused, hfigs, figcount, hsplot]=lt_plot_MultSubplotsFigs('', subplotrows, subplotcols, fignums_alreadyused, hfigs, figcount);
-    hsplots = [hsplots hsplot];
-    title(MotifsToExtract{i});
-    
-    % ####################################### UNDIR
-    inds = [DATSTRUCT.motif(i).rendnum.isDIR]==0;
-    plotcol = 'k';
-    
-    % ----------------- RUN
-    ffvals = [DATSTRUCT.motif(i).rendnum(inds).ff];
-    tvals = [DATSTRUCT.motif(i).rendnum(inds).datenum_song_SecRes];
-    
-    % ------- subtract baseline FF
-    if subtractMean==1
-    baseinds = tvals < TrainON_dnum;
-    ffvals = ffvals - mean(ffvals(baseinds));
-    end
-    
-    % -- convert tvals to days from start
-    firstday = datestr(floor(min(tvals)), 'ddmmmyyyy');
-    tvals = lt_convert_EventTimes_to_RelTimes(firstday, tvals);
-    tvals = tvals.FinalValue;
-    
-    % ----- plot
-    plot(tvals, ffvals, 'o', 'Color', plotcol);
-  
-    % ----- plot day means
-    numdays = floor(max(tvals));
-    for j=1:numdays
-       
-        indstmp = floor(tvals)==j;
-        tt = tvals(indstmp);
-        ff = ffvals(indstmp);
-        
-        if isempty(ff)
-            continue
-        end
-            
-        lt_plot(max(tt)+0.1, mean(ff), {'Errors', lt_sem(ff), 'Color', plotcol});
-    end
-    
-        % ######################### lines
-    % --- train onset
-    tmp = lt_convert_EventTimes_to_RelTimes(firstday, TrainON_dnum);
-    line([tmp.FinalValue tmp.FinalValue], ylim, 'Color', 'r');
-    
-    for j=1:length(SwitchTimes)
-        tmp = lt_convert_EventTimes_to_RelTimes(firstday, datenum(SwitchTimes{j}, 'ddmmmyyyy-HHMM'));
-        line([tmp.FinalValue tmp.FinalValue], ylim, 'Color', 'm');
-    end
-    lt_plot_zeroline;
-
-    
-    % ####################################### DIR
-    inds = [DATSTRUCT.motif(i).rendnum.isDIR]==1;
-    if ~any(inds)
-        continue
-    end
-    plotcol = 'b';
-    
-    % ----------------- RUN
-    ffvals = [DATSTRUCT.motif(i).rendnum(inds).ff];
-    tvals = [DATSTRUCT.motif(i).rendnum(inds).datenum_song_SecRes];
-    
-    % ------- subtract baseline FF
-    if subtractMean==1
-    baseinds = tvals < TrainON_dnum;
-    ffvals = ffvals - mean(ffvals(baseinds));
-    end
-    
-    % -- convert tvals to days from start
-    tvals = lt_convert_EventTimes_to_RelTimes(firstday, tvals);
-    tvals = tvals.FinalValue;
-    
-    % ----- plot
-    lt_plot(tvals, ffvals, {'Color', plotcol});
-%      plot(tvals, ffvals, 'o', 'Color', plotcol);
-
-        % ----- plot day means
-    numdays = floor(max(tvals));
-    for j=1:numdays
-       
-        indstmp = floor(tvals)==j;
-        tt = tvals(indstmp);
-        ff = ffvals(indstmp);
-        
-        if isempty(ff)
-            continue
-        end
-            
-        lt_plot(max(tt)+0.15, mean(ff), {'Errors', lt_sem(ff), 'Color', plotcol});
-    end
-
-    
-end
-linkaxes(hsplots, 'xy');
+%% ============== PLOT
+% close all;
+% TrainON = '30Oct2017-1430';
+% SwitchTimes = {}; % will places lines in plot at these times
+% subtractMean = 1;
+% 
+% TrainON_dnum = datenum(TrainON, 'ddmmmyyyy-HHMM');
+% 
+% figcount=1;
+% subplotrows=4;
+% subplotcols=1;
+% fignums_alreadyused=[];
+% hfigs=[];
+% hsplots = [];
+% 
+% for i = 1:length(MotifsToExtract);
+%     [fignums_alreadyused, hfigs, figcount, hsplot]=lt_plot_MultSubplotsFigs('', subplotrows, subplotcols, fignums_alreadyused, hfigs, figcount);
+%     hsplots = [hsplots hsplot];
+%     title(MotifsToExtract{i});
+%     
+%     % ####################################### UNDIR
+%     inds = [DATSTRUCT.motif(i).rendnum.isDIR]==0;
+%     plotcol = 'k';
+%     
+%     % ----------------- RUN
+%     ffvals = [DATSTRUCT.motif(i).rendnum(inds).ff];
+%     tvals = [DATSTRUCT.motif(i).rendnum(inds).datenum_song_SecRes];
+%     
+%     % ------- subtract baseline FF
+%     if subtractMean==1
+%     baseinds = tvals < TrainON_dnum;
+%     ffvals = ffvals - mean(ffvals(baseinds));
+%     end
+%     
+%     % -- convert tvals to days from start
+%     firstday = datestr(floor(min(tvals)), 'ddmmmyyyy');
+%     tvals = lt_convert_EventTimes_to_RelTimes(firstday, tvals);
+%     tvals = tvals.FinalValue;
+%     
+%     % ----- plot
+%     plot(tvals, ffvals, 'o', 'Color', plotcol);
+%   
+%     % ----- plot day means
+%     numdays = floor(max(tvals));
+%     for j=1:numdays
+%        
+%         indstmp = floor(tvals)==j;
+%         tt = tvals(indstmp);
+%         ff = ffvals(indstmp);
+%         
+%         if isempty(ff)
+%             continue
+%         end
+%             
+%         lt_plot(max(tt)+0.1, mean(ff), {'Errors', lt_sem(ff), 'Color', plotcol});
+%     end
+%     
+%         % ######################### lines
+%     % --- train onset
+%     tmp = lt_convert_EventTimes_to_RelTimes(firstday, TrainON_dnum);
+%     line([tmp.FinalValue tmp.FinalValue], ylim, 'Color', 'r');
+%     
+%     for j=1:length(SwitchTimes)
+%         tmp = lt_convert_EventTimes_to_RelTimes(firstday, datenum(SwitchTimes{j}, 'ddmmmyyyy-HHMM'));
+%         line([tmp.FinalValue tmp.FinalValue], ylim, 'Color', 'm');
+%     end
+%     lt_plot_zeroline;
+% 
+%     
+%     % ####################################### DIR
+%     inds = [DATSTRUCT.motif(i).rendnum.isDIR]==1;
+%     if ~any(inds)
+%         continue
+%     end
+%     plotcol = 'b';
+%     
+%     % ----------------- RUN
+%     ffvals = [DATSTRUCT.motif(i).rendnum(inds).ff];
+%     tvals = [DATSTRUCT.motif(i).rendnum(inds).datenum_song_SecRes];
+%     
+%     % ------- subtract baseline FF
+%     if subtractMean==1
+%     baseinds = tvals < TrainON_dnum;
+%     ffvals = ffvals - mean(ffvals(baseinds));
+%     end
+%     
+%     % -- convert tvals to days from start
+%     tvals = lt_convert_EventTimes_to_RelTimes(firstday, tvals);
+%     tvals = tvals.FinalValue;
+%     
+%     % ----- plot
+%     lt_plot(tvals, ffvals, {'Color', plotcol});
+% %      plot(tvals, ffvals, 'o', 'Color', plotcol);
+% 
+%         % ----- plot day means
+%     numdays = floor(max(tvals));
+%     for j=1:numdays
+%        
+%         indstmp = floor(tvals)==j;
+%         tt = tvals(indstmp);
+%         ff = ffvals(indstmp);
+%         
+%         if isempty(ff)
+%             continue
+%         end
+%             
+%         lt_plot(max(tt)+0.15, mean(ff), {'Errors', lt_sem(ff), 'Color', plotcol});
+%     end
+% 
+%     
+% end
+% linkaxes(hsplots, 'xy');
     
 
 %% ############################# 

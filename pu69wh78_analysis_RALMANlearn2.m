@@ -28,7 +28,7 @@ lt_batchsong_calcFF(ListOfDirs_ALL, ListOfBatch, FFparams, plotAllPC, plotEachSy
     overwrite);
 
 %% ==== EXTRACT FF
-MotifsToExtract = {'a(b)', 'j(b)', 'ab(h)', 'jb(h)',  'jbh(h)', '(g)'};
+MotifsToExtract = {'(a)b', 'a(b)', 'j(b)', 'ab(h)', 'jb(h)',  'abh(h)', 'jbh(h)', '(g)'};
 DATSTRUCT = lt_batchsong_extractFF(ListOfDirs_ALL, {}, ListOfBatch, MotifsToExtract);
 
 
@@ -37,9 +37,11 @@ close all;
 TrainON = '05Nov2017-1125';
 SwitchTimes = {'05Nov2017-1235', '05Nov2017-1355', '05Nov2017-1548', ...
     '05Nov2017-1811'}; % will places lines in plot at these times
-subtractMean = 0;
+subtractMean = 1;
+dozscore=1;
 
-lt_batchsong_plotFF(DATSTRUCT, MotifsToExtract, TrainON, SwitchTimes, subtractMean);
+lt_batchsong_plotFF(DATSTRUCT, MotifsToExtract, TrainON, SwitchTimes, ...
+    subtractMean, dozscore);
 
 %% #############################
 %% #############################  PLOT NEURAL CHANGES AT SWITCHES

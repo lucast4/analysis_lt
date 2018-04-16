@@ -641,7 +641,9 @@ DATSTRUCT = lt_batchsong_extractFF(ListOfDirs_UNDIR, ListOfDirs_DIR, ListOfBatch
 %% ============== PLOT
 close all;
 TrainON = '10Nov2017-1157';
-SwitchTimes = {'18Nov2017-1936'};
+SwitchTimes = {'10Nov2017-1544', '16Nov2017-1820', '16Nov2017-2300', ...
+    '17Nov2017-1729', '18Nov2017-1507', '18Nov2017-1819', '18Nov2017-1936', ...
+    '18Nov2017-2109', '19Nov2017-1129', '20Nov2017-1455', '20Nov2017-1820'};
 subtractMean = 1;
 
 lt_batchsong_plotFF(DATSTRUCT, MotifsToExtract, TrainON, SwitchTimes, subtractMean);
