@@ -693,8 +693,8 @@ for k = 1:length(chanstoplot)
                     % switch, get xcov in block preceding and following
                     % switch
                     cond = DATAllSwitches.switch(i).motif(mm).batchinorder(bb).condition;
-%                     datmat1 = DATAllSwitches.switch(i).motif(mm).batchinorder(bb).DatAllRaw{chan1};
-%                     datmat2 = DATAllSwitches.switch(i).motif(mm).batchinorder(bb).DatAllRaw{chan2};
+                    %                     datmat1 = DATAllSwitches.switch(i).motif(mm).batchinorder(bb).DatAllRaw{chan1};
+                    %                     datmat2 = DATAllSwitches.switch(i).motif(mm).batchinorder(bb).DatAllRaw{chan2};
                     datmat1 = DATAllSwitches.switch(i).motif(mm).batchinorder(bb).DatAll{chan1};
                     datmat2 = DATAllSwitches.switch(i).motif(mm).batchinorder(bb).DatAll{chan2};
                     t =  DATAllSwitches.switch(i).motif(mm).batchinorder(bb).t;
@@ -757,7 +757,7 @@ for k = 1:length(chanstoplot)
                             pretime = 0.1;
                         end
                         
-                        % --------- 
+                        % ---------
                         tmp = pretime+premotorwind;
                         indstmp = t>=tmp(1) & t<=tmp(2);
                         datmat1 = datmat1(:, indstmp);
@@ -845,7 +845,7 @@ end
 
 if (0)
     % FOR PLOTTING DIAGNOSIS - comparing differeing smoothing and binning
-        lt_figure; hold on;
+    lt_figure; hold on;
     binsize = 0.001
     windowsize=0.005; % from -2sd to +2sd
     sigma=(windowsize/4)*fs; %
@@ -857,22 +857,22 @@ if (0)
     alpha= numsamps/(2*sigma); % N/2sigma
     gaussFilter = gausswin(numsamps, alpha);
     gaussFilter = gaussFilter / sum(gaussFilter); % Normalize.
-
-DATMAT = datmat2;
-
-                            datmat1 = abs(DATMAT);
-                            for nn =1:size(datmat1,1)
-                                tmp = conv(datmat1(nn,:), gaussFilter);
-                                tmp = tmp(:,numsamps/2:end-numsamps/2);
-                                datmat1(nn,:) = tmp;
-                                
-                            end
-
-                          % ---------------- bin activity
-                        TrimDown = 1;
-                        [X, xtimes] = lt_neural_v2_QUICK_binFR(datmat1, t, binsize, TrimDown);
-                        
-plot(t, abs(DATMAT(1,:)));
-plot(t, datmat1(1,:), 'k', 'LineWidth', 2);
-plot(xtimes, X(1,:), 'o-r', 'LineWidth', 2);
+    
+    DATMAT = datmat2;
+    
+    datmat1 = abs(DATMAT);
+    for nn =1:size(datmat1,1)
+        tmp = conv(datmat1(nn,:), gaussFilter);
+        tmp = tmp(:,numsamps/2:end-numsamps/2);
+        datmat1(nn,:) = tmp;
+        
+    end
+    
+    % ---------------- bin activity
+    TrimDown = 1;
+    [X, xtimes] = lt_neural_v2_QUICK_binFR(datmat1, t, binsize, TrimDown);
+    
+    plot(t, abs(DATMAT(1,:)));
+    plot(t, datmat1(1,:), 'k', 'LineWidth', 2);
+    plot(xtimes, X(1,:), 'o-r', 'LineWidth', 2);
 end
