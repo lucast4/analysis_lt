@@ -11,7 +11,7 @@ FFparams.cell_of_freqwinds={'a', [1350 2400], 'g', [1370 1900], ...
 FFparams.cell_of_FFtimebins={'a', [0.05 0.063], 'g', [0.1 0.106], ...
     'n', [0.04 0.05], 'b', [0.033 0.041]};
 
-plotAllPC = 1;
+plotAllPC = 0;
 plotEachSyl = 0;
 overwrite = 1;
 

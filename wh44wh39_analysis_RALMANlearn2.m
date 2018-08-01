@@ -49,14 +49,14 @@ ListOfDirs_DIR = {};
 ListOfDirs_ALL = [ListOfDirs_UNDIR ListOfDirs_DIR];
 
 ListOfBatch = {...
-    'Batch1139to2028'};
+    'BatchAll'};
 
 FFparams.cell_of_freqwinds={'b', [2600 4100], 'h', [2800 4000], 'c', [2100 2800], ...
     'n', [1700 2600], 'd', [800 2200], 'k', [1600 2600]}; % 'j', [950 1450], 'l', [1200 1600], 't', [3590 4960]
 FFparams.cell_of_FFtimebins={'b', [0.033 0.043], 'h', [0.04 0.05], 'c', [0.045 0.09], ...
      'n', [0.045 0.052], 'd', [0.068 0.074], 'k', [0.038 0.045]}; % 'j', [0.04 0.045], 'l', [0.035 0.039], 't', [0.026 0.033], ...
 
-plotAllPC = 1;
+plotAllPC = 0;
 plotEachSyl = 0;
 overwrite = 1;
 

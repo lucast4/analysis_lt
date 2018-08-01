@@ -5,14 +5,14 @@ ListOfDirs_ALL = {...
     '/bluejay5/lucas/birds/pu69wh78/NEURAL/110117_RALMANlearn1'};
 
 ListOfBatch = {...
-    'BatchAll.LABELED'};
+    'BatchAll'};
 
 FFparams.cell_of_freqwinds={'a', [1000 2600], 'g', [2000 3400], ...
     'h', [2900 3800], 'b', [2900 3800]}; % 'j', [950 1450], 'l', [1200 1600], 't', [3590 4960]
 FFparams.cell_of_FFtimebins={'a', [0.068 0.078], 'g', [0.04 0.06], ...
     'h', [0.033 0.042], 'b', [0.033 0.04]}; % 'j', [0.04 0.045], 'l', [0.035 0.039], 't', [0.026 0.033], ...
 
-plotAllPC = 1;
+plotAllPC = 0;
 plotEachSyl = 0;
 overwrite = 1;
 

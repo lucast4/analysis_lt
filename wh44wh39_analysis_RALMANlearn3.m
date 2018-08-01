@@ -89,7 +89,7 @@ FFparams.cell_of_FFtimebins={'b', [0.033 0.043], 'h', [0.04 0.05], 'c', [0.045 0
 
 plotAllPC = 0;
 plotEachSyl = 0;
-overwrite = 0;
+overwrite = 1;
 
 % ==================== CALCULATE AND SAVE FF
 lt_batchsong_calcFF(ListOfDirs_ALL, ListOfBatch, FFparams, plotAllPC, plotEachSyl, ...
@@ -105,8 +105,8 @@ DATSTRUCT = lt_batchsong_extractFF(ListOfDirs_UNDIR, ListOfDirs_DIR, ListOfBatch
 close all;
 TrainON = '21Mar2018-1215';
 SwitchTimes = {'21Mar2018-1314', '21Mar2018-1325', '21Mar2018-2347'};
-subtractMean = 0;
-dozscore = 0;
+subtractMean = 1;
+dozscore = 1;
 
 lt_batchsong_plotFF(DATSTRUCT, MotifsToExtract, TrainON, SwitchTimes, ...
     subtractMean, dozscore);
