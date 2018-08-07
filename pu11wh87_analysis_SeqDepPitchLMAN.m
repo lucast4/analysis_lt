@@ -296,14 +296,15 @@ end
 
 
 %% CHECKING TEMPLATE MATCHING (getting bcc[b], use note 1);
+clear all; close all;
 
-batchf='batch.labeled.all';
+batchf='batch.labeled.catch';
 % config='/bluejay3/lucas/birds/pu11wh87/121214_SeqDepPitchShift2_UpAndDn_durWN_day20/config_121114_Start.evconfig2';
 % config='/bluejay3/lucas/birds/pu11wh87/051115_SeqDepPitchLMAN_PbsMusc/test.evconfig2';
 % config='/bluejay3/lucas/birds/pu11wh87/051215_SeqDepPitchLMAN_durWN_day1/config.evconfig2'; % start of WN (5/12)
 % config='/bluejay3/lucas/birds/pu11wh87/051315_SeqDepPitchLMAN_durWN_day2/config051315.evconfig2'; % post 5/13 (changed 1 template param)
 % config='/bluejay3/lucas/birds/pu11wh87/051715_SeqDepPitchLMAN_durWN_day6/config.evconfig2'; % start 5/17 (changed template)
-config='/bluejay3/lucas/birds/pu11wh87/060915_SeqDepPitchLMAN_TwoTargs_durWN/c.evconfig2'; % start 6/9 (no change from before)
+config='/bluejay5/lucas/birds/pu11wh87/060915_SeqDepPitchLMAN_TwoTargs_durWN/c.evconfig2'; % start 6/9 (no change from before)
 
 syl='b';
 syl_pre='bcc';
@@ -322,7 +323,7 @@ batchf='batch.labeled.all';
 % config='/bluejay3/lucas/birds/pu11wh87/051215_SeqDepPitchLMAN_durWN_day1/config.evconfig2'; % start of WN (5/12)
 % config='/bluejay3/lucas/birds/pu11wh87/051315_SeqDepPitchLMAN_durWN_day2/config051315.evconfig2'; % post 5/13 (changed 1 template param)
 % config='/bluejay3/lucas/birds/pu11wh87/051715_SeqDepPitchLMAN_durWN_day6/config.evconfig2'; % start 5/17 (changed template)
-config='/bluejay3/lucas/birds/pu11wh87/060915_SeqDepPitchLMAN_TwoTargs_durWN/c.evconfig2'; % start 5/17 (changed template)
+config='/bluejay5/lucas/birds/pu11wh87/060915_SeqDepPitchLMAN_TwoTargs_durWN/c.evconfig2'; % start 5/17 (changed template)
 
 
 syl='b';
@@ -352,6 +353,241 @@ overwrite_notmat=1;
 
 
 lt_autolabel_EvTAFv4(batch, config, syl, NoteNum, ampThresh, min_dur, min_int, overwrite_notmat)
+
+
+%% ###################################################################
+%% ################################################# AUTOLABEL
+
+% STRATEGY for complete labeling:
+% first label all c(b) as dccb, then overwrite those that are bccb
+
+%% =============== TEST CONFIGS
+clear all; close all;
+
+
+% ===== MOTIF 1 - bccB
+% NOTE: good, hits almost all, but some FP.
+batchf = 'BatchAll.LABELED.rand';
+% config='/bluejay4/lucas/birds/pu11wh87/config_111715.evconfig2'; 
+config='/bluejay5/lucas/birds/pu11wh87/config_AL_bccB.evconfig2'; 
+
+syl='b';
+syl_pre='bcc';
+syl_post='';
+get_WN_hits=0;
+get_offline_match=1;
+get_FF=0;
+
+NoteNum=0;
+
+check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post, get_WN_hits,get_offline_match,get_FF,config,NoteNum);
+
+
+% ===== MOTIF 1 - bccB
+% MATCHED ALL
+batchf = 'BatchAll.LABELED.rand';
+% config='/bluejay4/lucas/birds/pu11wh87/config_111715.evconfig2'; 
+config='/bluejay5/lucas/birds/pu11wh87/config_AL_dccB_2.evconfig2'; 
+config='/bluejay5/lucas/birds/pu11wh87/config_AL_dccB_3.evconfig2'; % modified template
+
+syl='b';
+syl_pre='dcc';
+syl_post='';
+get_WN_hits=0;
+get_offline_match=1;
+get_FF=0;
+
+NoteNum=0;
+
+check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post, get_WN_hits,get_offline_match,get_FF,config,NoteNum);
+
+
+%% ================ AUTOLABLE
+% AND ITERATION OVER DAY
+clear all; close all;
+
+% ========================= 0) ECTRACT DIRECTORIRES
+basedir = '/bluejay5/lucas/birds/pu11wh87';
+% date_range_base={'10Feb2015','12Feb2015'};
+% date_range_WN={'14Feb2015','16Feb2015'};
+% experiment = 'SeqDepPitchShift3';
+
+    
+% -------- COLLECT METADAT
+% cd(basedir);
+% MetadataStruct=lt_metadata_collect;
+% 
+% condition='';
+% notes='';
+% only_labeled_dirs=0;
+% 
+% % ----- BASELINE
+% ListOfDirs1=lt_metadata_find_dirs(MetadataStruct, experiment, condition, ...
+%     notes, date_range_base, only_labeled_dirs, 2);
+% 
+% % ------ WN
+% ListOfDirs2=lt_metadata_find_dirs(MetadataStruct, experiment, condition, ...
+%     notes, date_range_WN, only_labeled_dirs, 2);
+% 
+% % ------- COMBINE
+% ListOfDirs = [ListOfDirs1 ListOfDirs2];
+% 
+ListOfDirs = {...
+    '/bluejay5/lucas/birds/pu11wh87/050215_SeqDepPitch_LMANprobe_PBS_day5', ...
+    '/bluejay5/lucas/birds/pu11wh87/050615_SeqDepPitchLMAN_PbsMusc', ...
+    '/bluejay5/lucas/birds/pu11wh87/051215_SeqDepPitchLMAN_durWN_day1', ...
+    '/bluejay5/lucas/birds/pu11wh87/051315_SeqDepPitchLMAN_durWN_day2', ...
+    '/bluejay5/lucas/birds/pu11wh87/051415_SeqDepPitchLMAN_durWN_day3', ...
+    '/bluejay5/lucas/birds/pu11wh87/051515_SeqDepPitchLMAN_durWN_day4', ...
+    '/bluejay5/lucas/birds/pu11wh87/051615_SeqDepPitchLMAN_durWN_day5'};
+
+% ============================== RUN, ITERATE OVER DAYS
+for j=1:length(ListOfDirs)
+
+    % ==================== 0) go to day folder
+    cd(ListOfDirs{j});
+    
+    
+    % ==================== 1) extract all s
+    !ls *PBS*.cbin > BatchPBS
+    lt_cleandirAuto('BatchPBS', 1000, 5, 5);
+    batch = 'BatchPBS.keep';
+%     batch = 'BatchPBS.rand';
+    
+    % ==================== 2) move old .notmat
+    if ~exist('OLDNOTMAT_SeqDepPitch', 'dir')
+        mkdir OLDNOTMAT_SeqDepPitch
+        !cp *.not.mat* OLDNOTMAT_SeqDepPitch
+    else
+        disp('not making OLDNOTMAT_SeqDepPitch, since already made!!');
+    end
+    
+    
+    % ==================== 3) run autolabel
+    % ---- GENERAL PARAMS
+    ampThresh=17000;
+    min_dur=30;
+    min_int=5;
+    
+    % ---- MOTIF 1 - first do dccB. this will label all dccB as well as
+    % match B on abbccb(b) (i.e. FP). Next will overwrite so is ok.
+    config='/bluejay5/lucas/birds/pu11wh87/config_AL_dccB_3.evconfig2'; % modified template
+    syl.targ='b';
+    syl.pre='dcc';
+    syl.post='b';
+    NoteNum=0;
+    overwrite_notmat=1; % will always make backup folder
+    
+    [fnames, sylnum, vlsorfn, vlsorind]=lt_autolabel_EvTAFv4(batch, config, syl, NoteNum, ampThresh, min_dur, min_int, overwrite_notmat);
+    
+    
+    % ------ MOTIF 2 - abbcc(b)b. since this b is target, will replace
+    % following syls with dash. this is also important because dcc(b) above
+    % replaces abbccb(b) with dcc(b)b, so there will be one b jutting
+    % out...
+    config='/bluejay5/lucas/birds/pu11wh87/config_AL_bccB.evconfig2'; 
+    syl.targ='b';
+    syl.pre='abbcc';
+    syl.post='--';
+    NoteNum=0;
+    overwrite_notmat=0; % will always make backup folder
+    
+    [fnames, sylnum, vlsorfn, vlsorind]=lt_autolabel_EvTAFv4(batch, config, syl, NoteNum, ampThresh, min_dur, min_int, overwrite_notmat);
+    
+    
+
+end
+
+%% === check
+
+% syl = 'c';
+% presyl = '';
+% [fnames, sylnum]=lt_jc_chcklbl(batch, syl, 0.025,0.025, presyl,'','');
+% [vlsorfn vlsorind]=jc_vlsorfn(batch, syl, presyl,'');
+
+syl = 'd';
+presyl = '';
+[fnames, sylnum]=lt_jc_chcklbl(batch, syl, 0.025,0.025, presyl,'','');
+[vlsorfn vlsorind]=jc_vlsorfn(batch, syl, presyl,'');
+
+syl = 'a';
+presyl = '';
+[fnames, sylnum]=lt_jc_chcklbl(batch, syl, 0.025,0.025, presyl,'','');
+[vlsorfn vlsorind]=jc_vlsorfn(batch, syl, presyl,'');
+
+%% ============ 2) Use evsonganaly manually on the .wav file created above
+% (contains only the syls you chose)
+% INSTRUCTIONS: 
+% 1) open .wav file using evsonganaly
+% 2) change threshold to segment all syls indivudally
+% 3) any syl labeled "-" (default) will remain unchanged (i.e. will stay autolabeled). 
+%     give a new label to any mislabeled syl - that will be its new actual label
+evsonganaly
+
+
+%% ============ 3) Replace hand-checekd mislabeld syls 
+lt_autolabel_FixHandCheckedSyls(fnames, sylnum, vlsorfn, vlsorind)
+
+
+
+
+%% ###########################################################
+%% ########################################## CALC FF
+%% calc FF for all syls, save next to song file
+clear all; close all;
+
+ListOfDirs_UNDIR = {...
+    '/bluejay5/lucas/birds/pu11wh87/050215_SeqDepPitch_LMANprobe_PBS_day5', ...
+    '/bluejay5/lucas/birds/pu11wh87/050615_SeqDepPitchLMAN_PbsMusc', ...
+    '/bluejay5/lucas/birds/pu11wh87/051215_SeqDepPitchLMAN_durWN_day1', ...
+    '/bluejay5/lucas/birds/pu11wh87/051315_SeqDepPitchLMAN_durWN_day2', ...
+    '/bluejay5/lucas/birds/pu11wh87/051415_SeqDepPitchLMAN_durWN_day3', ...
+    '/bluejay5/lucas/birds/pu11wh87/051515_SeqDepPitchLMAN_durWN_day4', ...
+    '/bluejay5/lucas/birds/pu11wh87/051615_SeqDepPitchLMAN_durWN_day5'};
+
+
+ListOfDirs_DIR = {};
+
+ListOfDirs_ALL = [ListOfDirs_UNDIR ListOfDirs_DIR];
+
+ListOfBatch = {...
+    'BatchPBS.LABELED', ...
+    'BatchPBS.LABELED', ...
+    'BatchPBS.LABELED', ...
+    'BatchPBS.LABELED', ...
+    'BatchPBS.LABELED', ...
+    'BatchPBS.LABELED', ...
+    'BatchPBS.LABELED', ...
+    };
+
+FFparams.cell_of_freqwinds={'c', [2000 3200], 'b', [2800 3800], ...
+    'a', [1300 2200], 'd', [1200 2700]};
+FFparams.cell_of_FFtimebins={'c', [0.036 0.065], 'b', [0.031 0.038], ...
+    'a', [0.07 0.085], 'd', [0.0255 0.045]};
+plotAllPC = 0;
+plotEachSyl = 0;
+overwrite = 1;
+
+% ==================== CALCULATE AND SAVE FF
+lt_batchsong_calcFF(ListOfDirs_ALL, ListOfBatch, FFparams, plotAllPC, plotEachSyl, ...
+    overwrite);
+
+%% ==== EXTRACT FF
+MotifsToExtract = {'(d)ccbb', 'd(c)cbb', 'dc(c)bb', 'dcc(b)b', 'dccb(b)' ...
+    '(a)bbccb', 'a(b)bccb', 'ab(b)ccb', 'abb(c)cb', 'abbc(c)b', 'abbcc(b)'};
+DATSTRUCT = lt_batchsong_extractFF(ListOfDirs_UNDIR, ListOfDirs_DIR, ListOfBatch, MotifsToExtract);
+
+
+%% ============== PLOT
+close all;
+TrainON = '12May2015-0000';
+SwitchTimes = {};
+subtractMean = 1;
+dozscore = 0;
+
+lt_batchsong_plotFF(DATSTRUCT, MotifsToExtract, TrainON, SwitchTimes, ...
+    subtractMean, dozscore);
+
 
 
 

@@ -58,7 +58,7 @@ FFparams.cell_of_FFtimebins={'b', [0.033 0.043], 'h', [0.04 0.05], 'c', [0.045 0
 
 plotAllPC = 0;
 plotEachSyl = 0;
-overwrite = 1;
+overwrite = 0;
 
 % ==================== CALCULATE AND SAVE FF
 lt_batchsong_calcFF(ListOfDirs_ALL, ListOfBatch, FFparams, plotAllPC, plotEachSyl, ...

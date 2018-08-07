@@ -2,7 +2,7 @@
 % ========== jjbB
 clear all; close all;
 batchf= 'batch.labeled.all';
-batchf= 'batch.labeled.all.PBS';
+% batchf= 'batch.labeled.all.PBS';
 
 get_WN_hits=1;
 get_offline_match=1; % do offline matching using template? (ADDX=1)
@@ -216,5 +216,178 @@ Params.PlotLearning.Lag_time=1.6; % time from switch to musc
 
 
 [Params, AllDays_PlotLearning]= lt_seq_dep_pitch_PlotLearning_Musc(Params, AllDays_PlotLearning);
+
+
+%% ########################################################################
+%% ######################################### AUTOLABEL
+%% ================ TeSTING CONFIG FILE
+if (0)
+    close all;
+    batchf= 'BatchAll.LABELED.rand';
+    batchf= 'batch.labeled.notcatch';
+    batchf= 'batch.labeled.catch.rand';
+    get_WN_hits=0;
+    get_offline_match=1;
+    get_FF=0;
+    
+    syl = 'b';
+    syl_pre = 'jjb';
+    syl_post = '';
+    % config= '/bluejay3/lucas/birds/pu53wh88/config.evconfig2'; % before 2/16 templ change
+    config= '/bluejay4/lucas/birds/bk34bk68/config_AL_njjjb.evconfig2';
+    config= '/bluejay4/lucas/birds/bk34bk68/config_AL_njjjb_2.evconfig2';
+    NoteNum = 0;
+    
+    
+    check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, ...
+        syl_post, get_WN_hits, get_offline_match, get_FF, config, NoteNum);
+end
+
+% to chkec: preceding b. some FP?
+
+
+
+% ================ TeSTING CONFIG FILE
+if (0)
+    close all;
+    batchf= 'batch.labeled.catch.rand';
+    get_WN_hits=0;
+    get_offline_match=1;
+    get_FF=0;
+    
+    syl = 'b';
+    syl_pre = 'ljb';
+    syl_post = '';
+    % config= '/bluejay3/lucas/birds/pu53wh88/config.evconfig2'; % before 2/16 templ change
+    config= '/bluejay4/lucas/birds/bk34bk68/config_AL_ljb.evconfig2';
+    NoteNum = 0;
+    
+    % GOOD 
+
+     
+    check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, ...
+        syl_post, get_WN_hits, get_offline_match, get_FF, config, NoteNum);
+end
+
+%% ##################################### AUTOLABEL 
+clear all; close all;
+
+% ========================= 0) ECTRACT DIRECTORIRES
+basedir = '/bluejay4/lucas/birds/bk34bk68';
+% date_range_base={'10Feb2015','12Feb2015'};
+% date_range_WN={'14Feb2015','16Feb2015'};
+% experiment = 'SeqDepPitchShift';
+% 
+% % -------- COLLECT METADAT
+% cd(basedir);
+% MetadataStruct=lt_metadata_collect;
+% 
+% condition='';
+% notes='';
+% only_labeled_dirs=0;
+% 
+% % ----- BASELINE
+% ListOfDirs1=lt_metadata_find_dirs(MetadataStruct, experiment, condition, ...
+%     notes, date_range_base, only_labeled_dirs, 2);
+% 
+% % ------ WN
+% ListOfDirs2=lt_metadata_find_dirs(MetadataStruct, experiment, condition, ...
+%     notes, date_range_WN, only_labeled_dirs, 2);
+
+% ------- COMBINE
+ListOfDirs = {...
+    '012016_SeqDepPitchLMAN3_pre', ...
+    '012116_SeqDepPitchLMAN3_pre', ...
+    '012316_SeqDepPitchLMAN3_pre', ...
+    '012516_SeqDepPitchLMAN3_durWN_day1', ...
+    '012616_SeqDepPitchLMAN3_durWN_day2', ...
+    '013116_SeqDepPitchLMAN3_durWN_day7'};
+ListOfDirs = {...
+    '012616_SeqDepPitchLMAN3_durWN_day2', ...
+    '013116_SeqDepPitchLMAN3_durWN_day7'};
+
+
+% ============================== RUN, ITERATE OVER DAYS
+for j=1:length(ListOfDirs)
+
+    % ==================== 0) go to day folder
+    cd([basedir '/' ListOfDirs{j}]);
+    
+    
+    % ==================== 1) extract all s
+    !ls *PBS*.cbin > BatchPBS
+    lt_cleandirAuto('BatchPBS', 1000, 4, 4);
+    batch = 'BatchPBS.keep';
+    
+    % ==================== 2) move old .notmat
+    if ~exist('OLDNOTMAT_SeqDepPitch', 'dir')
+        mkdir OLDNOTMAT_SeqDepPitch
+        !cp *.not.mat* OLDNOTMAT_SeqDepPitch
+    else
+        disp('not making OLDNOTMAT_SeqDepPitch, since already made!!');
+    end
+    
+    
+    % ==================== 3) run autolabel
+    % ---- GENERAL PARAMS
+    ampThresh=4500;
+    min_dur=30;
+    min_int=5;
+    
+    % ---- MOTIF 1
+    config= '/bluejay4/lucas/birds/bk34bk68/config_AL_njjjb_2.evconfig2';
+    syl.targ='b';
+    syl.pre='njjjb';
+    syl.post='';
+    NoteNum=0;
+    overwrite_notmat=1; % will always make backup folder
+    
+    lt_autolabel_EvTAFv4(batch, config, syl, NoteNum, ampThresh, min_dur, min_int, overwrite_notmat);
+    
+    
+    % ------ MOTIF 2 
+    config= '/bluejay4/lucas/birds/bk34bk68/config_AL_ljb.evconfig2';
+    syl.targ='b';
+    syl.pre='kljb';
+    syl.post='ga';
+    NoteNum=0;
+    overwrite_notmat=0; % will always make backup folder
+    
+    lt_autolabel_EvTAFv4(batch, config, syl, NoteNum, ampThresh, min_dur, min_int, overwrite_notmat);
+    
+    
+    
+end
+
+%% ============ MAKE WAVE FILES TO LOOK FOR FALSE POSITIVES
+
+syl = 'n';
+presyl = '';
+[fnames, sylnum]=lt_jc_chcklbl(batch, syl, 0.025,0.025, presyl,'','');
+[vlsorfn vlsorind]=jc_vlsorfn(batch, syl, presyl,'');
+
+syl = 'k';
+presyl = '';
+[fnames, sylnum]=lt_jc_chcklbl(batch, syl, 0.025,0.025, presyl,'','');
+[vlsorfn vlsorind]=jc_vlsorfn(batch, syl, presyl,'');
+
+% syl = 'b';
+% presyl = 'cb';
+% [fnames, sylnum]=lt_jc_chcklbl(batch, syl, 0.025,0.025, presyl,'','');
+% [vlsorfn vlsorind]=jc_vlsorfn(batch, syl, presyl,'');
+
+%% ============ 2) Use evsonganaly manually on the .wav file created above
+% (contains only the syls you chose)
+% INSTRUCTIONS: 
+% 1) open .wav file using evsonganaly
+% 2) change threshold to segment all syls indivudally
+% 3) any syl labeled "-" (default) will remain unchanged (i.e. will stay autolabeled). 
+%     give a new label to any mislabeled syl - that will be its new actual label
+evsonganaly
+
+
+%% ============ 3) Replace hand-checekd mislabeld syls 
+lt_autolabel_FixHandCheckedSyls(fnames, sylnum, vlsorfn, vlsorind)
+
 
 

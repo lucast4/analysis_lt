@@ -433,10 +433,257 @@ lt_compile_seq_dep_pitch_data_PLOTDirUndir(DirFilename,UndirFilename,plotDIR,...
 
 
 
+%% ###################################################################
+%% ################################################# AUTOLABEL
+
+% STRATEGY for complete labeling:
+% first label all c(b) as dccb, then overwrite those that are bccb
+
+%% =============== TEST CONFIGS
+clear all; close all;
+
+
+% ===== MOTIF 1 - bccB
+% NOTE: good, hits almost all, but some FP.
+batchf = 'BatchAll.LABELED';
+% config='/bluejay4/lucas/birds/pu11wh87/config_111715.evconfig2'; 
+config='/bluejay5/lucas/birds/pu11wh87/config_AL_bccB.evconfig2'; 
+
+syl='b';
+syl_pre='bcc';
+syl_post='';
+get_WN_hits=0;
+get_offline_match=1;
+get_FF=0;
+
+NoteNum=0;
+
+check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post, get_WN_hits,get_offline_match,get_FF,config,NoteNum);
+
+
+% ===== MOTIF 1 - bccB
+% MATCHED ALL
+batchf = 'BatchAll.LABELED';
+% config='/bluejay4/lucas/birds/pu11wh87/config_111715.evconfig2'; 
+% config='/bluejay5/lucas/birds/pu11wh87/config_AL_dccB_2.evconfig2'; 
+% config='/bluejay5/lucas/birds/pu11wh87/config_AL_dccB_3.evconfig2'; % modified template
+% config='/bluejay5/lucas/birds/pu11wh87/config_AL_dccB_3.evconfig2'; % modified template
+config='/bluejay5/lucas/birds/pu11wh87/config_AL_dccb.evconfig2'; % modified template
+
+syl='b';
+syl_pre='dcc';
+syl_post='';
+get_WN_hits=0;
+get_offline_match=1;
+get_FF=0;
+
+NoteNum=0;
+
+check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post, get_WN_hits,get_offline_match,get_FF,config,NoteNum);
+
+
+%% ================ AUTOLABLE
+% AND ITERATION OVER DAY
+clear all; close all;
+
+% ========================= 0) ECTRACT DIRECTORIRES
+basedir = '/bluejay5/lucas/birds/pu11wh87';
+% date_range_base={'10Feb2015','12Feb2015'};
+% date_range_WN={'14Feb2015','16Feb2015'};
+% experiment = 'SeqDepPitchShift3';
+
+    
+% -------- COLLECT METADAT
+% cd(basedir);
+% MetadataStruct=lt_metadata_collect;
+% 
+% condition='';
+% notes='';
+% only_labeled_dirs=0;
+% 
+% % ----- BASELINE
+% ListOfDirs1=lt_metadata_find_dirs(MetadataStruct, experiment, condition, ...
+%     notes, date_range_base, only_labeled_dirs, 2);
+% 
+% % ------ WN
+% ListOfDirs2=lt_metadata_find_dirs(MetadataStruct, experiment, condition, ...
+%     notes, date_range_WN, only_labeled_dirs, 2);
+% 
+% % ------- COMBINE
+% ListOfDirs = [ListOfDirs1 ListOfDirs2];
+% 
+ListOfDirs = {...
+    '/bluejay5/lucas/birds/pu11wh87/112014_SeqDepPitchShift2_pre', ...
+    '/bluejay5/lucas/birds/pu11wh87/112114_SeqDepPitchShift2_pre', ...
+    '/bluejay5/lucas/birds/pu11wh87/112214_SeqDepPitchShift2_pre', ...
+    '/bluejay5/lucas/birds/pu11wh87/112314_SeqDepPitchShift2_durWN_day1', ...
+    '/bluejay5/lucas/birds/pu11wh87/112414_SeqDepPitchShift2_durWN_day2', ...
+    '/bluejay5/lucas/birds/pu11wh87/112514_SeqDepPitchShift2_durWN_day3'};
+% ListOfDirs = {...
+%     '/bluejay5/lucas/birds/pu11wh87/112314_SeqDepPitchShift2_durWN_day1', ...
+%     '/bluejay5/lucas/birds/pu11wh87/112414_SeqDepPitchShift2_durWN_day2', ...
+%     '/bluejay5/lucas/birds/pu11wh87/112514_SeqDepPitchShift2_durWN_day3'};
+
+% ============================== RUN, ITERATE OVER DAYS
+for j=1:length(ListOfDirs)
+
+    % ==================== 0) go to day folder
+    cd(ListOfDirs{j});
+    
+    % ==================== 1) extract all s
+    !ls *.cbin > BatchAll
+    lt_cleandirAuto('BatchAll', 1000, 5, 5);
+    batch = 'BatchAll.keep';
+%     batch = 'BatchPBS.rand';
+    
+    % ==================== 2) move old .notmat
+    if ~exist('OLDNOTMAT_SeqDepPitch', 'dir')
+        mkdir OLDNOTMAT_SeqDepPitch
+        !cp *.not.mat* OLDNOTMAT_SeqDepPitch
+    else
+        disp('not making OLDNOTMAT_SeqDepPitch, since already made!!');
+    end
+    
+    
+    % ==================== 3) run autolabeli
+    if (1)
+    % ---- GENERAL PARAMS
+    ampThresh=2200;
+    min_dur=30;
+    min_int=5;
+    
+    % ---- MOTIF 1 - first do dccB. this will label all dccB as well as
+    % match B on abbccb(b) (i.e. FP). Next will overwrite so is ok.
+    config='/bluejay5/lucas/birds/pu11wh87/config_AL_dccb.evconfig2'; % modified template
+    syl.targ='b';
+    syl.pre='dcc';
+    syl.post='';
+    NoteNum=0;
+    overwrite_notmat=1; % will always make backup folder
+    
+    [fnames, sylnum, vlsorfn, vlsorind]=lt_autolabel_EvTAFv4(batch, config, syl, NoteNum, ampThresh, min_dur, min_int, overwrite_notmat);
+    
+    
+    % ------ MOTIF 2 - abbcc(b)b. since this b is target, will replace
+    % following syls with dash. this is also important because dcc(b) above
+    % replaces abbccb(b) with dcc(b)b, so there will be one b jutting
+    % out...
+    config='/bluejay5/lucas/birds/pu11wh87/config_AL_bccB.evconfig2'; 
+    syl.targ='b';
+    syl.pre='abbcc';
+    syl.post='b';
+    NoteNum=0;
+    overwrite_notmat=0; % will always make backup folder
+    
+    [fnames, sylnum, vlsorfn, vlsorind]=lt_autolabel_EvTAFv4(batch, config, syl, NoteNum, ampThresh, min_dur, min_int, overwrite_notmat);
+    
+    else
+    % ---- GENERAL PARAMS
+    ampThresh=2200;
+    min_dur=30;
+    min_int=5;
+    
+    % ---- MOTIF 1 - first do dccB. this will label all dccB as well as
+    % match B on abbccb(b) (i.e. FP). Next will overwrite so is ok.
+    config='/bluejay5/lucas/birds/pu11wh87/config_AL_dccb.evconfig2'; % modified template
+    syl.targ='b';
+    syl.pre='dcc';
+    syl.post='';
+    NoteNum=0;
+    overwrite_notmat=0; % will always make backup folder
+    
+    [fnames, sylnum, vlsorfn, vlsorind]=lt_autolabel_EvTAFv4(batch, config, syl, NoteNum, ampThresh, min_dur, min_int, overwrite_notmat);
+    end
+
+end
 
 
 
 
+%% === check
 
+% syl = 'c';
+% presyl = '';
+% [fnames, sylnum]=lt_jc_chcklbl(batch, syl, 0.025,0.025, presyl,'','');
+% [vlsorfn vlsorind]=jc_vlsorfn(batch, syl, presyl,'');
+
+syl = 'd';
+presyl = '';
+[fnames, sylnum]=lt_jc_chcklbl(batch, syl, 0.025,0.025, presyl,'','');
+[vlsorfn vlsorind]=jc_vlsorfn(batch, syl, presyl,'');
+
+syl = 'a';
+presyl = '';
+[fnames, sylnum]=lt_jc_chcklbl(batch, syl, 0.025,0.025, presyl,'','');
+[vlsorfn vlsorind]=jc_vlsorfn(batch, syl, presyl,'');
+
+%% ============ 2) Use evsonganaly manually on the .wav file created above
+% (contains only the syls you chose)
+% INSTRUCTIONS: 
+% 1) open .wav file using evsonganaly
+% 2) change threshold to segment all syls indivudally
+% 3) any syl labeled "-" (default) will remain unchanged (i.e. will stay autolabeled). 
+%     give a new label to any mislabeled syl - that will be its new actual label
+evsonganaly
+
+
+%% ============ 3) Replace hand-checekd mislabeld syls 
+lt_autolabel_FixHandCheckedSyls(fnames, sylnum, vlsorfn, vlsorind)
+
+
+%% ###########################################################
+%% ########################################## CALC FF
+%% calc FF for all syls, save next to song file
+clear all; close all;
+
+ListOfDirs_UNDIR = {...
+    '/bluejay5/lucas/birds/pu11wh87/112014_SeqDepPitchShift2_pre', ...
+    '/bluejay5/lucas/birds/pu11wh87/112114_SeqDepPitchShift2_pre', ...
+    '/bluejay5/lucas/birds/pu11wh87/112214_SeqDepPitchShift2_pre', ...
+    '/bluejay5/lucas/birds/pu11wh87/112314_SeqDepPitchShift2_durWN_day1', ...
+    '/bluejay5/lucas/birds/pu11wh87/112414_SeqDepPitchShift2_durWN_day2', ...
+    '/bluejay5/lucas/birds/pu11wh87/112514_SeqDepPitchShift2_durWN_day3'};
+
+
+ListOfDirs_DIR = {};
+
+ListOfDirs_ALL = [ListOfDirs_UNDIR ListOfDirs_DIR];
+
+ListOfBatch = {...
+    'BatchAll.LABELED', ...
+    'BatchAll.LABELED', ...
+    'BatchAll.LABELED', ...
+    'BatchAll.LABELED', ...
+    'BatchAll.LABELED', ...
+    'BatchAll.LABELED', ...
+    };
+
+FFparams.cell_of_freqwinds={'c', [2000 3200], 'b', [2800 3800], ...
+    'a', [1300 2200], 'd', [1200 2700]};
+FFparams.cell_of_FFtimebins={'c', [0.036 0.065], 'b', [0.03 0.034], ...
+    'a', [0.07 0.085], 'd', [0.028 0.036]};
+plotAllPC = 0;
+plotEachSyl = 0;
+overwrite = 1;
+
+% ==================== CALCULATE AND SAVE FF
+lt_batchsong_calcFF(ListOfDirs_ALL, ListOfBatch, FFparams, plotAllPC, plotEachSyl, ...
+    overwrite);
+
+%% ==== EXTRACT FF
+MotifsToExtract = {'(d)ccb', 'd(c)cb', 'dc(c)b', 'dcc(b)', ...
+    '(a)bbccb', 'a(b)bccb', 'ab(b)ccb', 'abb(c)cb', 'abbc(c)b', 'abbcc(b)', 'abbccb(b)'};
+DATSTRUCT = lt_batchsong_extractFF(ListOfDirs_UNDIR, ListOfDirs_DIR, ListOfBatch, MotifsToExtract);
+
+
+%% ============== PLOT
+close all;
+TrainON = '23Nov2014-0000';
+SwitchTimes = {};
+subtractMean = 1;
+dozscore = 0;
+
+lt_batchsong_plotFF(DATSTRUCT, MotifsToExtract, TrainON, SwitchTimes, ...
+    subtractMean, dozscore);
 
 

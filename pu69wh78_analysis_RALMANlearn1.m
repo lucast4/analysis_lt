@@ -35,6 +35,14 @@ lt_batchsong_plotFF(DATSTRUCT, MotifsToExtract, TrainON, SwitchTimes, ...
     subtractMean, dozscore);
 
 
+%% =============== EXTRACT WN HITS
+ListOfDirs = {...
+    '/bluejay5/lucas/birds/pu69wh78/NEURAL/110117_RALMANlearn1'};
+ListOfBatch = {...
+    'BatchAll'};
+
+lt_batchsong_extractWNhit(ListOfDirs, ListOfBatch);
+
 %% ============== PLOT
 % close all;
 % TrainON = '01Nov2017-1402';

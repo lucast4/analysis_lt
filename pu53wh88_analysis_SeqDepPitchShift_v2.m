@@ -2,7 +2,7 @@
 
 %% 1) TO GATHER RAW DATA for one day - PARAMS INCORRECT
 % clear all; close all;
-% 
+%
 % Params.DayRawDat.fs=32000;
 % Params.DayRawDat.pc_harms=1; % harmonics to take weighted avg over. 1 or 2 is good.
 % Params.DayRawDat.batch='batch.labeled.all.subset';
@@ -12,13 +12,13 @@
 % Params.DayRawDat.pc_dur=[0.12,0.09,0.11];
 % Params.DayRawDat.pc_time_window={[375 525],[60 220],[55 320]};
 % Params.DayRawDat.pc_sigma=1;
-% 
+%
 % % plot and save?
 % plotON=1;
 % saveON=0;
-% 
+%
 % [Params, RawDatStruct]=lt_seq_dep_pitch_DayRawDat(Params,1,1);
-% 
+%
 
 %% TO DO OVER ALL DAYS
 clear all; close all
@@ -180,4 +180,249 @@ lt_seq_dep_pitch_Correlations(Params, AllDays_StructStatsStruct,DaysWanted)% to 
 
 
 
+%%
+
+%% ########################################################################
+%% ######################################### AUTOLABEL
+%% ================ TeSTING CONFIG FILE
+if (0)
+    close all;
+    batchf= 'BatchAll.LABELED';
+    get_WN_hits=0;
+    get_offline_match=1;
+    get_FF=0;
+    
+    syl = 'b';
+    syl_pre = 'a';
+    syl_post = '';
+    % config= '/bluejay3/lucas/birds/pu53wh88/config.evconfig2'; % before 2/16 templ change
+    config= '/bluejay5/lucas/birds/pu53wh88/config_AL_aB1.evconfig2';
+    config= '/bluejay5/lucas/birds/pu53wh88/config_AL_aB2.evconfig2';
+    NoteNum = 0;
+    
+    
+    check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, ...
+        syl_post, get_WN_hits, get_offline_match, get_FF, config, NoteNum);
+end
+
+% ================ TeSTING CONFIG FILE
+if (0)
+    close all;
+    batchf= 'BatchAll.LABELED';
+    get_WN_hits=0;
+    get_offline_match=1;
+    get_FF=0;
+    
+    syl = 'b';
+    syl_pre = 'c';
+    syl_post = '';
+    % config= '/bluejay3/lucas/birds/pu53wh88/config.evconfig2'; % before 2/16 templ change
+    config= '/bluejay5/lucas/birds/pu53wh88/config_AL_cB.evconfig2';
+    NoteNum = 0;
+    
+    
+    check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, ...
+        syl_post, get_WN_hits, get_offline_match, get_FF, config, NoteNum);
+end
+
+
+
+%% ##################################### AUTOLABEL
+clear all; close all;
+
+% ========================= 0) ECTRACT DIRECTORIRES
+basedir = '/bluejay5/lucas/birds/pu53wh88';
+% date_range_base={'10Feb2015','12Feb2015'};
+% date_range_WN={'14Feb2015','16Feb2015'};
+% experiment = 'SeqDepPitchShift';
+%
+% % -------- COLLECT METADAT
+% cd(basedir);
+% MetadataStruct=lt_metadata_collect;
+%
+% condition='';
+% notes='';
+% only_labeled_dirs=0;
+%
+% % ----- BASELINE
+% ListOfDirs1=lt_metadata_find_dirs(MetadataStruct, experiment, condition, ...
+%     notes, date_range_base, only_labeled_dirs, 2);
+%
+% % ------ WN
+% ListOfDirs2=lt_metadata_find_dirs(MetadataStruct, experiment, condition, ...
+%     notes, date_range_WN, only_labeled_dirs, 2);
+
+% ------- COMBINE
+ListOfDirs = {...
+    '102714_SeqDepPitchShift_pre_day5', ...
+    '102814_SeqDepPitchShift_pre_day6', ...
+    '102914_SeqDepPitchShift_pre_day7', ...
+    '110314_SeqDepPitchShift_durWN_day5', ...
+    '110414_SeqDepPitchShift_durWN_day6', ...
+    '110514_SeqDepPitchShift_durWN_day7'};
+% ListOfDirs = {...
+%     '110314_SeqDepPitchShift_durWN_day5', ...
+%     '110414_SeqDepPitchShift_durWN_day6', ...
+%     '110514_SeqDepPitchShift_durWN_day7'};
+
+% ============================== RUN, ITERATE OVER DAYS
+for j=1:length(ListOfDirs)
+    
+    % ==================== 0) go to day folder
+    cd([basedir '/' ListOfDirs{j}]);
+    
+    
+    % ==================== 1) extract all s
+    !ls *.cbin > BatchAll
+    lt_cleandirAuto('BatchAll', 1000, 5, 5);
+    batch = 'BatchAll.keep';
+    
+    % ==================== 2) move old .notmat
+    if ~exist('OLDNOTMAT_SeqDepPitch', 'dir')
+        mkdir OLDNOTMAT_SeqDepPitch
+        !cp *.not.mat* OLDNOTMAT_SeqDepPitch
+    else
+        disp('not making OLDNOTMAT_SeqDepPitch, since already made!!');
+    end
+    
+    
+    if (1)
+        % ==================== 3) run autolabel
+        % ---- GENERAL PARAMS
+        ampThresh=28000;
+        min_dur=30;
+        min_int=3;
+        
+        % ---- MOTIF 1 [abB] [not labeling abb(b) % since WN target is ab(b)]
+        config= '/bluejay5/lucas/birds/pu53wh88/config_AL_aB2.evconfig2';
+        syl.targ='b';
+        syl.pre='a';
+        syl.post='';
+        NoteNum=0;
+        overwrite_notmat=1; % will always make backup folder
+        
+        [fnames, sylnum, vlsorfn, vlsorind]=lt_autolabel_EvTAFv4(batch, config, syl, NoteNum, ampThresh, min_dur, min_int, overwrite_notmat);
+        
+        
+        % ------ MOTIF 2 [accBb]
+        config= '/bluejay5/lucas/birds/pu53wh88/config_AL_cB.evconfig2';
+        syl.targ='b';
+        syl.pre='acc';
+        syl.post='b';
+        NoteNum=0;
+        overwrite_notmat=0; % will always make backup folder
+        
+        [fnames, sylnum, vlsorfn, vlsorind]=lt_autolabel_EvTAFv4(batch, config, syl, NoteNum, ampThresh, min_dur, min_int, overwrite_notmat);
+        
+    else
+        
+        % ---- GENERAL PARAMS
+        ampThresh=28000;
+        min_dur=30;
+        min_int=3;
+        
+        % ---- MOTIF 1 [abB] [not labeling abb(b) % since WN target is ab(b)]
+        config= '/bluejay5/lucas/birds/pu53wh88/config_AL_aB2.evconfig2';
+        syl.targ='b';
+        syl.pre='a';
+        syl.post='';
+        NoteNum=0;
+        overwrite_notmat=0; % will always make backup folder
+        
+        [fnames, sylnum, vlsorfn, vlsorind]=lt_autolabel_EvTAFv4(batch, config, syl, NoteNum, ampThresh, min_dur, min_int, overwrite_notmat);
+        
+    end
+    
+    
+end
+
+%% ============ MAKE WAVE FILES TO LOOK FOR FALSE POSITIVES
+
+syl = 'a';
+postsyl = 'b';
+presyl = '';
+[fnames, sylnum]=lt_jc_chcklbl(batch, syl, 0.025,0.025, presyl, postsyl,'');
+[vlsorfn vlsorind]=jc_vlsorfn(batch, syl, presyl, postsyl);
+
+syl = 'c';
+presyl = 'c';
+[fnames, sylnum]=lt_jc_chcklbl(batch, syl, 0.025,0.025, presyl,'','');
+[vlsorfn vlsorind]=jc_vlsorfn(batch, syl, presyl,'');
+
+syl = 'b';
+presyl = 'cb';
+[fnames, sylnum]=lt_jc_chcklbl(batch, syl, 0.025,0.025, presyl,'','');
+[vlsorfn vlsorind]=jc_vlsorfn(batch, syl, presyl,'');
+
+%% ============ 2) Use evsonganaly manually on the .wav file created above
+% (contains only the syls you chose)
+% INSTRUCTIONS:
+% 1) open .wav file using evsonganaly
+% 2) change threshold to segment all syls indivudally
+% 3) any syl labeled "-" (default) will remain unchanged (i.e. will stay autolabeled).
+%     give a new label to any mislabeled syl - that will be its new actual label
+evsonganaly
+
+
+%% ============ 3) Replace hand-checekd mislabeld syls
+lt_autolabel_FixHandCheckedSyls(fnames, sylnum, vlsorfn, vlsorind)
+
+
+
+
+%% ################ PLOT LEARNING
+%% calc FF for all syls, save next to song file
+clear all; close all;
+
+ListOfDirs_UNDIR = {...
+    '/bluejay5/lucas/birds/pu53wh88/102714_SeqDepPitchShift_pre_day5', ...
+    '/bluejay5/lucas/birds/pu53wh88/102814_SeqDepPitchShift_pre_day6', ...
+    '/bluejay5/lucas/birds/pu53wh88/102914_SeqDepPitchShift_pre_day7', ...
+    '/bluejay5/lucas/birds/pu53wh88/110314_SeqDepPitchShift_durWN_day5', ...
+    '/bluejay5/lucas/birds/pu53wh88/110414_SeqDepPitchShift_durWN_day6', ...
+    '/bluejay5/lucas/birds/pu53wh88/110514_SeqDepPitchShift_durWN_day7'};
+
+ListOfDirs_DIR = {};
+
+ListOfDirs_ALL = [ListOfDirs_UNDIR ListOfDirs_DIR];
+
+ListOfBatch = {...
+    'BatchAll.LABELED', ...
+    'BatchAll.LABELED', ...
+    'BatchAll.LABELED', ...
+    'BatchAll.LABELED', ...
+    'BatchAll.LABELED', ...
+    'BatchAll.LABELED', ...
+    };
+
+
+
+FFparams.cell_of_freqwinds={'c', [2200 2950], 'b', [2650 4150], ...
+    'a', [1200 2200]};
+FFparams.cell_of_FFtimebins={'c', [0.035 0.067], 'b', [0.031 0.033], ...
+    'a', [0.064 0.077]};
+
+plotAllPC = 0;
+plotEachSyl = 0;
+overwrite = 1;
+
+% ==================== CALCULATE AND SAVE FF
+lt_batchsong_calcFF(ListOfDirs_ALL, ListOfBatch, FFparams, plotAllPC, plotEachSyl, ...
+    overwrite);
+
+%% ==== EXTRACT FF
+MotifsToExtract = {'(a)b', 'a(b)', ...
+    '(a)ccbb', 'a(c)cbb', 'ac(c)bb', 'acc(b)b', 'accb(b)'};
+DATSTRUCT = lt_batchsong_extractFF(ListOfDirs_UNDIR, ListOfDirs_DIR, ListOfBatch, MotifsToExtract);
+
+
+%% ============== PLOT
+close all;
+TrainON = '30Oct2014-1000';
+SwitchTimes = {};
+subtractMean = 1;
+dozscore = 0;
+
+lt_batchsong_plotFF(DATSTRUCT, MotifsToExtract, TrainON, SwitchTimes, ...
+    subtractMean, dozscore);
 
