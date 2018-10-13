@@ -15,17 +15,7 @@
 
 clear all; close all;
 batchf='batch.labeled.all';
-% config='/bluejay5/lucas/birds/bu6bu98/config092718.evconfig2';
-% config='/bluejay5/lucas/birds/bu6bu98/config092718_v2.evconfig2';
-% config='/bluejay5/lucas/birds/bu6bu98/config092718_3.evconfig2';
-config='/bluejay5/lucas/birds/bu6bu98/config092718_good.evconfig2';
-config='/bluejay5/lucas/birds/bu6bu98/config092918.evconfig2';
-config='/bluejay5/lucas/birds/bu6bu98/config100218.evconfig2';
-config='/bluejay5/lucas/birds/bu6bu98/config100318.evconfig2';
-config='/bluejay5/lucas/birds/bu6bu98/config100518.evconfig2';
-config='/bluejay5/lucas/birds/bu6bu98/config100618.evconfig2';
-config='/bluejay5/lucas/birds/bu6bu98/config100718.evconfig2';
-config='/bluejay5/lucas/birds/bu6bu98/config100818.evconfig2';
+config='/bluejay5/lucas/birds/bu6bu98/config101218.evconfig2';
 
 % === Note 0 (LASER on d)
 syl='d';
@@ -38,7 +28,7 @@ NoteNum=0;
 
 check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post, get_WN_hits,get_offline_match,get_FF,config,NoteNum);
 
-% === Note 1 (WN on d(b))
+% === Note 1 (WN on d(b)) [UP]
 syl='b';
 syl_pre='d';
 syl_post='';
@@ -50,40 +40,14 @@ NoteNum=1;
 check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post, get_WN_hits,get_offline_match,get_FF,config,NoteNum);
 
 
-% === Note 2 (WN on db(h))
-syl='h';
-syl_pre='db';
+% === Note 2 (WN on d(b)) [DN]
+syl='b';
+syl_pre='d';
 syl_post='';
 get_WN_hits=1;
 get_offline_match=1;
 get_FF=1;
 NoteNum=2;
-
-check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post, get_WN_hits,get_offline_match,get_FF,config,NoteNum);
-
-
-% === Note 3 (LASER on (c)c);
-syl='c';
-syl_pre='g';
-syl_post='';
-get_WN_hits=1;
-get_offline_match=1;
-get_FF=0;
-NoteNum=3;
-
-check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post, get_WN_hits,get_offline_match,get_FF,config,NoteNum);
-
-
-% ==========OTHERS NOT BEING USED
-% === Note (WN on c(b) [note 1 is cb, note 2 is cb(h))
-config='/bluejay5/lucas/birds/bu6bu98/config092718_v2.evconfig2';
-syl='c';
-syl_pre='d';
-syl_post='';
-get_WN_hits=1;
-get_offline_match=1;
-get_FF=0;
-NoteNum=1;
 
 check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post, get_WN_hits,get_offline_match,get_FF,config,NoteNum);
 

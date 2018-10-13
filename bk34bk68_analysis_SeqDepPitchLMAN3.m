@@ -360,6 +360,7 @@ for j=1:length(ListOfDirs)
 end
 
 %% ============ MAKE WAVE FILES TO LOOK FOR FALSE POSITIVES
+batch = 'BatchPBS.keep';
 
 syl = 'n';
 presyl = '';
@@ -390,4 +391,49 @@ evsonganaly
 lt_autolabel_FixHandCheckedSyls(fnames, sylnum, vlsorfn, vlsorind)
 
 
+%% ###########################################################
+%% ########################################## CALC FF
+%% calc FF for all syls, save next to song file
+clear all; close all;
 
+ListOfDirs_UNDIR = {...
+    '/bluejay4/lucas/birds/bk34bk68/012116_SeqDepPitchLMAN3_pre', ...
+    '/bluejay4/lucas/birds/bk34bk68/012516_SeqDepPitchLMAN3_durWN_day1', ...
+    '/bluejay4/lucas/birds/bk34bk68/012616_SeqDepPitchLMAN3_durWN_day2', ...
+    };
+ListOfDirs_DIR = {};
+
+ListOfDirs_ALL = [ListOfDirs_UNDIR ListOfDirs_DIR];
+
+ListOfBatch = {...
+    'BatchPBS.LABELED', ...
+    'BatchPBS.LABELED', ...
+    'BatchPBS.LABELED', ...
+    };
+
+FFparams.cell_of_freqwinds={'b', [2900 3900], ...
+    'a', [1400 2300]};
+FFparams.cell_of_FFtimebins={'b', [0.034 0.040], ...
+    'a', [0.041 0.069]};
+plotAllPC = 0;
+plotEachSyl = 0;
+overwrite = 1;
+
+% ==================== CALCULATE AND SAVE FF
+lt_batchsong_calcFF(ListOfDirs_ALL, ListOfBatch, FFparams, plotAllPC, plotEachSyl, ...
+    overwrite);
+
+%% ==== EXTRACT FF
+MotifsToExtract = {'njjj(b)', 'njjjb(b)', 'klj(b)', 'kljb(b)', 'kljbbg(a)'};
+DATSTRUCT = lt_batchsong_extractFF(ListOfDirs_UNDIR, ListOfDirs_DIR, ListOfBatch, MotifsToExtract);
+
+
+%% ============== PLOT
+close all;
+TrainON = '24Jan2016-2330';
+SwitchTimes = {};
+subtractMean = 0;
+dozscore = 0;
+
+lt_batchsong_plotFF(DATSTRUCT, MotifsToExtract, TrainON, SwitchTimes, ...
+    subtractMean, dozscore);
