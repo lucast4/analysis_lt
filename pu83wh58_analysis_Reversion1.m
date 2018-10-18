@@ -256,7 +256,7 @@ Params_bysyl(3).notenum_stim=3;
     Params_metadata.experiment='Reversion1'; % 1st underscore ...
     Params_metadata.condition='';
     Params_metadata.notes='STIMon';
-    Params_metadata.date_range={'11Oct2018', '11Oct2018'};
+    Params_metadata.date_range={'13Oct2018', '14Oct2018'};
     Params_metadata.only_labeled_dirs=1;
     
     % ===== For opto analysis
@@ -397,7 +397,7 @@ MetadataStruct=lt_metadata_collect;
 experiment = 'Reversion1';
 condition='';
 notes='';
-date_range={'27Sep2018', '11Oct2018'};
+date_range={'27Sep2018', '14Oct2018'};
 only_labeled_dirs=1;
 
 ListOfDirs2=lt_metadata_find_dirs(MetadataStruct, experiment, condition, notes, date_range, only_labeled_dirs);
@@ -458,7 +458,7 @@ basedir = '/bluejay5/lucas/birds/pu83wh58';
 % date_range_base={'27Sep2018','29Sep2018'};
 % date_range_WN={'30Sep2018','08Oct2018'};
 date_range_base={};
-date_range_WN={'11Oct2018','11Oct2018'};
+date_range_WN={'13Oct2018','14Oct2018'};
 experiment = 'Reversion1';
 
 % -------- COLLECT METADAT
