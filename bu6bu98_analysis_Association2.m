@@ -543,11 +543,11 @@ Params_bysyl(1).notenum_stim=0; % of Stim - CONFIRMED THIS WORKS
 
 % ####################### GENERAL PARAMS (shared across sykls)
 % =======, to find directories
-Params_metadata.experiment='Association1'; % 1st underscore ...
+Params_metadata.experiment='Association2'; % 1st underscore ...
 Params_metadata.condition='';
 Params_metadata.notes='';
 %     Params_metadata.date_range={'28Sep2018', '04Oct2018'};
-Params_metadata.date_range={'20Oct2018', '20Oct2018'};
+Params_metadata.date_range={'27Oct2018', '30Oct2018'};
 Params_metadata.only_labeled_dirs=1;
 
 % ===== For opto analysis
@@ -684,10 +684,10 @@ sylthis = 'd_b';
 % ==== METHOD 2) METADATA automatically
 MetadataStruct=lt_metadata_collect;
 
-experiment = 'Association1';
+experiment = 'Association2';
 condition='';
 notes='';
-date_range={'12Oct2018', '20Oct2018'};
+date_range={'21Oct2018', '30Oct2018'};
 only_labeled_dirs=1;
 
 ListOfDirs2=lt_metadata_find_dirs(MetadataStruct, experiment, condition, notes, date_range, only_labeled_dirs);
@@ -816,8 +816,8 @@ clear all; close all;
 % ========================= 0) ECTRACT DIRECTORIRES
 basedir = '/bluejay5/lucas/birds/bu6bu98';
 date_range_base={};
-date_range_WN={'20Oct2018','20Oct2018'};
-experiment = 'Association1';
+date_range_WN={'26Oct2018','30Oct2018'};
+experiment = 'Association2';
 
 % -------- COLLECT METADAT
 cd(basedir);
@@ -890,16 +890,16 @@ for j=1:length(ListOfDirs)
         syl, NoteNum, ampThresh, min_dur, min_int, overwrite_notmat, [], sm_win);
     
     
-    % ------ MOTIF 2 [accBb]
-    config= '/bluejay5/lucas/birds/bu6bu98/config_AL_c1.evconfig2';
-    syl.targ='c';
-    syl.pre='g';
-    syl.post='cbh';
-    NoteNum=0;
-    overwrite_notmat=0; % will always make backup folder
-    
-    [fnames, sylnum, vlsorfn, vlsorind]=lt_autolabel_EvTAFv4(batch, config, ...
-        syl, NoteNum, ampThresh, min_dur, min_int, overwrite_notmat, [], sm_win);
+%     % ------ MOTIF 2 [accBb]
+%     config= '/bluejay5/lucas/birds/bu6bu98/config_AL_c1.evconfig2';
+%     syl.targ='c';
+%     syl.pre='g';
+%     syl.post='cbh';
+%     NoteNum=0;
+%     overwrite_notmat=0; % will always make backup folder
+%     
+%     [fnames, sylnum, vlsorfn, vlsorind]=lt_autolabel_EvTAFv4(batch, config, ...
+%         syl, NoteNum, ampThresh, min_dur, min_int, overwrite_notmat, [], sm_win);
 end
 
 %% ============ MAKE WAVE FILES TO LOOK FOR FALSE POSITIVES
