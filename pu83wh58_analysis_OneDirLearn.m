@@ -10,7 +10,7 @@ config='/bluejay5/lucas/birds/pu83wh58/config101618.evconfig2';
 config='/bluejay5/lucas/birds/pu83wh58/config102618.evconfig2';
 config='/bluejay5/lucas/birds/pu83wh58/config110918.evconfig2';
 config='/bluejay5/lucas/birds/pu83wh58/config111018.evconfig2';
-config='/bluejay5/lucas/birds/pu83wh58/config111218.evconfig2';
+config='/bluejay5/lucas/birds/pu83wh58/config111618.evconfig2';
 
 % === GETTING a
 syl='a';
@@ -123,6 +123,7 @@ check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post
 % ========== CHECKING NOTEGROUP 1
 close all;
 batchf = 'batch.NoteGroup_0.rec_FB'; % either .cbin file or batch
+batchf = 'batch.keep'; % either .cbin file or batch
 % songf = batchf; % either .cbin file or batch
 lasernote = 1;
 annotate_note_group = 1;
@@ -318,10 +319,10 @@ Params_bysyl(2).notenum_stim=0; % of Stim - CONFIRMED THIS WORKS
 
 % ####################### GENERAL PARAMS (shared across sykls)
     % =======, to find directories
-    Params_metadata.experiment='Association2'; % 1st underscore ...
+    Params_metadata.experiment='OneDirLearn'; % 1st underscore ...
     Params_metadata.condition='';
     Params_metadata.notes='';
-    Params_metadata.date_range={'07Nov2018', '07Nov2018'};
+    Params_metadata.date_range={'14Nov2018', '14Nov2018'};
     Params_metadata.only_labeled_dirs=1;
     
     % ===== For opto analysis
@@ -394,10 +395,10 @@ sylthis = 'ab_h';
 % ==== METHOD 2) METADATA automatically
 MetadataStruct=lt_metadata_collect;
 
-experiment = 'Association2';
+experiment = 'OneDirLearn';
 condition='';
 notes='';
-date_range={'22Oct2018', '07Nov2018'};
+date_range={'08Nov2018', '14Nov2018'};
 only_labeled_dirs=1;
 
 ListOfDirs2=lt_metadata_find_dirs(MetadataStruct, experiment, condition, notes, date_range, only_labeled_dirs);
@@ -458,9 +459,9 @@ basedir = '/bluejay5/lucas/birds/pu83wh58';
 % date_range_base={'27Sep2018','29Sep2018'};
 % date_range_WN={'30Sep2018','08Oct2018'};
 date_range_base={};
-date_range_WN={'26Oct2018','26Oct2018'};
-% date_range_WN={'06Nov2018','07Nov2018'};
-experiment = 'Association2';
+% date_range_WN={'26Oct2018','26Oct2018'};
+date_range_WN={'17Nov2018','18Nov2018'};
+experiment = 'OneDirLearn';
 
 % -------- COLLECT METADAT
 cd(basedir);

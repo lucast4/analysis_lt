@@ -818,8 +818,8 @@ clear all; close all;
 basedir = '/bluejay5/lucas/birds/bu6bu98';
 date_range_base={};
 % date_range_WN={'26Oct2018','26Oct2018'};
-date_range_WN={'07Nov2018','10Nov2018'};
-experiment = 'Association2';
+date_range_WN={'15Nov2018','16Nov2018'};
+experiment = 'Reversion2';
 
 % -------- COLLECT METADAT
 cd(basedir);
