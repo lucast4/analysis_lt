@@ -548,7 +548,7 @@ Params_metadata.experiment='Association2'; % 1st underscore ...
 Params_metadata.condition='';
 Params_metadata.notes='';
 %     Params_metadata.date_range={'28Sep2018', '04Oct2018'};
-Params_metadata.date_range={'07Nov2018', '10Nov2018'};
+Params_metadata.date_range={'04Nov2018', '06Nov2018'};
 Params_metadata.only_labeled_dirs=1;
 
 % ===== For opto analysis
@@ -600,71 +600,6 @@ for i=1:length(Params_bysyl)
     cd(currdir);
 end
 
-%% EXCTRACTING DATA ACROSS DAYS
-% % IMPORTANT: dirs must be structured as (for e.g.)
-% % /bluejay4/lucas/birds/pk32/070115_Reversion1_preWN_STIMoff
-% % (date_experiment_somethingelse_STIMoff[or STIMon]).
-% 
-% % ALSO: Stim epochs must be catch trials (because will use StimCatch and
-% % StimNotCatch fields to filter data)
-% 
-% % WILL TAKE ALL LABELED SONGS
-% 
-% % RUN THIS IN BIRD FOLDER
-% clear Params_metadata; clear Params_glob;
-% close all;
-% 
-% % =======, to find directories
-% Params_metadata.experiment='Reversion1'; % 1st underscore ...
-% Params_metadata.condition='';
-% Params_metadata.notes='';
-% Params_metadata.date_range={'29Sep2018', '02Oct2018'};
-% Params_metadata.only_labeled_dirs=1;
-% 
-% % ===== For opto analysis
-% Params_glob.DataInfo='UnDir'; % To note information about data, 'Dir' and 'UnDir' means this is directed or undirected song.
-% Params_glob.Fs=32000;
-% 
-% %         WHERE TO ALIGN SONGS
-% Params_glob.SylTarg='b'; % aligns to onset of this
-% Params_glob.PreNote='a';
-% 
-% Params_glob.PreDur=0.15; % sec, how much data to take before targ
-% Params_glob.PostSylOnsetDur=0.2; % sec, data post to take
-% Params_glob.TargNoteNum=1; % template note directed to target
-% Params_glob.TargTrigCatchRate=0; % catch trial fraction at target
-% 
-% %         STIM
-% Params_glob.notenum_stim=0; % of Stim - CONFIRMED THIS WORKS
-% Params_glob.StimDelay=0; % in ms, delay from trigger to stim on
-% Params_glob.StimDur=400; % duration of Stim, in ms
-% Params_glob.StimType='pulse'; % either 'constant' or 'pulse'
-% 
-% %     	for pitch contour
-% Params_glob.PC_freqrange=[2650 3850]; % for both pitch contour and find note
-% Params_glob.pc_harms=1;
-% 
-% %     	To sort into stim vs. notstim trials
-% Params_glob.StimLatencyWindow=[-150, 0]; % [a b] a and b are times (in negative ms) preceding syl onset. If stim is within this window, then will call a "stim trial."
-% 
-% % Time Window List
-% % DURING WN (on window 3)
-% Params_glob.TimeWindowList{1}=[160 184]; % entire syl
-% Params_glob.TimeWindowList{2}=[250 271]; % entire syl
-% 
-% % Plotting over time
-% Params_glob.SmthBin=10; % smooth # rends
-% 
-% % Do you want to delete old opto analysis folder if it exists?
-% Params_glob.Delete_old_analysis_folder=1;
-% 
-% 
-% % =============================== RUN
-% KeepOutliers=1; % for running stats and plotting.
-% lt_Opto_Stim_analy_SUMMARY_MultDayAnaly_v3(Params_metadata, Params_glob, KeepOutliers);
-% 
-% cd ../../
-
 
 %% ==================== PLOT ACROSS DAYS
 close all;
@@ -688,7 +623,7 @@ MetadataStruct=lt_metadata_collect;
 experiment = 'Association2';
 condition='';
 notes='';
-date_range={'21Oct2018', '10Nov2018'};
+date_range={'12Oct2018', '14Nov2018'};
 only_labeled_dirs=1;
 
 ListOfDirs2=lt_metadata_find_dirs(MetadataStruct, experiment, condition, notes, date_range, only_labeled_dirs);
@@ -818,7 +753,7 @@ clear all; close all;
 basedir = '/bluejay5/lucas/birds/bu6bu98';
 date_range_base={};
 % date_range_WN={'26Oct2018','26Oct2018'};
-date_range_WN={'07Nov2018','10Nov2018'};
+date_range_WN={'11Nov2018','14Nov2018'};
 experiment = 'Association2';
 
 % -------- COLLECT METADAT

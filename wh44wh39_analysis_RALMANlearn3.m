@@ -98,14 +98,16 @@ lt_batchsong_calcFF(ListOfDirs_ALL, ListOfBatch, FFparams, plotAllPC, plotEachSy
 %% ==== EXTRACT FF
 MotifsToExtract = {'c(b)', 'cb(b)', '(k)', 'k(c)', 'kc(c)', '(n)', ...
     'n(h)', 'nh(h)'};
-DATSTRUCT = lt_batchsong_extractFF(ListOfDirs_UNDIR, ListOfDirs_DIR, ListOfBatch, MotifsToExtract);
+gethitsyls=0;
+DATSTRUCT = lt_batchsong_extractFF(ListOfDirs_UNDIR, ListOfDirs_DIR, ...
+    ListOfBatch, MotifsToExtract, gethitsyls);
 
 
 %% ============== PLOT
 close all;
 TrainON = '21Mar2018-1215';
 SwitchTimes = {'21Mar2018-1314', '21Mar2018-1325', '21Mar2018-2347'};
-subtractMean = 1;
+subtractMean = 0;
 dozscore = 1;
 
 lt_batchsong_plotFF(DATSTRUCT, MotifsToExtract, TrainON, SwitchTimes, ...

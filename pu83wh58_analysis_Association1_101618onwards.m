@@ -1,3 +1,6 @@
+%% NOTE [11/26/18] - renamed dataset to Association2, so this is now obsolete.
+% NOTE: Association1, pre 10/16, is not worth looking at. only 1 full day.
+
 %% CHECKING TEMPLATE MATCHING (ab[b]); [IGNORE NIOTE GROUPS]
 
 clear all; close all;

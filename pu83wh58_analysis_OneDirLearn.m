@@ -11,6 +11,7 @@ config='/bluejay5/lucas/birds/pu83wh58/config102618.evconfig2';
 config='/bluejay5/lucas/birds/pu83wh58/config110918.evconfig2';
 config='/bluejay5/lucas/birds/pu83wh58/config111018.evconfig2';
 config='/bluejay5/lucas/birds/pu83wh58/config111618.evconfig2';
+config='/bluejay5/lucas/birds/pu83wh58/config112018.evconfig2';
 
 % === GETTING a
 syl='a';
@@ -322,7 +323,7 @@ Params_bysyl(2).notenum_stim=0; % of Stim - CONFIRMED THIS WORKS
     Params_metadata.experiment='OneDirLearn'; % 1st underscore ...
     Params_metadata.condition='';
     Params_metadata.notes='';
-    Params_metadata.date_range={'14Nov2018', '14Nov2018'};
+    Params_metadata.date_range={'20Nov2018', '21Nov2018'};
     Params_metadata.only_labeled_dirs=1;
     
     % ===== For opto analysis
@@ -398,7 +399,7 @@ MetadataStruct=lt_metadata_collect;
 experiment = 'OneDirLearn';
 condition='';
 notes='';
-date_range={'08Nov2018', '14Nov2018'};
+date_range={'08Nov2018', '21Nov2018'};
 only_labeled_dirs=1;
 
 ListOfDirs2=lt_metadata_find_dirs(MetadataStruct, experiment, condition, notes, date_range, only_labeled_dirs);
@@ -460,7 +461,7 @@ basedir = '/bluejay5/lucas/birds/pu83wh58';
 % date_range_WN={'30Sep2018','08Oct2018'};
 date_range_base={};
 % date_range_WN={'26Oct2018','26Oct2018'};
-date_range_WN={'17Nov2018','18Nov2018'};
+date_range_WN={'20Nov2018','21Nov2018'};
 experiment = 'OneDirLearn';
 
 % -------- COLLECT METADAT

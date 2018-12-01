@@ -171,7 +171,8 @@ config='/bluejay3/lucas/birds/wh73pk61/032715_HVCChR2_NoteGroups_StimOFFWnON_Tar
 
     clear all; close all;
     batchf='batch.NoteGroup_0.LABELED';
-config='/bluejay3/lucas/birds/wh73pk61/config_b2_new.evconfig2';
+    batchf='batch.labeled.all.rand';
+config='/bluejay5/lucas/birds/wh73pk61/config_b2_new.evconfig2';
 
     syl='b';
     syl_pre='ccb';
@@ -254,7 +255,7 @@ clear all; close all;
 % 1, 2) directed song mark
 
 % 1) Data directories
-BirdDir='/bluejay3/lucas/birds/wh73pk61/';
+BirdDir='/bluejay5/lucas/birds/wh73pk61/';
 
 ListOfDirs=...
     {'031215_HVCChR2_XStimON_PitchShiftOFF_day4/lt_Opto_Stim_analy_batch.labeled.all_13Mar2015_1208X/PLOT_StimCatch_StimNotCatch_13Mar2015_1210/TimeWindow_13Mar2015_1213/OverTime_13Mar2015_1217',...
@@ -542,6 +543,297 @@ plotStimEpochs=1;
 
 lt_Opto_Stim_analy_SUMMARY_PlotOverTime(BirdDir, ListOfDirs_all,TimeFieldsOfInterest,statfield,BaselineDays,plotStimEpochs)
 
+%% ==================== [GOOD] ASSOCIATIONS [COPIED FROM ABOVE]
+% ========================= EXPERIMENT 3 - ASSOCIATION (ALL UP TO DATE
+% DATA)
+close all;
+clear all;
+
+BirdDir='/bluejay5/lucas/birds/wh73pk61/';
+TimeFieldsOfInterest = 4;
+statfield='ffvals';
+BaselineDays=1;
+plotStimEpochs=0;
+
+ListOfDirs=...
+    {'040215_HVCChR2_NoteGroups_StimONWnON_association_day1/lt_Opto_Stim_analy_v2/All/',...
+    '040315_HVCChR2_NoteGroups_StimONWnON_association_day2/lt_Opto_Stim_analy_v2/All',...
+    '040415_HVCChR2_NoteGroups_StimONWnON_association_day3/lt_Opto_Stim_analy_v2/All/',...
+    '040515_HVCChR2_NoteGroups_StimONWnON_association_day4/lt_Opto_Stim_analy_v2/All/',...
+    '040615_HVCChR2_NoteGroups_StimONWnON_association_day5/lt_Opto_Stim_analy_v2/Stim',...
+    '040715_HVCChR2_NoteGroups_StimONWnON_association_StimupNostimdn_day1/lt_Opto_Stim_analy_v2/All/',...
+    '040915_HVCChR2_NoteGroups_StimONWnON_association_StimupNostimdn_day3/lt_Opto_Stim_analy_v2/All/',...
+    '041015_HVCChR2_NoteGroups_StimONWnON_association_StimupNostimdn_day4/lt_Opto_Stim_analy_v2/All/',...
+    '041115_HVCChR2_NoteGroups_StimOFFWnON_association_day5/lt_Opto_Stim_analy_v2/All',...
+    '041215_HVCChR2_NoteGroups_StimOFFWnON_association_day6/lt_Opto_Stim_analy_v2/All',...
+    '041315_HVCChR2_StimONWnON_assoc_StimWNupNoStimWNDn_LaserCatch_day1/lt_Opto_Stim_analy_v2/Probe_post12',...
+    '041415_HVCChR2_StimONWnON_assoc_StimWNupNoStimWNDn_LaserCatch_day2/lt_Opto_Stim_analy_v2/Probe/',...
+    '041515_HVCChR2_StimONWnON_assoc_StimWNUpNoStimWNDn_LaserCatch_day1/lt_Opto_Stim_analy_v2/Probe/'};
+
+ListOfDirs_all=[ListOfDirs];
+
+% ASSOC EXP: Params telling what days are stim + UP vs stim + DN, etc.
+MetaParams.AssocExpt.Timeline.Stim_WNup_UniDir={'02Apr2015','03Apr2015','06Apr2015'};
+MetaParams.AssocExpt.Timeline.Stim_WNdn_UniDir={'04Apr2015','05Apr2015'};
+MetaParams.AssocExpt.Timeline.Stim_WNup_BiDir={'07Apr2015','08Apr2015','09Apr2015','10Apr2015'};
+MetaParams.AssocExpt.Timeline.noStim_WNup={'11Apr2015'};
+MetaParams.AssocExpt.Timeline.noStim_WNdn={'12Apr2015'};
+MetaParams.AssocExpt.Timeline.Stim_WNup_probe={'15Apr2015'};
+MetaParams.AssocExpt.Timeline.Stim_WNdn_probe={'13Apr2015','14Apr2015'};
+
+savephrase = 'Association';
+lt_Opto_Stim_analy_SUMMARY_PlotOverTime(BirdDir,ListOfDirs, ...
+    TimeFieldsOfInterest, statfield, BaselineDays, plotStimEpochs, MetaParams, ...
+    savephrase);
+
+
+
+%% ===================== [ASSOCIATION1] Redoing associations above, but better
+% main difference is extracting only the syllabe of interest, so remove
+% jitter in timing. I copied all those folders to new folders, analyses on
+% new folders below.
+
+
+% OPTO ANALY ACROSS DAYS
+% ================ DO SEPARATELY FOR EACH SYLLABLE OF INTEREST
+
+clear Params_metadata; clear Params_glob;
+close all;
+
+% ================== SYL PARAMS CATALOGp
+clear Params_bysyl
+
+Params_bysyl(1).SylTarg='h'; % aligns to onset of this
+Params_bysyl(1).PreNote='b';
+Params_bysyl(1).PreDur=0.05; % sec, how much data to take before targ
+Params_bysyl(1).PostSylOnsetDur=0.1; % sec, data post to take
+Params_bysyl(1).TargNoteNum=1; % template note directed to target
+Params_bysyl(1).PC_freqrange=[3000 4200]; % for both pitch contour and find note
+Params_bysyl(1).StimLatencyWindow=[-325, 0]; % [a b] a and b are times (in negative ms) preceding syl onset. If stim is within this window, then will call a "stim trial."
+Params_bysyl(1).TimeWindowList{1}=[54 56]; % entire syl
+Params_bysyl(1).notenum_stim=0; % of Stim - CONFIRMED THIS WORKS
+
+
+% ####################### GENERAL PARAMS (shared across sykls)
+% =======, to find directories
+Params_metadata.experiment='Association1'; % 1st underscore ...
+Params_metadata.condition='';
+Params_metadata.notes='';
+%     Params_metadata.date_range={'28Sep2018', '04Oct2018'};
+Params_metadata.date_range={'13Apr2015', '15Apr2015'};
+Params_metadata.only_labeled_dirs=1;
+
+% ===== For opto analysis
+Params_glob.DataInfo='UnDir'; % To note information about data, 'Dir' and 'UnDir' means this is directed or undirected song.
+Params_glob.Fs=32000;
+
+%         STIM
+Params_glob.StimDelay=0; % in ms, delay from trigger to stim on
+Params_glob.StimDur=[]; % duration of Stim, in ms
+Params_glob.StimType=''; % either 'constant' or 'pulse'
+
+
+% Time Window List
+% Plotting over time
+Params_glob.SmthBin=10; % smooth # rends
+
+% Do you want to delete old opto analysis folder if it exists?
+Params_glob.Delete_old_analysis_folder=1;
+
+
+
+% ###################### SYL SPECIFIC PARAMS
+SepBySyl = 1;
+currdir = pwd;
+for i=1:length(Params_bysyl)
+    
+    % ================== WHERE TO ALIGN SONGS
+    Params_glob.SylTarg=Params_bysyl(i).SylTarg; % aligns to onset of this
+    Params_glob.PreNote=Params_bysyl(i).PreNote;
+    Params_glob.PreDur=Params_bysyl(i).PreDur; % sec, how much data to take before targ
+    Params_glob.PostSylOnsetDur=Params_bysyl(i).PostSylOnsetDur; % sec, data post to take
+    Params_glob.TargNoteNum=Params_bysyl(i).TargNoteNum; % template note directed to target
+    Params_glob.PC_freqrange=Params_bysyl(i).PC_freqrange; % for both pitch contour and find note
+    Params_glob.StimLatencyWindow=Params_bysyl(i).StimLatencyWindow; % [a b] a and b are times (in negative ms) preceding syl onset. If stim is within this window, then will call a "stim trial."
+    Params_glob.TimeWindowList=Params_bysyl(i).TimeWindowList; % entire syl
+    Params_glob.notenum_stim=Params_bysyl(i).notenum_stim;
+    
+    % ================================== DEFAULTS, UNLIKELY TO NEED TO CHANGE
+    Params_glob.TargTrigCatchRate=0; % catch trial fraction at target
+    Params_glob.pc_harms=1;
+    
+    
+    % =============================== RUN
+    KeepOutliers=1; % for running stats and plotting.
+    lt_Opto_Stim_analy_SUMMARY_MultDayAnaly_v3(Params_metadata, Params_glob, ...
+        KeepOutliers, SepBySyl);
+    
+    cd(currdir);
+end
+
+%% ==================== PLOT ACROSS DAYS
+close all;
+clear all;
+
+% ==== Params for analysis
+BirdDir='/bluejay5/lucas/birds/wh73pk61/';
+TimeFieldsOfInterest = 1; % i.e. time windows in pitch contour
+statfield='ffvals';
+BaselineDays=1;
+plotStimEpochs=0; % if 1, then separates all data to stim epochs (even if multiple in one day)
+ListOfDirs1={};
+ListOfDirs2={};
+SepBySyl =1;
+syllist = {''};
+sylthis = 'b_h';
+
+% ==== METHOD 2) METADATA automatically
+MetadataStruct=lt_metadata_collect;
+
+experiment = 'Association1';
+condition='';
+notes='';
+date_range={'02Apr2015', '15Apr2015'};
+only_labeled_dirs=1;
+
+ListOfDirs2=lt_metadata_find_dirs(MetadataStruct, experiment, condition, notes, date_range, only_labeled_dirs);
+
+% get the correct subdir that contains opto stats
+c=1;
+for i=1:length(ListOfDirs2)
+    cd(ListOfDirs2{i});
+    
+    
+    tmp=[];
+    try
+        cd lt_Opto_Stim_analy_v2
+        try cd 'All';
+            tmp='All';
+        catch err
+            try cd 'Stim';
+                tmp='Stim';
+            end
+        end
+    catch err
+        disp(['error - no lt_Opto_Stim_analy_v2 data on: ' ListOfDirs2{i} ' - throwing day out']);
+    cd(BirdDir);        
+        continue
+    end
+    
+    % go back up to main dir
+    cd(BirdDir);
+    
+    % modify name to add opto analysis name
+    if SepBySyl==1
+        ListOfDirs2_modified{c}=[ListOfDirs2{i} '/lt_Opto_Stim_analy_v2/' tmp '/' sylthis];
+    else
+    ListOfDirs2_modified{c}=[ListOfDirs2{i} '/lt_Opto_Stim_analy_v2/' tmp];
+    end
+    c=c+1;
+end
+
+
+% ===== COMBINE DIRS
+ListOfDirs_all=[ListOfDirs1 ListOfDirs2_modified];
+
+MetaParams.WNonDates = {}; % times when WN epochs began
+
+
+lt_Opto_Stim_analy_SUMMARY_PlotOverTime(BirdDir, ListOfDirs_all,TimeFieldsOfInterest, ...
+    statfield,BaselineDays,plotStimEpochs, MetaParams)
+
+
+%% =================== [REVERSION] THE GOOD LEARNING + STIM EXPERIMENT:
+clear all; close all;
+% MODIFIED FROM ABOVE. NOT adding new info, but making into current format
+% (11/22/18) 
+% ===================== EXPERIMENT - REVERSION (ALL DAYS WITH WN ON WHILE
+% STIM)
+% Combining experiments:
+% 1) 3/26 to 4/1
+% 2) 4/20 to 5/24
+% (6/1/15) - UP TO DATE.
+
+
+% -- Get directories of interest
+
+BirdDir='/bluejay5/lucas/birds/wh73pk61/';
+
+ListOfDirs1=...
+    {'030815_HVCChR2_XStim_StimOFF/lt_Opto_Stim_analy_batch.labeled.all_12Mar2015_2009/PLOT_All_12Mar2015_2010/TimeWindow_12Mar2015_2010/OverTime_12Mar2015_2010',...
+    '030815_HVCChR2_XStim_StimON_pulse/lt_Opto_Stim_analy_batch.labeled.all_12Mar2015_2010/PLOT_StimCatch_StimNotCatch_12Mar2015_2012/TimeWindow_12Mar2015_2012/OverTime_12Mar2015_2012',...
+    '030715_HVCChR2_XStim_StimOFF/lt_Opto_Stim_analy_batch.labeled.all_12Mar2015_2015/PLOT_All_12Mar2015_2016/TimeWindow_12Mar2015_2016/OverTime_12Mar2015_2016',...
+    '030715_HVCChR2_XStim_StimON_pulse/lt_Opto_Stim_analy_batch.labeled.all_12Mar2015_2016/PLOT_StimCatch_StimNotCatch_12Mar2015_2018/TimeWindow_12Mar2015_2018/OverTime_12Mar2015_2018',...
+    '030615_HVCChR2_XStim_StimON_pulse/lt_Opto_Stim_analy_batch.labeled.all_12Mar2015_2022/PLOT_StimCatch_StimNotCatch_12Mar2015_2025/TimeWindow_12Mar2015_2025/OverTime_12Mar2015_2025',...
+    '032615_HVCChR2_NoteGroups_StimONWnON_day6/lt_Opto_Stim_analy_batch.labeled.all_28Mar2015_1809X/PLOT_StimCatch_StimNotCatch_28Mar2015_1811/TimeWindow_28Mar2015_1813/OverTime_28Mar2015_1814/',...
+    '032615_HVCChR2_NoteGroups_StimONWnOFF_day6/lt_Opto_Stim_analy_batch.labeled.all_28Mar2015_1828X/PLOT_StimCatch_StimNotCatch_28Mar2015_1830/TimeWindow_28Mar2015_1833/OverTime_28Mar2015_1833/',...
+    '032715_HVCChR2_NoteGroups_StimOFFWnON_Targb2only_day1/lt_Opto_Stim_analy_v2/All',...
+    '032715_HVCChR2_NoteGroups_StimONWnON_Targb2only_day1/lt_Opto_Stim_analy_v2/Stim',...
+    '032815_HVCChR2_NoteGroups_StimONWnON_Targb2only_day2/lt_Opto_Stim_analy_batch.labeled.all_28Mar2015_1718X/PLOT_StimCatch_StimNotCatch_28Mar2015_1719/TimeWindow_30Mar2015_1232/OverTime_30Mar2015_1232',...
+    '032815_HVCChR2_NoteGroups_StimOFFWnON_Targb2only_day2/lt_Opto_Stim_analy_v2/All',...    
+    '032815_HVCChR2_NoteGroups_StimONWnON_Targb2only_day_stim2/lt_Opto_Stim_analy_batch.labeled.all_29Mar2015_1832X/PLOT_StimCatch_StimNotCatch_29Mar2015_1833/TimeWindow_30Mar2015_1234/OverTime_30Mar2015_1234',...
+    '032915_HVCChR2_NoteGroups_StimONWnON_Targb2only_day3/lt_Opto_Stim_analy_batch.labeled.all_29Mar2015_1910X/PLOT_StimCatch_StimNotCatch_29Mar2015_1913/TimeWindow_30Mar2015_1238/OverTime_30Mar2015_1238',...
+    '032915_HVCChR2_NoteGroups_StimOFFWnON_Targb2only_day3/lt_Opto_Stim_analy_v2/All',...
+    '033015_HVCChR2_NoteGroups_StimOFFWnON_Targb2only_day4/lt_Opto_Stim_analy_v2/All',...
+    '033015_HVCChR2_NoteGroups_StimONWnON_Targb2only_day4/lt_Opto_Stim_analy_batch.labeled.all_30Mar2015_1853X/PLOT_StimCatch_StimNotCatch_30Mar2015_1856/TimeWindow_30Mar2015_1857/OverTime_30Mar2015_1858/',...
+    '033115_HVCChR2_NoteGroups_StimOFFWnON_Targb2only_day5/lt_Opto_Stim_analy_batch.labeled.all_01Apr2015_1306X/PLOT_All_01Apr2015_1311/TimeWindow_01Apr2015_1313/OverTime_01Apr2015_1314',...
+    '033115_HVCChR2_NoteGroups_StimONWnON_Targb2only_day5/lt_Opto_Stim_analy_batch.labeled.all_01Apr2015_1315X/PLOT_StimCatch_StimNotCatch_01Apr2015_1316/TimeWindow_01Apr2015_1335/OverTime_01Apr2015_1335',...
+    '040115_HVCChR2_NoteGroups_StimONWnON_Targb2only_day6/lt_Opto_Stim_analy_v2/Stim',...
+    '040115_HVCChR2_NoteGroups_StimOffWnON_Targb2only_day6/lt_Opto_Stim_analy_v2/All'};
+    
+
+
+MetadataStruct=lt_metadata_collect;
+
+experiment = '';
+condition='';
+notes='';
+date_range={'20Apr2015','20May2015'};
+only_labeled_dirs=1;
+
+ListOfDirs2=lt_metadata_find_dirs(MetadataStruct, experiment, condition, notes, date_range, only_labeled_dirs);
+
+% get the correct subdir that contains opto stats
+c=1;
+for i=1:length(ListOfDirs2)
+    cd(ListOfDirs2{i});
+    
+    tmp=[];
+    try
+        cd lt_Opto_Stim_analy_v2
+        try cd 'All';
+            tmp='All';
+        catch err
+            try cd 'Stim';
+                tmp='Stim';
+            end
+        end
+    catch err
+        disp(['error - no lt_Opto_Stim_analy_v2 data on: ' ListOfDirs2{i} ' - throwing day out']);
+    cd(BirdDir);        
+        continue
+    end
+    
+    % go back up to main dir
+    cd(BirdDir);
+    
+    % modify name to add opto analysis name
+    ListOfDirs2_modified{c}=[ListOfDirs2{i} '/lt_Opto_Stim_analy_v2/' tmp];
+    c=c+1;
+end
+
+ListOfDirs_all=[ListOfDirs1 ListOfDirs2_modified];
+
+% Params for analysis
+TimeFieldsOfInterest = 4;
+% TimeFieldsOfInterest = 4;
+statfield='ffvals';
+BaselineDays=1:3;
+plotStimEpochs=0;
+savephrase = 'Reversion';
+
+lt_Opto_Stim_analy_SUMMARY_PlotOverTime(BirdDir, ListOfDirs_all,TimeFieldsOfInterest,statfield,BaselineDays,plotStimEpochs, ...
+    '', savephrase);
 
 
 %% AUTOLABELING
@@ -727,7 +1019,24 @@ Params.TEMPLATE.refract=0.2;
 end
 
 
+%% ============ MAKE WAVE FILES TO LOOK FOR FALSE POSITIVES
+batch = 'batch.labeled.all';
+syl = '-';
+presyl = 'b';
+[fnames, sylnum]=lt_jc_chcklbl(batch, syl, 0.025,0.025, presyl,'','');
+[vlsorfn vlsorind]=jc_vlsorfn(batch, syl, presyl,'');
 
+
+%% ============ 3) Replace hand-checekd mislabeld syls 
+lt_autolabel_FixHandCheckedSyls(fnames, sylnum, vlsorfn, vlsorind)
+
+%% ============== 4) change b(-) to b(h)
+db_change_syllable_in_batchfile('batch.labeled.all', 'b-', 'bh');
+
+% ==== plot random h to visualize
+close all;
+lt_disp_random_songs_syls('batch.labeled.all', 1, 1, 50, ...
+    1,0,0,'h','b',0.2,0.2);
 %% ============= USING CONTEXT ANALYSIS TO ANALYZE ASSOCIATION EXPERIMENT
 
 % 4/2 to 4/6, one-dir association, used catch song, so will have to modify

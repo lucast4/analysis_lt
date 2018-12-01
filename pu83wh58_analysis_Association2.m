@@ -397,7 +397,7 @@ MetadataStruct=lt_metadata_collect;
 experiment = 'Association2';
 condition='';
 notes='';
-date_range={'22Oct2018', '07Nov2018'};
+date_range={'16Oct2018', '07Nov2018'};
 only_labeled_dirs=1;
 
 ListOfDirs2=lt_metadata_find_dirs(MetadataStruct, experiment, condition, notes, date_range, only_labeled_dirs);
