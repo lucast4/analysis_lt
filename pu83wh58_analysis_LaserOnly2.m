@@ -183,120 +183,120 @@ lt_batchsong_plotallchans(batchf, lasernote, annotate_note_group);
 %% OPTO ANALY ACROSS DAYS
 % ================ DO SEPARATELY FOR EACH SYLLABLE OF INTEREST
 
-% clear Params_metadata; clear Params_glob;
-% close all;
-% 
-% % ================== SYL PARAMS CATALOGp
-% clear Params_bysyl
-% 
-% Params_bysyl(1).SylTarg='b'; % aligns to onset of this
-% Params_bysyl(1).PreNote='a';
-% Params_bysyl(1).PreDur=0.05; % sec, how much data to take before targ
-% Params_bysyl(1).PostSylOnsetDur=0.1; % sec, data post to take
-% Params_bysyl(1).TargNoteNum=1; % template note directed to target
-% Params_bysyl(1).PC_freqrange=[2650 3950]; % for both pitch contour and find note
-% Params_bysyl(1).StimLatencyWindow=[-150, 0]; % [a b] a and b are times (in negative ms) preceding syl onset. If stim is within this window, then will call a "stim trial."
-% Params_bysyl(1).TimeWindowList{1}=[60 72]; % entire syl
-% Params_bysyl(1).notenum_stim=0; % of Stim - CONFIRMED THIS WORKS
-% 
-% Params_bysyl(2).SylTarg='h'; % aligns to onset of this
-% Params_bysyl(2).PreNote='ab';
+clear Params_metadata; clear Params_glob;
+close all;
+
+% ================== SYL PARAMS CATALOGp
+clear Params_bysyl
+
+Params_bysyl(1).SylTarg='b'; % aligns to onset of this
+Params_bysyl(1).PreNote='a';
+Params_bysyl(1).PreDur=0.05; % sec, how much data to take before targ
+Params_bysyl(1).PostSylOnsetDur=0.1; % sec, data post to take
+Params_bysyl(1).TargNoteNum=1; % template note directed to target
+Params_bysyl(1).PC_freqrange=[2650 3950]; % for both pitch contour and find note
+Params_bysyl(1).StimLatencyWindow=[-150, 0]; % [a b] a and b are times (in negative ms) preceding syl onset. If stim is within this window, then will call a "stim trial."
+Params_bysyl(1).TimeWindowList{1}=[60 72]; % entire syl
+Params_bysyl(1).notenum_stim=0; % of Stim - CONFIRMED THIS WORKS
+
+Params_bysyl(2).SylTarg='h'; % aligns to onset of this
+Params_bysyl(2).PreNote='ab';
+Params_bysyl(2).PreDur=0.05; % sec, how much data to take before targ
+Params_bysyl(2).PostSylOnsetDur=0.1; % sec, data post to take
+Params_bysyl(2).TargNoteNum=2; % template note directed to target
+Params_bysyl(2).PC_freqrange=[2650 3850]; % for both pitch contour and find note
+Params_bysyl(2).StimLatencyWindow=[-300, 0]; % [a b] a and b are times (in negative ms) preceding syl onset. If stim is within this window, then will call a "stim trial."
+Params_bysyl(2).TimeWindowList{1}=[56 61]; % entire syl
+Params_bysyl(2).notenum_stim=0; % of Stim - CONFIRMED THIS WORKS
+
+
+% Params_bysyl(2).SylTarg='c'; % aligns to onset of this
+% Params_bysyl(2).PreNote='c';
 % Params_bysyl(2).PreDur=0.05; % sec, how much data to take before targ
 % Params_bysyl(2).PostSylOnsetDur=0.1; % sec, data post to take
-% Params_bysyl(2).TargNoteNum=2; % template note directed to target
-% Params_bysyl(2).PC_freqrange=[2650 3850]; % for both pitch contour and find note
-% Params_bysyl(2).StimLatencyWindow=[-300, 0]; % [a b] a and b are times (in negative ms) preceding syl onset. If stim is within this window, then will call a "stim trial."
-% Params_bysyl(2).TimeWindowList{1}=[56 61]; % entire syl
-% Params_bysyl(2).notenum_stim=0; % of Stim - CONFIRMED THIS WORKS
+% Params_bysyl(2).TargNoteNum=-1; % template note directed to target [make -1 if don't care]
+% Params_bysyl(2).PC_freqrange=[2000 2900]; % for both pitch contour and find note
+% Params_bysyl(2).StimLatencyWindow=[-200, 0]; % [a b] a and b are times (in negative ms) preceding syl onset. If stim is within this window, then will call a "stim trial."
+% Params_bysyl(2).TimeWindowList{1}=[62 120]; % entire syl
+% Params_bysyl(2).notenum_stim=3; % of Stim - CONFIRMED THIS WORKS
 % 
+% Params_bysyl(4).SylTarg='b'; % aligns to onset of this
+% Params_bysyl(4).PreNote='c';
+% Params_bysyl(4).PreDur=0.05; % sec, how much data to take before targ
+% Params_bysyl(4).PostSylOnsetDur=0.1; % sec, data post to take
+% Params_bysyl(4).TargNoteNum=-1; % template note directed to target
+% Params_bysyl(4).PC_freqrange=[3100 3900]; % for both pitch contour and find note
+% Params_bysyl(4).StimLatencyWindow=[-300 0]; % [a b] a and b are times (in negative ms) preceding syl onset. If stim is within this window, then will call a "stim trial."
+% Params_bysyl(4).TimeWindowList{1}=[58 76]; % entire syl
+% Params_bysyl(4).notenum_stim=3; % of Stim - CONFIRMED THIS WORKS
 % 
-% % Params_bysyl(2).SylTarg='c'; % aligns to onset of this
-% % Params_bysyl(2).PreNote='c';
-% % Params_bysyl(2).PreDur=0.05; % sec, how much data to take before targ
-% % Params_bysyl(2).PostSylOnsetDur=0.1; % sec, data post to take
-% % Params_bysyl(2).TargNoteNum=-1; % template note directed to target [make -1 if don't care]
-% % Params_bysyl(2).PC_freqrange=[2000 2900]; % for both pitch contour and find note
-% % Params_bysyl(2).StimLatencyWindow=[-200, 0]; % [a b] a and b are times (in negative ms) preceding syl onset. If stim is within this window, then will call a "stim trial."
-% % Params_bysyl(2).TimeWindowList{1}=[62 120]; % entire syl
-% % Params_bysyl(2).notenum_stim=3; % of Stim - CONFIRMED THIS WORKS
-% % 
-% % Params_bysyl(4).SylTarg='b'; % aligns to onset of this
-% % Params_bysyl(4).PreNote='c';
-% % Params_bysyl(4).PreDur=0.05; % sec, how much data to take before targ
-% % Params_bysyl(4).PostSylOnsetDur=0.1; % sec, data post to take
-% % Params_bysyl(4).TargNoteNum=-1; % template note directed to target
-% % Params_bysyl(4).PC_freqrange=[3100 3900]; % for both pitch contour and find note
-% % Params_bysyl(4).StimLatencyWindow=[-300 0]; % [a b] a and b are times (in negative ms) preceding syl onset. If stim is within this window, then will call a "stim trial."
-% % Params_bysyl(4).TimeWindowList{1}=[58 76]; % entire syl
-% % Params_bysyl(4).notenum_stim=3; % of Stim - CONFIRMED THIS WORKS
-% % 
-% % Params_bysyl(3).SylTarg='h'; % aligns to onset of this
-% % Params_bysyl(3).PreNote='cb';
-% % Params_bysyl(3).PreDur=0.05; % sec, how much data to take before targ
-% % Params_bysyl(3).PostSylOnsetDur=0.1; % sec, data post to take
-% % Params_bysyl(3).TargNoteNum=-1; % template note directed to target
-% % Params_bysyl(3).PC_freqrange=[2800 3800]; % for both pitch contour and find note
-% % Params_bysyl(3).StimLatencyWindow=[-450, 0]; % [a b] a and b are times (in negative ms) preceding syl onset. If stim is within this window, then will call a "stim trial."
-% % Params_bysyl(3).TimeWindowList{1}=[55 77]; % entire syl
-% % Params_bysyl(3).notenum_stim=3;
-% 
-% 
-% % ####################### GENERAL PARAMS (shared across sykls)
-%     % =======, to find directories
-%     Params_metadata.experiment='OneDirLearn'; % 1st underscore ...
-%     Params_metadata.condition='';
-%     Params_metadata.notes='';
-%     Params_metadata.date_range={'20Nov2018', '21Nov2018'};
-%     Params_metadata.only_labeled_dirs=1;
-%     
-%     % ===== For opto analysis
-%     Params_glob.DataInfo='UnDir'; % To note information about data, 'Dir' and 'UnDir' means this is directed or undirected song.
-%     Params_glob.Fs=32000;
-%     
-%     %         STIM
-%     Params_glob.StimDelay=0; % in ms, delay from trigger to stim on
-%     Params_glob.StimDur=400; % duration of Stim, in ms
-%     Params_glob.StimType='pulse'; % either 'constant' or 'pulse'
-% 
-% 
-% 
-% % Time Window List
-% % Plotting over time
-% Params_glob.SmthBin=10; % smooth # rends
-% 
-% % Do you want to delete old opto analysis folder if it exists?
-% Params_glob.Delete_old_analysis_folder=1;
-% 
-% 
-% 
-% % ###################### SYL SPECIFIC PARAMS
-% SepBySyl = 1;
-% currdir = pwd;
-% for i=1:length(Params_bysyl)
-%     
-%     % ================== WHERE TO ALIGN SONGS
-%     Params_glob.SylTarg=Params_bysyl(i).SylTarg; % aligns to onset of this
-%     Params_glob.PreNote=Params_bysyl(i).PreNote;
-%     Params_glob.PreDur=Params_bysyl(i).PreDur; % sec, how much data to take before targ
-%     Params_glob.PostSylOnsetDur=Params_bysyl(i).PostSylOnsetDur; % sec, data post to take
-%     Params_glob.TargNoteNum=Params_bysyl(i).TargNoteNum; % template note directed to target
-%     Params_glob.PC_freqrange=Params_bysyl(i).PC_freqrange; % for both pitch contour and find note
-%     Params_glob.StimLatencyWindow=Params_bysyl(i).StimLatencyWindow; % [a b] a and b are times (in negative ms) preceding syl onset. If stim is within this window, then will call a "stim trial."
-%     Params_glob.TimeWindowList=Params_bysyl(i).TimeWindowList; % entire syl
-%     Params_glob.notenum_stim=Params_bysyl(i).notenum_stim;
-%     
-%     % ================================== DEFAULTS, UNLIKELY TO NEED TO CHANGE
-%     Params_glob.TargTrigCatchRate=0; % catch trial fraction at target
-%     Params_glob.pc_harms=1;
-%     
-%     
-%     % =============================== RUN
-%     KeepOutliers=1; % for running stats and plotting.
-%     lt_Opto_Stim_analy_SUMMARY_MultDayAnaly_v3(Params_metadata, Params_glob, ...
-%         KeepOutliers, SepBySyl);
-%     
-%     cd(currdir);
-% end
+% Params_bysyl(3).SylTarg='h'; % aligns to onset of this
+% Params_bysyl(3).PreNote='cb';
+% Params_bysyl(3).PreDur=0.05; % sec, how much data to take before targ
+% Params_bysyl(3).PostSylOnsetDur=0.1; % sec, data post to take
+% Params_bysyl(3).TargNoteNum=-1; % template note directed to target
+% Params_bysyl(3).PC_freqrange=[2800 3800]; % for both pitch contour and find note
+% Params_bysyl(3).StimLatencyWindow=[-450, 0]; % [a b] a and b are times (in negative ms) preceding syl onset. If stim is within this window, then will call a "stim trial."
+% Params_bysyl(3).TimeWindowList{1}=[55 77]; % entire syl
+% Params_bysyl(3).notenum_stim=3;
+
+
+% ####################### GENERAL PARAMS (shared across sykls)
+    % =======, to find directories
+    Params_metadata.experiment='LaserOnly2'; % 1st underscore ...
+    Params_metadata.condition='';
+    Params_metadata.notes='';
+    Params_metadata.date_range={'06Dec2018', '06Dec2018'};
+    Params_metadata.only_labeled_dirs=1;
+    
+    % ===== For opto analysis
+    Params_glob.DataInfo='UnDir'; % To note information about data, 'Dir' and 'UnDir' means this is directed or undirected song.
+    Params_glob.Fs=32000;
+    
+    %         STIM
+    Params_glob.StimDelay=0; % in ms, delay from trigger to stim on
+    Params_glob.StimDur=400; % duration of Stim, in ms
+    Params_glob.StimType='pulse'; % either 'constant' or 'pulse'
+
+
+
+% Time Window List
+% Plotting over time
+Params_glob.SmthBin=10; % smooth # rends
+
+% Do you want to delete old opto analysis folder if it exists?
+Params_glob.Delete_old_analysis_folder=1;
+
+
+
+% ###################### SYL SPECIFIC PARAMS
+SepBySyl = 1;
+currdir = pwd;
+for i=1:length(Params_bysyl)
+    
+    % ================== WHERE TO ALIGN SONGS
+    Params_glob.SylTarg=Params_bysyl(i).SylTarg; % aligns to onset of this
+    Params_glob.PreNote=Params_bysyl(i).PreNote;
+    Params_glob.PreDur=Params_bysyl(i).PreDur; % sec, how much data to take before targ
+    Params_glob.PostSylOnsetDur=Params_bysyl(i).PostSylOnsetDur; % sec, data post to take
+    Params_glob.TargNoteNum=Params_bysyl(i).TargNoteNum; % template note directed to target
+    Params_glob.PC_freqrange=Params_bysyl(i).PC_freqrange; % for both pitch contour and find note
+    Params_glob.StimLatencyWindow=Params_bysyl(i).StimLatencyWindow; % [a b] a and b are times (in negative ms) preceding syl onset. If stim is within this window, then will call a "stim trial."
+    Params_glob.TimeWindowList=Params_bysyl(i).TimeWindowList; % entire syl
+    Params_glob.notenum_stim=Params_bysyl(i).notenum_stim;
+    
+    % ================================== DEFAULTS, UNLIKELY TO NEED TO CHANGE
+    Params_glob.TargTrigCatchRate=0; % catch trial fraction at target
+    Params_glob.pc_harms=1;
+    
+    
+    % =============================== RUN
+    KeepOutliers=1; % for running stats and plotting.
+    lt_Opto_Stim_analy_SUMMARY_MultDayAnaly_v3(Params_metadata, Params_glob, ...
+        KeepOutliers, SepBySyl);
+    
+    cd(currdir);
+end
 
 
 
@@ -304,174 +304,174 @@ lt_batchsong_plotallchans(batchf, lasernote, annotate_note_group);
 close all;
 clear all;
 
-% % ==== Params for analysis
-% BirdDir='/bluejay5/lucas/birds/pu83wh58/';
-% TimeFieldsOfInterest = 1; % i.e. time windows in pitch contour
-% statfield='ffvals';
-% BaselineDays=1;
-% plotStimEpochs=0; % if 1, then separates all data to stim epochs (even if multiple in one day)
-% ListOfDirs1={};
-% ListOfDirs2={};
-% SepBySyl =1;
-% syllist = {'a_b'};
-% sylthis = 'ab_h';
-% 
-% % ==== METHOD 2) METADATA automatically
-% MetadataStruct=lt_metadata_collect;
-% 
-% experiment = 'OneDirLearn';
-% condition='';
-% notes='';
-% date_range={'08Nov2018', '21Nov2018'};
-% only_labeled_dirs=1;
-% 
-% ListOfDirs2=lt_metadata_find_dirs(MetadataStruct, experiment, condition, notes, date_range, only_labeled_dirs);
-% 
-% % get the correct subdir that contains opto stats
-% c=1;
-% for i=1:length(ListOfDirs2)
-%     cd(ListOfDirs2{i});
-%     
-%     
-%     tmp=[];
-%     try
-%         cd lt_Opto_Stim_analy_v2
-%         try cd 'All';
-%             tmp='All';
-%         catch err
-%             try cd 'Stim';
-%                 tmp='Stim';
-%             end
-%         end
-%     catch err
-%         disp(['error - no lt_Opto_Stim_analy_v2 data on: ' ListOfDirs2{i} ' - throwing day out']);
-%     cd(BirdDir);        
-%         continue
-%     end
-%     
-%     % go back up to main dir
-%     cd(BirdDir);
-%     
-%     % modify name to add opto analysis name
-%     if SepBySyl==1
-%         ListOfDirs2_modified{c}=[ListOfDirs2{i} '/lt_Opto_Stim_analy_v2/' tmp '/' sylthis];
-%     else
-%     ListOfDirs2_modified{c}=[ListOfDirs2{i} '/lt_Opto_Stim_analy_v2/' tmp];
-%     end
-%     c=c+1;
-% end
-% 
-% 
-% % ===== COMBINE DIRS
-% ListOfDirs_all=[ListOfDirs1 ListOfDirs2_modified];
-% 
-% MetaParams.WNonDates = {}; % times when WN epochs began
-% 
-% 
-% lt_Opto_Stim_analy_SUMMARY_PlotOverTime(BirdDir, ListOfDirs_all,TimeFieldsOfInterest, ...
-%     statfield,BaselineDays,plotStimEpochs, MetaParams)
-% 
+% ==== Params for analysis
+BirdDir='/bluejay5/lucas/birds/pu83wh58/';
+TimeFieldsOfInterest = 1; % i.e. time windows in pitch contour
+statfield='ffvals';
+BaselineDays=1;
+plotStimEpochs=0; % if 1, then separates all data to stim epochs (even if multiple in one day)
+ListOfDirs1={};
+ListOfDirs2={};
+SepBySyl =1;
+syllist = {'a_b'};
+sylthis = 'ab_h';
+
+% ==== METHOD 2) METADATA automatically
+MetadataStruct=lt_metadata_collect;
+
+experiment = 'LaserOnly2';
+condition='';
+notes='';
+date_range={'06Dec2018', '18Dec2018'};
+only_labeled_dirs=1;
+
+ListOfDirs2=lt_metadata_find_dirs(MetadataStruct, experiment, condition, notes, date_range, only_labeled_dirs);
+
+% get the correct subdir that contains opto stats
+c=1;
+for i=1:length(ListOfDirs2)
+    cd(ListOfDirs2{i});
+    
+    
+    tmp=[];
+    try
+        cd lt_Opto_Stim_analy_v2
+        try cd 'All';
+            tmp='All';
+        catch err
+            try cd 'Stim';
+                tmp='Stim';
+            end
+        end
+    catch err
+        disp(['error - no lt_Opto_Stim_analy_v2 data on: ' ListOfDirs2{i} ' - throwing day out']);
+    cd(BirdDir);        
+        continue
+    end
+    
+    % go back up to main dir
+    cd(BirdDir);
+    
+    % modify name to add opto analysis name
+    if SepBySyl==1
+        ListOfDirs2_modified{c}=[ListOfDirs2{i} '/lt_Opto_Stim_analy_v2/' tmp '/' sylthis];
+    else
+    ListOfDirs2_modified{c}=[ListOfDirs2{i} '/lt_Opto_Stim_analy_v2/' tmp];
+    end
+    c=c+1;
+end
+
+
+% ===== COMBINE DIRS
+ListOfDirs_all=[ListOfDirs1 ListOfDirs2_modified];
+
+MetaParams.WNonDates = {}; % times when WN epochs began
+
+
+lt_Opto_Stim_analy_SUMMARY_PlotOverTime(BirdDir, ListOfDirs_all,TimeFieldsOfInterest, ...
+    statfield,BaselineDays,plotStimEpochs, MetaParams)
+
 
 
 
 %% ########################################################################
 %% ######################################### AUTOLABEL
-% clear all; close all;
-% 
-% % ========================= 0) ECTRACT DIRECTORIRES
-% basedir = '/bluejay5/lucas/birds/pu83wh58';
-% % date_range_base={'27Sep2018','29Sep2018'};
-% % date_range_WN={'30Sep2018','08Oct2018'};
-% date_range_base={};
-% % date_range_WN={'26Oct2018','26Oct2018'};
-% date_range_WN={'20Nov2018','21Nov2018'};
-% experiment = 'OneDirLearn';
-% 
-% % -------- COLLECT METADAT
-% cd(basedir);
-% MetadataStruct=lt_metadata_collect;
-% 
-% condition='';
-% notes='';
-% only_labeled_dirs=0;
-% 
-% % ----- BASELINE
-% ListOfDirs1=lt_metadata_find_dirs(MetadataStruct, experiment, condition, ...
-%     notes, date_range_base, only_labeled_dirs, 2);
-% 
-% % ------ WN
-% ListOfDirs2=lt_metadata_find_dirs(MetadataStruct, experiment, condition, ...
-%     notes, date_range_WN, only_labeled_dirs, 2);
-% 
-% % ------- COMBINE
-% if ~isempty(date_range_base) & ~isempty(date_range_WN)
-% ListOfDirs = [ListOfDirs1 ListOfDirs2];
-% elseif isempty(date_range_base) 
-%     ListOfDirs = [ListOfDirs2];
-% elseif isempty(date_range_WN) 
-%     ListOfDirs = [ListOfDirs1];
-% end
-% 
-% 
-% % ============================== RUN, ITERATE OVER DAYS
-% for j=1:length(ListOfDirs)
-% 
-%     % ==================== 0) go to day folder
-%     cd([basedir '/' ListOfDirs(j).dirname]);
-%     
-%     % ==================== 1) extract all s
-% %     try
-% %     lt_make_batch(4);
-% %     batch = 'batch.rec_FB';
-% %     catch err
-%         lt_make_batch(3);
-%         lt_cleandirAuto('batch', 1000,4,4);
-%         batch = 'batch.keep';
-% %     end
-% %     randsamp(batch, 0.3);
-% %     batch = 'batch.rec_FB.rand';
-%     
-%     % ==================== 2) move old .notmat
-%     if ~exist('OLDNOTMAT_SeqDepPitch', 'dir')
-%         mkdir OLDNOTMAT_SeqDepPitch
-%         !cp *.not.mat* OLDNOTMAT_SeqDepPitch
-%     else
-%         disp('not making OLDNOTMAT_SeqDepPitch, since already made!!');
+clear all; close all;
+
+% ========================= 0) ECTRACT DIRECTORIRES
+basedir = '/bluejay5/lucas/birds/pu83wh58';
+% date_range_base={'27Sep2018','29Sep2018'};
+% date_range_WN={'30Sep2018','08Oct2018'};
+date_range_base={};
+% date_range_WN={'26Oct2018','26Oct2018'};
+date_range_WN={'06Dec2018','16Dec2018'};
+experiment = 'LaserOnly2';
+
+% -------- COLLECT METADAT
+cd(basedir);
+MetadataStruct=lt_metadata_collect;
+
+condition='';
+notes='';
+only_labeled_dirs=0;
+
+% ----- BASELINE
+ListOfDirs1=lt_metadata_find_dirs(MetadataStruct, experiment, condition, ...
+    notes, date_range_base, only_labeled_dirs, 2);
+
+% ------ WN
+ListOfDirs2=lt_metadata_find_dirs(MetadataStruct, experiment, condition, ...
+    notes, date_range_WN, only_labeled_dirs, 2);
+
+% ------- COMBINE
+if ~isempty(date_range_base) & ~isempty(date_range_WN)
+ListOfDirs = [ListOfDirs1 ListOfDirs2];
+elseif isempty(date_range_base) 
+    ListOfDirs = [ListOfDirs2];
+elseif isempty(date_range_WN) 
+    ListOfDirs = [ListOfDirs1];
+end
+
+
+% ============================== RUN, ITERATE OVER DAYS
+for j=1:length(ListOfDirs)
+
+    % ==================== 0) go to day folder
+    cd([basedir '/' ListOfDirs(j).dirname]);
+    
+    % ==================== 1) extract all s
+%     try
+%     lt_make_batch(4);
+%     batch = 'batch.rec_FB';
+%     catch err
+        lt_make_batch(3);
+        lt_cleandirAuto('batch', 1000,4,4);
+        batch = 'batch.keep';
 %     end
-%     
-%     % ==================== 3) run autolabel
-%     % ---- GENERAL PARAMS
-%     ampThresh=28000;
-%     min_dur=30;
-%     min_int=4;
-%     sm_win = 2;
-%     
-%     % ---- MOTIF 1 [ab]
+%     randsamp(batch, 0.3);
+%     batch = 'batch.rec_FB.rand';
+    
+    % ==================== 2) move old .notmat
+    if ~exist('OLDNOTMAT_SeqDepPitch', 'dir')
+        mkdir OLDNOTMAT_SeqDepPitch
+        !cp *.not.mat* OLDNOTMAT_SeqDepPitch
+    else
+        disp('not making OLDNOTMAT_SeqDepPitch, since already made!!');
+    end
+    
+    % ==================== 3) run autolabel
+    % ---- GENERAL PARAMS
+    ampThresh=25000;
+    min_dur=30;
+    min_int=4;
+    sm_win = 3;
+    
+    % ---- MOTIF 1 [ab]
 %     config= '/bluejay5/lucas/birds/pu83wh58/config_AL_ab.evconfig2';
-%     config= '/bluejay5/lucas/birds/pu83wh58/config_AL_ab_v2.evconfig2';
-%     syl.targ='b';
-%     syl.pre='a';
-%     syl.post='h';
-%     NoteNum=0;
-%     overwrite_notmat=1; % will always make backup folder
-%     
-%     [fnames, sylnum, vlsorfn, vlsorind]=lt_autolabel_EvTAFv4(batch, config, ...
-%         syl, NoteNum, ampThresh, min_dur, min_int, overwrite_notmat, [], sm_win);
-%     
-%     
-%     % ------ MOTIF 2 [accBb]
-% %     config= '/bluejay5/lucas/birds/pu83wh58/config_AL_c1.evconfig2';
-% %     syl.targ='c';
-% %     syl.pre='';
-% %     syl.post='cbh';
-% %     NoteNum=0;
-% %     overwrite_notmat=0; % will always make backup folder
-% %     
-% %     [fnames, sylnum, vlsorfn, vlsorind]=lt_autolabel_EvTAFv4(batch, config, ...
-% %         syl, NoteNum, ampThresh, min_dur, min_int, overwrite_notmat, [], sm_win);
-% end
-% 
-% cd(basedir);
+    config= '/bluejay5/lucas/birds/pu83wh58/config_AL_ab_v2.evconfig2';
+    syl.targ='b';
+    syl.pre='a';
+    syl.post='h';
+    NoteNum=0;
+    overwrite_notmat=1; % will always make backup folder
+    
+    [fnames, sylnum, vlsorfn, vlsorind]=lt_autolabel_EvTAFv4(batch, config, ...
+        syl, NoteNum, ampThresh, min_dur, min_int, overwrite_notmat, [], sm_win);
+    
+    
+    % ------ MOTIF 2 [accBb]
+    config= '/bluejay5/lucas/birds/pu83wh58/config_AL_c1.evconfig2';
+    syl.targ='c';
+    syl.pre='';
+    syl.post='cbh';
+    NoteNum=0;
+    overwrite_notmat=0; % will always make backup folder
+    
+    [fnames, sylnum, vlsorfn, vlsorind]=lt_autolabel_EvTAFv4(batch, config, ...
+        syl, NoteNum, ampThresh, min_dur, min_int, overwrite_notmat, [], sm_win);
+end
+
+cd(basedir);
 
 %% ============ MAKE WAVE FILES TO LOOK FOR FALSE POSITIVES
 batch='batch.labeled.all';
@@ -480,11 +480,11 @@ presyl = 'ab';
 [fnames, sylnum]=lt_jc_chcklbl(batch, syl, 0.025,0.025, presyl,'','');
 [vlsorfn vlsorind]=jc_vlsorfn(batch, syl, presyl,'');
 
-syl = 'b';
-presyl = 'c';
-[fnames, sylnum]=lt_jc_chcklbl(batch, syl, 0.025,0.025, presyl,'','');
-[vlsorfn vlsorind]=jc_vlsorfn(batch, syl, presyl,'');
- 
+% syl = 'b';
+% presyl = 'c';
+% [fnames, sylnum]=lt_jc_chcklbl(batch, syl, 0.025,0.025, presyl,'','');
+% [vlsorfn vlsorind]=jc_vlsorfn(batch, syl, presyl,'');
+%  
 %% ============ 2) Use evsonganaly manually on the .wav file created above
 % (contains only the syls you chose)
 % INSTRUCTIONS: 
