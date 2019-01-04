@@ -83,20 +83,6 @@ lt_batchsong_plotallchans(batchf, lasernote, annotate_note_group);
 
 
 
-%% ====== ALIGNING STIM TO SONG [SUBSET OF SONGS]
-% ========== CHECKING NOTEGROUP 1
-close all;
-randsamp('batch.labeled.all', 0.1);
-batchf = 'batch.labeled.all.rand'; % either .cbin file or batch
-% songf = batchf; % either .cbin file or batch
-lasernote = 0;
-annotate_note_group = 1;
-
-lt_batchsong_plotallchans(batchf, lasernote, annotate_note_group);
-
-
-% ========= OPENING FIGURE TO SEE FF TIME WINDOW [PITCH CONTOUR]
-openfig('lt_Opto_Stim_analy_v2/Stim/d_b/FIGURES/Compare2/figsall.fig');
 
 %% ##################### METHOD 2 - MORE FLEXIBLE.
 %% ##################### METHOD 2 - MORE FLEXIBLE.
@@ -192,7 +178,7 @@ Params_metadata.experiment='LaserOnly'; % 1st underscore ...
 Params_metadata.condition='';
 Params_metadata.notes='';
 %     Params_metadata.date_range={'28Sep2018', '04Oct2018'};
-Params_metadata.date_range={'06Dec2018', '19Dec2018'};
+Params_metadata.date_range={'24Nov2018', '04Dec2018'};
 Params_metadata.only_labeled_dirs=1;
 
 % ===== For opto analysis
@@ -266,7 +252,7 @@ MetadataStruct=lt_metadata_collect;
 experiment = 'LaserOnly';
 condition='';
 notes='';
-date_range={'24Nov2018', '19Dec2018'};
+date_range={'06Dec2018', '19Dec2018'};
 only_labeled_dirs=1;
 
 ListOfDirs2=lt_metadata_find_dirs(MetadataStruct, experiment, condition, notes, date_range, only_labeled_dirs);

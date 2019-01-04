@@ -64,6 +64,22 @@ annotate_note_group = 1;
 
 lt_batchsong_plotallchans(batchf, lasernote, annotate_note_group);
 
+%% SANITY CHEECKS
+% ========== CHECKING NOTEGROUP 1
+close all;
+randsamp('batch.labeled.all', 0.1);
+batchf = 'batch.labeled.all.rand'; % either .cbin file or batch
+% batchf = 'batch.keep'; % either .cbin file or batch
+% songf = batchf; % either .cbin file or batch
+lasernote = 0;
+annotate_note_group = 1;
+
+lt_batchsong_plotallchans(batchf, lasernote, annotate_note_group);
+
+
+% ========= OPENING FIGURE TO SEE FF TIME WINDOW [PITCH CONTOUR]
+openfig('lt_Opto_Stim_analy_v2/Stim/ab_h/FIGURES/Compare2/figsall.fig');
+
 %% ########## AUTOLABEL
 
 
@@ -246,7 +262,8 @@ Params_bysyl(2).notenum_stim=0; % of Stim - CONFIRMED THIS WORKS
     Params_metadata.experiment='LaserOnly2'; % 1st underscore ...
     Params_metadata.condition='';
     Params_metadata.notes='';
-    Params_metadata.date_range={'06Dec2018', '06Dec2018'};
+    Params_metadata.date_range={'08Dec2018', '09Dec2018'};
+%     Params_metadata.date_range={'17Dec2018', '20Dec2018'};
     Params_metadata.only_labeled_dirs=1;
     
     % ===== For opto analysis
@@ -322,7 +339,8 @@ MetadataStruct=lt_metadata_collect;
 experiment = 'LaserOnly2';
 condition='';
 notes='';
-date_range={'06Dec2018', '18Dec2018'};
+% date_range={'08Dec2018', '09Dec2018'};
+date_range={'06Dec2018', '20Dec2018'};
 only_labeled_dirs=1;
 
 ListOfDirs2=lt_metadata_find_dirs(MetadataStruct, experiment, condition, notes, date_range, only_labeled_dirs);
@@ -380,11 +398,10 @@ clear all; close all;
 
 % ========================= 0) ECTRACT DIRECTORIRES
 basedir = '/bluejay5/lucas/birds/pu83wh58';
-% date_range_base={'27Sep2018','29Sep2018'};
-% date_range_WN={'30Sep2018','08Oct2018'};
 date_range_base={};
-% date_range_WN={'26Oct2018','26Oct2018'};
-date_range_WN={'06Dec2018','16Dec2018'};
+% date_range_WN={'08Dec2018','09Dec2018'};
+% date_range_WN={'15Dec2018','15Dec2018'};
+date_range_WN={'17Dec2018','20Dec2018'};
 experiment = 'LaserOnly2';
 
 % -------- COLLECT METADAT
