@@ -635,7 +635,9 @@ lt_batchsong_calcFF(ListOfDirs_ALL, ListOfBatch, FFparams, plotAllPC, plotEachSy
 %% ==== EXTRACT FF
 % MotifsToExtract = {'a(b)n', 'ab(h)', 'jb(h)',  'jbh(h)', 'a(b)h', 'j(b)'};
 MotifsToExtract = {'ab(h)', 'jb(h)',  'jbh(h)', 'a(b)h', 'j(b)', 'h(g)'};
-DATSTRUCT = lt_batchsong_extractFF(ListOfDirs_UNDIR, ListOfDirs_DIR, ListOfBatch, MotifsToExtract);
+gethitsyls = 0;
+DATSTRUCT = lt_batchsong_extractFF(ListOfDirs_UNDIR, ListOfDirs_DIR, ...
+    ListOfBatch, MotifsToExtract, gethitsyls);
 
 
 %% ============== PLOT
