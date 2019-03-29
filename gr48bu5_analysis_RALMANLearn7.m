@@ -29,47 +29,47 @@ check_stuff=lt_check_hit_templ_freq_v2_EvTAFv4Sim(batchf, syl, syl_pre, syl_post
 
 
 %% calc FF for all syls, save next to song file
-% clear all; close all;
-% 
-% ListOfDirs_UNDIR = {...
-%     '/bluejay0/bluejay2/lucas/birds/gr48bu5/NEURAL/012819_RALMANLearn6', ...
-%     };
-% 
-% ListOfDirs_DIR = {};
-% 
-% ListOfDirs_ALL = [ListOfDirs_UNDIR ListOfDirs_DIR];
-% 
-% ListOfBatch = {...
-%     'Batch1058to2152', ...
-%     };
-% 
-% FFparams.cell_of_freqwinds={'b', [3000 3950], 'h', [3000 4000], 'a', [950 2250],...
-%      'd', [1300 2450]}; %
-% FFparams.cell_of_FFtimebins={'b', [0.041 0.0475], 'h', [0.023 0.026], 'a', [0.078 0.085], ...
-%     'd', [0.039 0.052]}; %
-% 
-% plotAllPC = 0;
-% plotEachSyl = 0;
-% overwrite = 1;
-% 
-% % ==================== CALCULATE AND SAVE FF
-% lt_batchsong_calcFF(ListOfDirs_ALL, ListOfBatch, FFparams, plotAllPC, plotEachSyl, ...
-%     overwrite);
-% 
-% %% ==== EXTRACT FF
-% MotifsToExtract = {'(a)rd', 'r(d)', '(a)b', 'a(b)', 'ab(h)', ...
-%                         '(a)j', 'j(b)', 'jb(h)'};
-% % MotifsToExtract = {'jj(b)'};
-% DATSTRUCT = lt_batchsong_extractFF(ListOfDirs_UNDIR, ListOfDirs_DIR, ...
-%     ListOfBatch, MotifsToExtract, 0);
-% 
-% 
-% %% ============== PLOT
-% close all;
-% TrainON = '28Jan2019-1203';
-% SwitchTimes = {};
-% subtractMean = 1;
-% dozscore = 1;
-% 
-% lt_batchsong_plotFF(DATSTRUCT, MotifsToExtract, TrainON, SwitchTimes, ...
-%     subtractMean, dozscore);
+clear all; close all;
+
+ListOfDirs_UNDIR = {...
+    '/bluejay0/bluejay2/lucas/birds/gr48bu5/NEURAL/021019_RALMANLearn7', ...
+    };
+
+ListOfDirs_DIR = {};
+
+ListOfDirs_ALL = [ListOfDirs_UNDIR ListOfDirs_DIR];
+
+ListOfBatch = {...
+    'Batch1049to2106.LABELED', ...
+    };
+
+FFparams.cell_of_freqwinds={'b', [3000 3950], 'h', [3000 4000], 'a', [950 2250],...
+     'd', [1300 2450]}; %
+FFparams.cell_of_FFtimebins={'b', [0.041 0.0475], 'h', [0.023 0.026], 'a', [0.078 0.085], ...
+    'd', [0.039 0.052]}; %
+
+plotAllPC = 1;
+plotEachSyl = 0;
+overwrite = 1;
+
+% ==================== CALCULATE AND SAVE FF
+lt_batchsong_calcFF(ListOfDirs_ALL, ListOfBatch, FFparams, plotAllPC, plotEachSyl, ...
+    overwrite);
+
+%% ==== EXTRACT FF
+MotifsToExtract = {'(a)rd', 'r(d)', '(a)b', 'a(b)', 'ab(h)', ...
+                        '(a)j', 'j(b)', 'jb(h)'};
+% MotifsToExtract = {'jj(b)'};
+DATSTRUCT = lt_batchsong_extractFF(ListOfDirs_UNDIR, ListOfDirs_DIR, ...
+    ListOfBatch, MotifsToExtract, 0);
+
+
+%% ============== PLOT
+close all;
+TrainON = '10Feb2019-1130';
+SwitchTimes = {};
+subtractMean = 1;
+dozscore = 1;
+
+lt_batchsong_plotFF(DATSTRUCT, MotifsToExtract, TrainON, SwitchTimes, ...
+    subtractMean, dozscore);
