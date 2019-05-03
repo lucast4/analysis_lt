@@ -3,9 +3,8 @@
 clear all; close all;
 batchf='batch.labeled.all';
 % batchf='batch.keep.UNLABELED';
-config='/bluejay2/lucas/birds/gr48bu5/config012319_4.evconfig2'; % less liberal, and not is stronger
 config='/bluejay2/lucas/birds/gr48bu5/config_022119.evconfig2'; % less liberal, and not is stronger
-
+config='/bluejay2/lucas/birds/gr48bu5/config_032919.evconfig2'; % less liberal, and not is stronger
 
 
 % === Note 0 
